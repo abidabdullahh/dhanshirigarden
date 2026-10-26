@@ -1,4 +1,4 @@
-import { Mail, MessageCircle, Phone, Sprout, Users } from 'lucide-react'
+import { Globe, Mail, MessageCircle, Phone, Sprout, Users } from 'lucide-react'
 import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
 import { teamPhoto } from '../../lib/teamPhotos'
@@ -144,10 +144,21 @@ export default function About() {
           </div>
 
           <div className="lg:col-span-7">
-            <p className="inline-flex items-center gap-2 rounded-full bg-mint px-3.5 py-1.5 text-sm font-semibold text-emerald">
-              <Sprout className="size-4" aria-hidden="true" />
-              {founder.role}
-            </p>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <p className="inline-flex items-center gap-2 rounded-full bg-mint px-3.5 py-1.5 text-sm font-semibold text-emerald">
+                <Sprout className="size-4" aria-hidden="true" />
+                {founder.role}
+              </p>
+              <a
+                href={site.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full glass-green px-3.5 py-1.5 text-xs font-semibold text-forest transition hover:bg-forest hover:text-white"
+              >
+                <Globe className="size-3.5" aria-hidden="true" />
+                {site.domain}
+              </a>
+            </div>
             <h3 className="mt-4 text-[clamp(2rem,4.4vw,3.3rem)]">{founder.name}</h3>
 
             <ul className="mt-5 flex flex-wrap gap-2">
@@ -167,6 +178,9 @@ export default function About() {
             <div className="mt-8 border-t border-dashed border-forest/20 pt-6">
               <p className="mb-3 font-display text-base font-semibold text-forest">{founder.connect}</p>
               <div className="flex flex-wrap items-center gap-2.5">
+                <Button href={site.website} target="_blank" rel="noopener noreferrer" variant="glass" icon={Globe}>
+                  {founder.website || 'Website'}
+                </Button>
                 <Button href={getWhatsAppLink(null, null, lang)} icon={MessageCircle}>
                   {founder.whatsapp}
                 </Button>

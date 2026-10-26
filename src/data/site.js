@@ -3,6 +3,9 @@
  * all visible copy lives in content.js.
  */
 export const site = {
+  website: 'https://www.dhanshirigarden.com',
+  domain: 'www.dhanshirigarden.com',
+
   whatsapp: '8801739203981',
 
   phones: [
