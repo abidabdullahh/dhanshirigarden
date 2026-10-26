@@ -37,13 +37,13 @@ const selectService = (key) => {
 }
 
 const linkClass = (isActive) =>
-  `relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[0.95rem] font-semibold transition-colors duration-200 ${
+  `relative inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[0.87rem] 2xl:px-3 2xl:text-[0.92rem] font-semibold transition-colors duration-200 ${
     isActive ? 'bg-forest/[0.09] text-forest' : 'text-forest/75 hover:bg-forest/[0.06] hover:text-forest'
   }`
 
 function AiTag({ label }) {
   return (
-    <span className="rounded-full bg-bloom px-1.5 py-[3px] text-[0.62rem] font-bold leading-none text-charcoal">
+    <span className="whitespace-nowrap rounded-full bg-bloom px-1.5 py-[3px] text-[0.62rem] font-bold leading-none text-charcoal">
       {label}
     </span>
   )
@@ -95,7 +95,7 @@ function ServicesMenu({ active }) {
   return (
     <div
       ref={rootRef}
-      className="relative"
+      className="relative shrink-0"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onBlur={(event) => {
@@ -107,11 +107,11 @@ function ServicesMenu({ active }) {
         aria-haspopup="true"
         aria-expanded={open}
         onClick={handleClick}
-        className={`${linkClass(active)} gap-1`}
+        className={`${linkClass(active)} gap-1 whitespace-nowrap`}
       >
-        <span>{t.nav.services}</span>
+        <span className="whitespace-nowrap">{t.nav.services}</span>
         <ChevronDown
-          className={`size-4 text-emerald transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`size-3.5 text-emerald transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           aria-hidden="true"
         />
       </button>
@@ -141,7 +141,7 @@ function ServicesMenu({ active }) {
                         <Icon className="size-6" aria-hidden="true" />
                       </span>
                       <span className="min-w-0">
-                        <span className="block font-display text-[1.02rem] font-semibold text-forest">{copy.title}</span>
+                        <span className="block font-display text-[1.02rem] font-semibold text-forest whitespace-nowrap">{copy.title}</span>
                         <span className="block text-sm leading-snug text-charcoal/65">{copy.desc}</span>
                       </span>
                     </a>
@@ -215,34 +215,34 @@ export default function Navbar() {
             <Logo />
           </a>
 
-          <ul className="hidden items-center gap-0.5 xl:flex">
+          <ul className="hidden flex-nowrap items-center gap-0.5 xl:flex">
             <li>
               <ServicesMenu active={['services', 'rooftop', 'lawn'].includes(activeId)} />
             </li>
             {links.map((link) => (
-              <li key={link.id} className={link.wide ? 'hidden min-[1400px]:block' : undefined}>
+              <li key={link.id} className="shrink-0">
                 <a
                   href={`#${link.id}`}
                   aria-current={link.match.includes(activeId) ? 'true' : undefined}
                   className={linkClass(link.match.includes(activeId))}
                 >
-                  {link.label}
+                  <span className="whitespace-nowrap">{link.label}</span>
                   {link.ai && <AiTag label={t.nav.aiTag} />}
                 </a>
               </li>
             ))}
           </ul>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
             <LangToggle />
             <Button
               href={`tel:${phone.tel}`}
               size="sm"
               icon={Phone}
-              className="max-md:hidden"
+              className="max-md:hidden whitespace-nowrap"
               aria-label={`${t.actions.callNow} ${phone.number}`}
             >
-              {t.actions.callNow}
+              <span className="whitespace-nowrap">{t.actions.callNow}</span>
             </Button>
             <button
               ref={openerRef}
@@ -299,8 +299,8 @@ export default function Navbar() {
                       link.match.includes(activeId) ? 'bg-forest/[0.08] text-forest' : 'text-forest/85 hover:bg-forest/[0.06]'
                     }`}
                   >
-                    <span className="inline-flex items-center gap-2.5">
-                      {link.label}
+                    <span className="inline-flex items-center gap-2.5 whitespace-nowrap">
+                      <span>{link.label}</span>
                       {link.ai && <AiTag label={t.nav.aiTag} />}
                     </span>
                     <ChevronDown className="size-5 -rotate-90 text-emerald/70" aria-hidden="true" />
@@ -323,7 +323,7 @@ export default function Navbar() {
                       className="flex h-full items-center gap-2.5 rounded-2xl glass-green p-3 text-sm font-semibold text-forest"
                     >
                       <Icon className="size-5 shrink-0 text-emerald" aria-hidden="true" />
-                      {t.servicesMenu[item.key].title}
+                      <span className="whitespace-nowrap">{t.servicesMenu[item.key].title}</span>
                     </a>
                   </li>
                 )

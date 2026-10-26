@@ -50,7 +50,7 @@ export const content = {
     "skip": "মূল অংশে যান",
     "home": "প্রচ্ছদে যান",
     "aiTag": "এআই",
-    "estimator": "খরচ ক্যালকুলেটর"
+    "estimator": "ক্যালকুলেটর"
   },
   "servicesMenu": {
     "rooftop": {

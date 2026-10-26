@@ -10,18 +10,20 @@ export function LogoMark({ className = 'size-9 sm:size-10' }) {
   )
 }
 
-export default function Logo({ className = '', light = false }) {
+export default function Logo({ className = '', light = false, showTagline = false }) {
   const { t } = useLocale()
   return (
-    <span className={`inline-flex items-center gap-2 sm:gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center gap-2 sm:gap-2.5 whitespace-nowrap ${className}`}>
       <LogoMark />
-      <span className="flex flex-col leading-none">
-        <span className={`font-display text-[0.95rem] font-bold min-[390px]:text-[1.02rem] sm:text-[1.15rem] ${light ? 'text-white' : 'text-forest'}`}>
+      <span className="flex flex-col justify-center leading-none">
+        <span className={`font-display text-[1rem] font-bold sm:text-[1.12rem] tracking-tight whitespace-nowrap ${light ? 'text-white' : 'text-forest'}`}>
           {t.brand.name}
         </span>
-        <span className={`mt-1 hidden text-[0.72rem] font-medium sm:block ${light ? 'text-mint/80' : 'text-emerald/80'}`}>
-          {t.brand.tagline}
-        </span>
+        {showTagline && (
+          <span className={`mt-1 hidden text-[0.72rem] font-medium sm:block ${light ? 'text-mint/80' : 'text-emerald/80'}`}>
+            {t.brand.tagline}
+          </span>
+        )}
       </span>
     </span>
   )
