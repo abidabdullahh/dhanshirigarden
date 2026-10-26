@@ -1,0 +1,381 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   DESIGN TOKENS
+   Palette: forest / emerald / bright (greens), mint (tint), cream (light
+   ground), ink (blueprint blue-grey), bloom (marigold — the one playful
+   accent), charcoal (text).
+   Fonts are bundled through fontsource (see main.jsx) so the site never
+   depends on a third-party font CDN. Li Ador Noirrit is loaded at runtime
+   from src/assets/fonts when the font file is present (see lib/brandFont.js).
+------------------------------------------------------------------- */
+@theme static {
+  --color-forest: #1b4332;
+  --color-emerald: #2d6a4f;
+  --color-bright: #52b788;
+  --color-mint: #d8f3dc;
+  --color-cream: #f8f9fa;
+  --color-cream-alt: #f4f1de;
+  --color-ink: #3a5a73;
+  --color-bloom: #d99a2b;
+  --color-bloom-soft: #fbefd2;
+  --color-charcoal: #212529;
+  --color-alert: #b5483a;
+
+  --font-display-en: 'Bricolage Grotesque Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body-en: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display-bn: 'Li Ador Noirrit', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+  --font-body-bn: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+
+  --shadow-soft: 0 10px 30px -14px rgb(27 67 50 / 0.28);
+  --shadow-lift: 0 26px 56px -22px rgb(27 67 50 / 0.42);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-spin-slow: spin 26s linear infinite;
+  --animate-wiggle: wiggle 0.7s ease-in-out;
+  --animate-scan: scan 2.6s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+  --animate-pop: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+  --animate-grow: grow 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-drip: drip 1.9s ease-in infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--r, 0deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 4deg));
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  75% {
+    transform: rotate(12deg);
+  }
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: calc(100% - 3px);
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes vine-grow {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes grow {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-24deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes drip {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------
+   LANGUAGE-AWARE TYPE — Bangla needs more line-height and must never get
+   negative letter-spacing (it breaks conjuncts), so these swap with <html lang>
+------------------------------------------------------------------- */
+:root {
+  --font-display: var(--font-display-en);
+  --font-body: var(--font-body-en);
+  --lh-display: 1.06;
+  --ls-display: -0.028em;
+  --lh-body: 1.7;
+  --ls-eyebrow: 0.14em;
+}
+
+html[lang='bn'] {
+  --font-display: var(--font-display-bn);
+  --font-body: var(--font-body-bn);
+  --lh-display: 1.3;
+  --ls-display: 0em;
+  --lh-body: 1.9;
+  --ls-eyebrow: 0em;
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+@utility font-body {
+  font-family: var(--font-body);
+}
+@utility leading-display {
+  line-height: var(--lh-display);
+}
+@utility leading-body {
+  line-height: var(--lh-body);
+}
+@utility tracking-display {
+  letter-spacing: var(--ls-display);
+}
+@utility tracking-eyebrow {
+  letter-spacing: var(--ls-eyebrow);
+}
+
+/* ------------------------------------------------------------------
+   GREEN-TINTED GLASS (light backgrounds) + BLUEPRINT TEXTURE
+------------------------------------------------------------------- */
+@utility glass-green {
+  background-color: rgb(82 183 136 / 0.14);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgb(82 183 136 / 0.35);
+}
+
+@utility glass-green-strong {
+  background-color: rgb(216 243 220 / 0.62);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgb(82 183 136 / 0.42);
+}
+
+@utility glass-white {
+  background-color: rgb(255 255 255 / 0.6);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgb(255 255 255 / 0.75);
+}
+
+/* Green-tinted glass that stays readable on top of photographs. */
+@utility glass-card {
+  background-color: rgb(246 252 248 / 0.92);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border: 1px solid rgb(82 183 136 / 0.5);
+}
+
+@utility blueprint-grid {
+  background-image:
+    linear-gradient(rgb(27 67 50 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(27 67 50 / 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility mesh-glow {
+  background-image:
+    radial-gradient(circle at 12% 18%, rgb(82 183 136 / 0.24), transparent 42%),
+    radial-gradient(circle at 88% 70%, rgb(217 154 43 / 0.14), transparent 40%),
+    radial-gradient(circle at 70% 8%, rgb(45 106 79 / 0.14), transparent 38%);
+}
+
+/* Leaf-shaped frames: two opposite corners are swept, the other two stay soft. */
+@utility leaf-a {
+  border-radius: min(9rem, 42%) 1rem min(9rem, 42%) 1rem;
+}
+@utility leaf-b {
+  border-radius: 1rem min(9rem, 42%) 1rem min(9rem, 42%);
+}
+
+/* Orchestrated page-load entrance: set --d (delay) inline. */
+@utility enter {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   BASE
+------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-cream);
+    color: var(--color-charcoal);
+    font-family: var(--font-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: var(--lh-display);
+    letter-spacing: var(--ls-display);
+    color: var(--color-forest);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  ::selection {
+    background-color: rgb(82 183 136 / 0.35);
+    color: var(--color-forest);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-emerald);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   SCROLL REVEAL — hidden state only applies once JS has opted in, so
+   content is never invisible without JavaScript.
+------------------------------------------------------------------- */
+.reveal {
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal-ready .reveal:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+/* Bangla has taller matras and below-line marks than Latin, so small body text needs more air.
+   Unlayered on purpose: it must win over the (layered) Tailwind leading utility. */
+html[lang='bn'] .leading-snug {
+  line-height: 1.6;
+}
+
+/* hero squiggle underline: draws itself once on load */
+.squiggle-path {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: draw 1.2s ease-out 0.6s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-ready .reveal:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+  }
+
+  .squiggle-path {
+    stroke-dashoffset: 0;
+  }
+}

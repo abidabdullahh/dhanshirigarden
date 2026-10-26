@@ -1,0 +1,17 @@
+# Cloudflare Worker that lets the static GitHub Pages site use Claude without exposing the API key.
+# Deploy:  cd worker && npx wrangler deploy
+# Secret:  npx wrangler secret put ANTHROPIC_API_KEY      (paste the key when asked; never commit it)
+
+name = "dhanshiri-plant-doctor"
+main = "plant-doctor-worker.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+[vars]
+# Website origins allowed to call the Worker: scheme + host only, no path, comma-separated.
+# For a GitHub Pages project site the origin is just https://YOUR-USERNAME.github.io
+# (add http://localhost:5173 while developing locally).
+ALLOWED_ORIGINS = "https://YOUR-USERNAME.github.io"
+
+# Optional: any Claude model that accepts images.
+MODEL = "claude-sonnet-5-5"
