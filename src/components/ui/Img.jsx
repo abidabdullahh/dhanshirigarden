@@ -13,12 +13,14 @@ export default function Img({
   sizes = '(min-width: 1024px) 50vw, 100vw',
   priority = false,
   alt,
+  title,
   fit = 'cover',
   className = '',
 }) {
   const { lang } = useLocale()
   const [failed, setFailed] = useState(false)
-  const label = alt ?? photo.alt[lang]
+  const label = alt ?? photo?.alt?.[lang] ?? photo?.alt?.en ?? ''
+  const tooltip = title ?? photo?.title?.[lang] ?? photo?.title?.en ?? label
 
   if (failed) {
     return (
@@ -39,6 +41,7 @@ export default function Img({
       srcSet={photo.srcSet}
       sizes={sizes}
       alt={label}
+      title={tooltip}
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}

@@ -294,7 +294,7 @@ export const content = {
         camera: 'ক্যামেরায় তুলুন',
         gallery: 'গ্যালারি থেকে নিন',
         formats: 'JPG, PNG বা WebP',
-        previewAlt: 'আপনার আপলোড করা গাছের ছবি',
+        previewAlt: 'গাছের রোগ নির্ণয়ের জন্য আপলোড করা ছবি - ধানসিঁড়ি গার্ডেন',
       },
       actions: {
         analyze: 'বিশ্লেষণ শুরু করুন',
@@ -447,7 +447,7 @@ export const content = {
         sticker: 'প্রতিষ্ঠাতা',
         role: 'প্রতিষ্ঠাতা ও প্রধান কৃষি পরামর্শক',
         name: 'জনাব আমির আলী',
-        photoAlt: 'জনাব আমির আলী',
+        photoAlt: 'জনাব আমির আলী - প্রতিষ্ঠাতা ও প্রধান কৃষি পরামর্শক, ধানসিঁড়ি গার্ডেন',
         photoNote: 'শীঘ্রই ছবি যুক্ত হবে',
         creds: ['ডিপ্লোমা কৃষিবিদ', 'সাবেক উপসহকারী কৃষি কর্মকর্তা', 'কৃষি সম্প্রসারণ অধিদপ্তর'],
         bio: [
@@ -794,7 +794,7 @@ export const content = {
         camera: 'Take a photo',
         gallery: 'Choose from gallery',
         formats: 'JPG, PNG or WebP',
-        previewAlt: 'The plant photo you uploaded',
+        previewAlt: 'Uploaded plant photo for disease diagnosis - Dhanshiri Garden',
       },
       actions: {
         analyze: 'Start analysis',
@@ -947,7 +947,7 @@ export const content = {
         sticker: 'Founder',
         role: 'Founder & Chief Agronomy Consultant',
         name: 'Mr. Amir Ali',
-        photoAlt: 'Mr. Amir Ali',
+        photoAlt: 'Mr. Amir Ali - Founder & Chief Agronomy Consultant, Dhanshiri Garden',
         photoNote: 'Photo coming soon',
         creds: ['Diploma Agronomist', 'Former Sub-Assistant Agriculture Officer', 'Department of Agricultural Extension'],
         bio: [

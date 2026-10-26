@@ -25,7 +25,7 @@ function FounderPortrait() {
       <div aria-hidden="true" className="absolute inset-0 -rotate-3 rounded-[2.5rem] bg-bright/30" />
       <div className="relative h-full overflow-hidden bg-mint shadow-lift ring-8 ring-white leaf-a">
         {src ? (
-          <img src={src} alt={copy.photoAlt} className="h-full w-full object-cover" />
+          <img src={src} alt={copy.photoAlt} title={copy.photoAlt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
         ) : (
           <div className="relative grid h-full w-full place-items-center bg-linear-to-br from-mint via-white to-bright/40">
             <svg viewBox="0 0 120 150" className="absolute bottom-0 h-[78%] w-auto text-forest/[0.14]" aria-hidden="true">
@@ -98,7 +98,7 @@ function TeamCard({ memberKey }) {
     <article className="group relative flex flex-col rounded-[2rem] glass-white p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-lift">
       <div className={`relative mb-6 aspect-[5/4] w-full overflow-hidden bg-linear-to-br ${meta.tone} leaf-a`}>
         {src ? (
-          <img src={src} alt={member.role} className="h-full w-full object-cover" />
+          <img src={src} alt={`${member.role} - ${lang === 'bn' ? 'ধানসিঁড়ি গার্ডেন' : 'Dhanshiri Garden'}`} title={`${member.role} - ${lang === 'bn' ? 'ধানসিঁড়ি গার্ডেন' : 'Dhanshiri Garden'}`} loading="lazy" decoding="async" className="h-full w-full object-cover" />
         ) : (
           <div className="grid h-full w-full place-items-center">
             <Doodle className="size-28 text-forest transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-105" strokeWidth={2.2} />
