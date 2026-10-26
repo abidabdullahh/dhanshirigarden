@@ -175,6 +175,19 @@ export default function About() {
               ))}
             </div>
 
+            <div className="mt-5 flex items-center gap-2 rounded-xl bg-mint/60 px-4 py-2.5 text-sm font-medium text-forest">
+              <Globe className="size-4 shrink-0 text-emerald" aria-hidden="true" />
+              <span>{lang === 'bn' ? 'অফিসিয়াল ওয়েবসাইট:' : 'Official website:'}</span>
+              <a
+                href={site.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-emerald underline decoration-emerald/50 underline-offset-4 transition hover:text-forest"
+              >
+                {site.domain}
+              </a>
+            </div>
+
             <div className="mt-8 border-t border-dashed border-forest/20 pt-6">
               <p className="mb-3 font-display text-base font-semibold text-forest">{founder.connect}</p>
               <div className="flex flex-wrap items-center gap-2.5">
