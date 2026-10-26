@@ -1,6 +1,8 @@
-import { Check, Info, MessageCircle, ScanSearch, Scissors, Sprout, Target, X } from 'lucide-react'
+import { useState } from 'react'
+import { Check, Info, MessageCircle, ScanSearch, Scissors, Sparkles, Sprout, Target, X } from 'lucide-react'
+import { formatNumber } from '../../lib/format'
 import { useLocale } from '../../lib/locale'
-import { getWhatsAppLink } from '../../lib/whatsapp'
+import { getCustomWhatsAppLink, getWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
 import { LeafDoodle, ScissorsDoodle, TrowelDoodle } from '../ui/Doodles'
 import { Container, Section, SectionHeading } from '../ui/Section'
@@ -9,7 +11,6 @@ const planOrder = ['daily', 'monthly', 'halfYearly']
 const visitDots = { daily: { count: 1, cols: 1 }, monthly: { count: 3, cols: 3 }, halfYearly: { count: 18, cols: 6 } }
 const visitIcons = [ScanSearch, Scissors, MessageCircle]
 
-/** Each leaf is one visit — a punch-card read of how often the team comes. */
 function VisitDots({ plan }) {
   const { count, cols } = visitDots[plan]
   return (
@@ -27,15 +28,41 @@ function VisitDots({ plan }) {
   )
 }
 
-function PlanCard({ planKey, popular }) {
+function PlanCard({ planKey, popular, isAnnual }) {
   const { t, lang } = useLocale()
   const copy = t.carePlans
   const plan = copy.plans[planKey]
 
+  // Calculate annual rate (15% discount for recurring plans)
+  const isRecurring = planKey !== 'daily'
+  let displayedPrice = plan.price
+  let displayedPeriod = plan.period
+  let savingsAmount = 0
+
+  if (isAnnual && isRecurring) {
+    if (planKey === 'monthly') {
+      // 4,499 * 12 = 53,988 -> with 15% discount = 45,890 (save 8,098)
+      displayedPrice = formatNumber(45890, lang)
+      displayedPeriod = lang === 'bn' ? '/বছর' : '/year'
+      savingsAmount = formatNumber(8098, lang)
+    } else if (planKey === 'halfYearly') {
+      // 24,999 * 2 = 49,998 -> with 15% discount = 42,498 (save 7,500)
+      displayedPrice = formatNumber(42498, lang)
+      displayedPeriod = lang === 'bn' ? '/বছর' : '/year'
+      savingsAmount = formatNumber(7500, lang)
+    }
+  }
+
+  const bookingMessage = isAnnual && isRecurring
+    ? (lang === 'bn'
+        ? `হ্যালো, আমি ধানসিঁড়ি গার্ডেনের “${plan.name}” (বাৎসরিক চুক্তি - ১৫% ছাড়সহ) বুক করতে চাই।`
+        : `Hello, I would like to book the "${plan.name}" (Annual Package with 15% discount).`)
+    : null
+
   return (
     <article
-      className={`relative flex flex-col rounded-[2.25rem] p-6 sm:p-8 ${
-        popular ? 'glass-green-strong shadow-lift ring-2 ring-emerald/35 lg:-translate-y-6' : 'glass-white shadow-soft'
+      className={`relative flex flex-col rounded-[2.25rem] p-6 sm:p-8 transition-all duration-300 ${
+        popular ? 'glass-green-strong shadow-lift ring-2 ring-emerald/35 lg:-translate-y-6' : 'glass-white shadow-soft hover:shadow-lift'
       }`}
     >
       {popular && (
@@ -45,21 +72,37 @@ function PlanCard({ planKey, popular }) {
       )}
 
       <header>
-        <h3 className="text-2xl">{plan.name}</h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-2xl">{plan.name}</h3>
+          {isAnnual && isRecurring && (
+            <span className="rounded-full bg-emerald/15 px-2.5 py-0.5 text-xs font-bold text-emerald">
+              {copy.billingToggle.badge}
+            </span>
+          )}
+        </div>
         <p className="mt-1 text-sm font-semibold text-emerald">{plan.tagline}</p>
 
         <p className="mt-5 flex flex-wrap items-baseline gap-x-2">
           <span className="font-display text-[2.7rem] font-extrabold leading-none text-forest">
             {copy.currencyBn}
-            {plan.price}
+            {displayedPrice}
           </span>
-          <span className="text-sm font-medium text-charcoal/65">{plan.period}</span>
+          <span className="text-sm font-medium text-charcoal/65">{displayedPeriod}</span>
         </p>
+
+        {isAnnual && isRecurring && savingsAmount && (
+          <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-mint px-3 py-1 text-xs font-bold text-forest">
+            <Sparkles className="size-3.5 text-bloom" aria-hidden="true" />
+            <span>৳{savingsAmount} {copy.billingToggle.saveSuffix}</span>
+          </p>
+        )}
 
         <p className="mt-4 text-[0.95rem] leading-body text-charcoal/75">{plan.desc}</p>
 
         <div className="mt-5 grid gap-2">
-          <p className="text-sm font-semibold text-forest/80">{plan.visitsText}</p>
+          <p className="text-sm font-semibold text-forest/80">
+            {isAnnual && isRecurring ? (lang === 'bn' ? 'বাৎসরিক তদারকি সূচি' : 'Annual Inspection Schedule') : plan.visitsText}
+          </p>
           <VisitDots plan={planKey} />
         </div>
       </header>
@@ -99,20 +142,20 @@ function PlanCard({ planKey, popular }) {
                   <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-alert/12 text-alert">
                     <X className="size-3.5" strokeWidth={3} aria-hidden="true" />
                   </span>
-                  <span className="line-through decoration-alert/40">{item}</span>
+                  {item}
                 </li>
               ))}
             </ul>
           </>
         )}
 
-        <div className="mt-8 pt-2">
+        <div className="mt-auto pt-8">
           <Button
-            href={getWhatsAppLink(null, plan.name, lang)}
+            href={bookingMessage ? getCustomWhatsAppLink(bookingMessage) : getWhatsAppLink(null, plan.name, lang)}
             variant={popular ? 'primary' : 'outline'}
             size="lg"
             icon={MessageCircle}
-            className="w-full"
+            className="w-full justify-center shadow-soft"
           >
             {t.actions.bookWhatsapp}
           </Button>
@@ -125,6 +168,7 @@ function PlanCard({ planKey, popular }) {
 export default function CarePlans() {
   const { t } = useLocale()
   const copy = t.carePlans
+  const [isAnnual, setIsAnnual] = useState(false)
 
   return (
     <Section id="care-plans">
@@ -135,9 +179,41 @@ export default function CarePlans() {
       <Container>
         <SectionHeading eyebrow={copy.eyebrow} icon={Sprout} title={copy.title} sub={copy.sub} />
 
-        <div className="grid items-stretch gap-10 pt-4 lg:grid-cols-3 lg:gap-6 xl:gap-8">
+        {/* Annual / Monthly Billing Toggle */}
+        <div className="mt-8 flex justify-center">
+          <div className="inline-flex items-center rounded-full glass-white p-1.5 shadow-soft ring-1 ring-forest/10">
+            <button
+              type="button"
+              onClick={() => setIsAnnual(false)}
+              className={`rounded-full px-5 py-2 text-sm font-bold transition-all ${
+                !isAnnual ? 'bg-forest text-white shadow-soft' : 'text-forest/75 hover:text-forest'
+              }`}
+            >
+              {copy.billingToggle.monthly}
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsAnnual(true)}
+              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-bold transition-all ${
+                isAnnual ? 'bg-forest text-white shadow-soft' : 'text-forest/75 hover:text-forest'
+              }`}
+            >
+              <span>{copy.billingToggle.annual}</span>
+              <span className="rounded-full bg-bloom px-2 py-0.5 text-[0.72rem] font-extrabold text-charcoal">
+                {copy.billingToggle.badge}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid items-stretch gap-10 pt-10 lg:grid-cols-3 lg:gap-6 xl:gap-8">
           {planOrder.map((key) => (
-            <PlanCard key={key} planKey={key} popular={key === 'monthly'} />
+            <PlanCard
+              key={key}
+              planKey={key}
+              popular={key === 'monthly'}
+              isAnnual={isAnnual}
+            />
           ))}
         </div>
 

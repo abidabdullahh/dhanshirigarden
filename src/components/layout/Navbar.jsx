@@ -11,6 +11,7 @@ import Logo from '../ui/Logo'
 
 const SECTION_IDS = [
   'services',
+  'estimator',
   'rooftop',
   'lawn',
   'projects',
@@ -98,24 +99,31 @@ function ServicesMenu({ active }) {
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onBlur={(event) => {
-        if (rootRef.current && !rootRef.current.contains(event.relatedTarget)) close()
+        if (!event.currentTarget.contains(event.relatedTarget)) close()
       }}
     >
       <button
         type="button"
-        aria-expanded={open}
         aria-haspopup="true"
+        aria-expanded={open}
         onClick={handleClick}
-        className={linkClass(active)}
+        className={`${linkClass(active)} gap-1`}
       >
-        {t.nav.services}
-        <ChevronDown className={`size-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+        <span>{t.nav.services}</span>
+        <ChevronDown
+          className={`size-4 text-emerald transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+        />
       </button>
 
       {open && (
-        <div className="absolute left-0 top-full z-10 pt-3">
-          <div className="animate-rise w-[min(34rem,90vw)] rounded-[1.75rem] glass-white p-2.5 shadow-lift [animation-duration:0.28s]">
-            <ul className="grid gap-1 sm:grid-cols-2">
+        <div
+          role="menu"
+          aria-label={t.nav.services}
+          className="absolute left-0 top-full z-50 pt-2.5 [filter:drop-shadow(0_20px_35px_rgba(27,67,50,0.22))]"
+        >
+          <div className="w-[22rem] rounded-3xl bg-white p-2.5 ring-1 ring-forest/10">
+            <ul className="grid gap-1">
               {serviceShortcuts.map((item) => {
                 const Icon = item.icon
                 const copy = t.servicesMenu[item.key]
@@ -183,19 +191,20 @@ export default function Navbar() {
   }, [])
 
   const links = [
+    { id: 'estimator', label: t.nav.estimator, match: ['estimator'] },
     { id: 'projects', label: t.nav.projects, match: ['projects', 'process'] },
     { id: 'gallery', label: t.nav.gallery, match: ['gallery'] },
     { id: 'plant-doctor', label: t.nav.plantDoctor, match: ['plant-doctor'], ai: true },
     { id: 'care-plans', label: t.nav.carePlans, match: ['care-plans'] },
     { id: 'about', label: t.nav.about, match: ['about', 'faq'] },
-    { id: 'contact', label: t.nav.contact, match: ['contact'], wide: true },
+    { id: 'contact', label: t.nav.contact, match: ['contact'] },
   ]
 
   const phone = site.phones[0]
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
+      <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
         <nav
           aria-label={t.brand.name}
           className={`relative mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 rounded-full glass-white py-2 pl-3 pr-2 transition-shadow duration-300 sm:gap-3 sm:pl-5 sm:pr-2.5 ${
@@ -261,11 +270,10 @@ export default function Navbar() {
           role="dialog"
           aria-modal="true"
           aria-label={t.nav.menu}
-          className="fixed inset-0 z-[60] overflow-y-auto bg-cream/95 backdrop-blur-xl xl:hidden"
+          className="fixed inset-0 z-50 flex flex-col bg-cream/95 p-5 backdrop-blur-xl sm:p-8 xl:hidden"
         >
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 mesh-glow" />
-          <div className="relative mx-auto flex min-h-full max-w-lg flex-col px-5 pb-8 pt-4">
-            <div className="flex items-center justify-between gap-3">
+          <div className="flex flex-1 flex-col overflow-y-auto">
+            <div className="flex items-center justify-between">
               <Logo />
               <div className="flex items-center gap-2">
                 <LangToggle />
@@ -274,9 +282,9 @@ export default function Navbar() {
                   type="button"
                   aria-label={t.nav.close}
                   onClick={closeMobile}
-                  className="grid size-11 place-items-center rounded-full bg-forest text-white"
+                  className="grid size-11 place-items-center rounded-full bg-white text-forest shadow-soft transition-colors hover:bg-mint"
                 >
-                  <X className="size-5" aria-hidden="true" />
+                  <X className="size-6" aria-hidden="true" />
                 </button>
               </div>
             </div>

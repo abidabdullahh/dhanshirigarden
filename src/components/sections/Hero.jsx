@@ -1,4 +1,4 @@
-import { Clock, MapPin, MessageCircle, ScanSearch, Sprout } from 'lucide-react'
+import { Calculator, Clock, MapPin, MessageCircle, ScanSearch, Sprout } from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
@@ -127,7 +127,10 @@ export default function Hero() {
             <Button href={getWhatsAppLink(null, null, lang)} size="lg" icon={MessageCircle}>
               {copy.ctaPrimary}
             </Button>
-            <Button href="#care-plans" variant="glass" size="lg">
+            <Button href="#estimator" variant="glass" size="lg" icon={Calculator}>
+              {t.nav.estimator}
+            </Button>
+            <Button href="#care-plans" variant="outline" size="lg">
               {copy.ctaSecondary}
             </Button>
           </div>

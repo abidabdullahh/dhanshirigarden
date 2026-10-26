@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Check, Loader2, MessageCircle, ScanSearch, Sparkles, TriangleAlert, X } from 'lucide-react'
+import { Check, Loader2, MessageCircle, RefreshCw, ScanSearch, Sparkles, TriangleAlert, X } from 'lucide-react'
+import { sampleDiagnoses } from '../../data/plantDoctorSamples'
 import { site } from '../../data/site'
 import { resizeImage } from '../../lib/imageUtils'
 import { useLocale } from '../../lib/locale'
 import { analyzePlant, normalizeReport } from '../../lib/plantDoctorApi'
 import { getCustomWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
-import { LeafDoodle, PlanTree, SproutDoodle } from '../ui/Doodles'
+import { LeafDoodle, SproutDoodle } from '../ui/Doodles'
 import { Container, Section, SectionHeading } from '../ui/Section'
 import CommonProblems from './CommonProblems'
 import ContextForm from './ContextForm'
@@ -145,13 +146,12 @@ export default function PlantDoctor() {
   const controller = useRef(null)
   const panel = useRef(null)
 
-  // The demo report is read from the active language's copy, so it follows the language toggle.
-  const report = useMemo(() => (isDemo ? normalizeReport(copy.sample) : liveReport), [isDemo, liveReport, copy.sample])
+  const report = useMemo(() => (isDemo ? (liveReport || normalizeReport(copy.sample)) : liveReport), [isDemo, liveReport, copy.sample])
   const scanSteps = copy.scanning.steps
 
   useEffect(() => {
     if (stage !== 'scanning') return undefined
-    const id = window.setInterval(() => setScanStep((step) => Math.min(step + 1, scanSteps.length - 1)), 950)
+    const id = window.setInterval(() => setScanStep((step) => Math.min(step + 1, scanSteps.length - 1)), 850)
     return () => window.clearInterval(id)
   }, [stage, scanSteps.length])
 
@@ -186,6 +186,22 @@ export default function PlantDoctor() {
     setNotice('')
     setStage('idle')
   }, [])
+
+  const runSample = useCallback(async (sampleId) => {
+    controller.current?.abort('cancelled')
+    const sample = sampleDiagnoses[sampleId]?.[lang] || sampleDiagnoses.rose[lang]
+    setStage('scanning')
+    setScanStep(0)
+    setNotice('')
+
+    await wait(2400)
+    setLiveReport(normalizeReport(sample))
+    setIsDemo(true)
+    setStage('result')
+    if (window.innerWidth < 1024) {
+      window.setTimeout(() => panel.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120)
+    }
+  }, [lang])
 
   const analyze = useCallback(async () => {
     if (!photo) return
@@ -233,59 +249,88 @@ export default function PlantDoctor() {
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-b from-transparent via-mint/60 to-transparent" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 blueprint-grid opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
       <div aria-hidden="true" className="absolute -left-20 top-1/4 -z-10 size-[28rem] rounded-full bg-bright/25 blur-3xl" />
-      <div aria-hidden="true" className="absolute -right-24 top-2/3 -z-10 size-[24rem] rounded-full bg-bloom/15 blur-3xl" />
-      <PlanTree className="absolute -right-10 top-24 -z-10 size-64 text-forest/[0.08]" lobes={12} />
+      <SproutDoodle className="pointer-events-none absolute -right-6 top-1/3 -z-10 size-48 text-emerald/15" />
+      <LeafDoodle className="pointer-events-none absolute bottom-24 left-10 -z-10 size-32 -rotate-12 text-forest/15" />
 
       <Container>
-        <SectionHeading eyebrow={copy.eyebrow} icon={ScanSearch} title={copy.title} sub={copy.sub} />
+        <SectionHeading
+          eyebrow={copy.eyebrow}
+          icon={ScanSearch}
+          title={copy.title}
+          sub={copy.sub}
+        />
 
-        <div className="relative rounded-[2.5rem] glass-green-strong p-3 shadow-lift sm:p-5">
-          <LeafDoodle className="pointer-events-none absolute -right-3 -top-7 hidden size-14 rotate-12 animate-sway text-emerald sm:block" />
-          <SproutDoodle className="pointer-events-none absolute -bottom-6 left-10 hidden size-14 text-emerald sm:block" />
-
-          <div className="grid gap-3 sm:gap-4 lg:grid-cols-12">
-            <div className="rounded-[2rem] bg-white/55 p-3 sm:p-4 lg:sticky lg:top-28 lg:col-span-7 lg:self-start">
-              <Viewfinder
-                photo={photo}
-                stage={stage}
-                scanText={scanSteps[scanStep]}
-                notice={notice}
-                onFile={handleFile}
-                onClear={reset}
-              />
+        {/* Quick Sample Presets */}
+        <div className="mb-10 mt-8 rounded-3xl glass-white p-5 shadow-soft">
+          <div className="mb-3.5 flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span className="inline-block rounded-full bg-bloom/20 px-3 py-1 text-xs font-bold text-forest">
+                {copy.sampleCases.eyebrow}
+              </span>
+              <h4 className="mt-1 font-display text-[1.1rem] font-bold text-forest">{copy.sampleCases.title}</h4>
+              <p className="text-xs text-charcoal/70">{copy.sampleCases.sub}</p>
             </div>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {copy.sampleCases.cases.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => runSample(c.id)}
+                className="group flex flex-col items-start rounded-2xl bg-mint/50 p-3.5 text-left transition hover:-translate-y-0.5 hover:bg-mint hover:shadow-soft"
+              >
+                <span className="rounded-full bg-forest px-2 py-0.5 text-[0.7rem] font-bold text-white">
+                  {c.badge}
+                </span>
+                <span className="mt-2 font-display text-sm font-bold text-forest group-hover:text-emerald">
+                  {c.title}
+                </span>
+                <span className="mt-0.5 text-[0.78rem] text-charcoal/70 leading-snug">{c.subtitle}</span>
+              </button>
+            ))}
+          </div>
+        </div>
 
-            <div ref={panel} className="scroll-mt-28 rounded-[2rem] bg-white/70 p-5 sm:p-7 lg:col-span-5">
-              {stage === 'idle' && <HowItWorks />}
+        <div className="relative grid gap-10 rounded-[2.75rem] glass-white p-6 shadow-lift sm:p-10 lg:grid-cols-12 lg:gap-12 lg:p-12">
+          {/* Left Column: Viewfinder & Photo Input */}
+          <div className="lg:col-span-6">
+            <Viewfinder
+              photo={photo}
+              stage={stage}
+              onSelect={handleFile}
+              onReset={reset}
+              onAnalyze={analyze}
+            />
 
-              {stage === 'ready' && (
-                <div className="grid gap-6">
-                  <ContextForm value={context} onChange={setContext} />
-                  <Button size="lg" icon={ScanSearch} onClick={analyze} className="w-full">
-                    {copy.actions.analyze}
+            {notice && (
+              <p role="alert" className="mt-3 text-center text-sm font-medium text-alert">
+                {notice}
+              </p>
+            )}
+
+            {stage === 'ready' && (
+              <div className="mt-6 border-t border-dashed border-forest/20 pt-6">
+                <ContextForm value={context} onChange={setContext} />
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Dynamic Stage View (How it works | Scanning | Report | Error) */}
+          <div ref={panel} className="flex flex-col justify-center lg:col-span-6 lg:border-l lg:border-forest/15 lg:pl-12">
+            {stage === 'idle' && <HowItWorks />}
+            {stage === 'ready' && <HowItWorks />}
+            {stage === 'scanning' && <ScanProgress step={scanStep} onCancel={cancel} />}
+            {stage === 'result' && report && (
+              <div>
+                <Report report={report} isDemo={isDemo} onReset={reset} />
+                <div className="mt-4 pt-4 border-t border-dashed border-forest/15 flex justify-end">
+                  <Button variant="glass" size="sm" onClick={reset} icon={RefreshCw}>
+                    {lang === 'bn' ? 'অন্য ছবি পরীক্ষা করুন' : 'Scan another plant'}
                   </Button>
                 </div>
-              )}
-
-              {stage === 'scanning' && <ScanProgress step={scanStep} onCancel={cancel} />}
-
-              {stage === 'error' && <FailurePanel kind={errorKind} onRetry={analyze} onReset={reset} />}
-
-              {stage === 'result' && report && report.isPlant && (
-                <Report key={`${isDemo ? 'demo' : 'live'}-${report.diagnosis}`} report={report} isDemo={isDemo} onRetry={reset} />
-              )}
-
-              {stage === 'result' && report && !report.isPlant && (
-                <div className="grid gap-4">
-                  <p className="text-base font-medium leading-body text-charcoal/90">{copy.result.notPlant}</p>
-                  <div>
-                    <Button onClick={reset} icon={ScanSearch}>
-                      {copy.actions.retry}
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
+              </div>
+            )}
+            {stage === 'error' && <FailurePanel kind={errorKind} onRetry={analyze} onReset={reset} />}
           </div>
         </div>
 

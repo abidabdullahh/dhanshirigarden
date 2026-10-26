@@ -1,4 +1,5 @@
 import { useLocale } from './lib/locale'
+import GardenEstimator from './components/calculator/GardenEstimator'
 import FloatingActions from './components/layout/FloatingActions'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
@@ -31,6 +32,7 @@ export default function App() {
         <Hero />
         <Stats />
         <Services />
+        <GardenEstimator />
         <Rooftop />
         <Lawn />
         <Projects />

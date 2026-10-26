@@ -4,6 +4,7 @@ import Logo from '../ui/Logo'
 
 const links = [
   ['services', 'services'],
+  ['estimator', 'estimator'],
   ['projects', 'projects'],
   ['gallery', 'gallery'],
   ['plant-doctor', 'plantDoctor'],
