@@ -8,6 +8,12 @@
     <priority>1.0</priority>
 
     <image:image>
+      <image:loc>https://www.dhanshirigarden.com/amir-ali.jpg</image:loc>
+      <image:title>জনাব আমির আলী - প্রতিষ্ঠাতা ও প্রধান কৃষি পরামর্শক, ধানসিঁড়ি গার্ডেন</image:title>
+      <image:caption>Mr. Amir Ali - Founder and Chief Agronomy Consultant of Dhanshiri Garden Bangladesh</image:caption>
+    </image:image>
+
+    <image:image>
       <image:loc>https://images.pexels.com/photos/19053055/pexels-photo-19053055.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1200</image:loc>
       <image:title>ধানসিঁড়ি গার্ডেন - ফুল ও সবুজে সাজানো ল্যান্ডস্কেপ বাগানপথ</image:title>
       <image:caption>Dhanshiri Garden sunlit flowering garden path and landscape design in Bangladesh</image:caption>
