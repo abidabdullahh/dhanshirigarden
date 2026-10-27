@@ -1,0 +1,53 @@
+name: Scheduled Auto-Blog Publisher (Bangladeshi Perspective)
+
+on:
+  schedule:
+    # Runs every Monday at 04:00 UTC (10:00 AM Bangladesh Standard Time)
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: auto-blog
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Dynamic Agronomy Blog Generator
+        run: node scripts/generate-blog.mjs
+
+      - name: Validate Copy Integrity
+        run: npm run check:content
+
+      - name: Commit and Push New Blog Post
+        run: |
+          git config --global user.name "Dhanshiri Garden Agronomy Bot"
+          git config --global user.email "bot@dhanshirigarden.com"
+          git add src/data/blogPosts.js public/sitemap.xml
+          if git diff --staged --quiet; then
+            echo "No new blog changes to commit."
+          else
+            git commit -m "🌱 Auto-publish new SEO blog post with dynamic Bangladeshi agronomic analysis"
+            git push origin main
+          fi

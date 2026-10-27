@@ -15,6 +15,7 @@ import Rooftop from './components/sections/Rooftop'
 import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
 import PlantDoctor from './components/plant-doctor/PlantDoctor'
+import Blog from './components/sections/Blog'
 
 export default function App() {
   const { t } = useLocale()
@@ -37,6 +38,7 @@ export default function App() {
         <Gallery />
         <Process />
         <PlantDoctor />
+        <Blog />
         <CarePlans />
         <About />
         <Faq />

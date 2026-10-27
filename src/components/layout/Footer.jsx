@@ -8,6 +8,7 @@ const links = [
   ['gallery', 'gallery'],
   ['plant-doctor', 'plantDoctor'],
   ['care-plans', 'carePlans'],
+  ['blog', 'blog'],
   ['about', 'about'],
   ['contact', 'contact'],
 ]
