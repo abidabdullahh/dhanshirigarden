@@ -29,8 +29,8 @@ export const site = {
    * Fill in the real URLs (e.g. 'https://facebook.com/...') to switch them on.
    */
   social: {
-    founder: { facebook: '', instagram: '', linkedin: '', youtube: '' },
-    company: { facebook: '', instagram: '', youtube: '' },
+    founder: { facebook: 'https://www.facebook.com/amirali.saao', instagram: '', linkedin: '', youtube: '' },
+    company: { facebook: 'https://www.facebook.com/dhanshirigarden/', instagram: '', youtube: '' },
   },
 
   /**

@@ -1,4 +1,6 @@
+import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
+import { FacebookIcon } from '../ui/Icons'
 import { Container } from '../ui/Section'
 import Logo from '../ui/Logo'
 
@@ -23,6 +25,20 @@ export default function Footer() {
         <div className="md:col-span-5">
           <Logo />
           <p className="mt-3 max-w-sm text-sm leading-body text-charcoal/65">{t.meta.description}</p>
+          {site.social?.company?.facebook && (
+            <div className="mt-4">
+              <a
+                href={site.social.company.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Dhanshiri Garden on Facebook"
+                className="inline-flex items-center gap-2 rounded-full glass-green px-3.5 py-1.5 text-xs font-semibold text-forest transition hover:bg-forest hover:text-white"
+              >
+                <FacebookIcon size={16} />
+                <span>Facebook</span>
+              </a>
+            </div>
+          )}
         </div>
         <nav aria-label={t.brand.name} className="md:col-span-7">
           <ul className="flex flex-wrap gap-x-5 gap-y-2 md:justify-end">
@@ -41,7 +57,15 @@ export default function Footer() {
           © {n(YEAR)} {t.brand.name}. {t.footer.rights}.
         </p>
         <p className="md:text-right">
-          {t.footer.photoCredit} · {t.footer.fontCredit}
+          {t.footer.designedBy}{' '}
+          <a
+            href="https://www.innerloopatelier.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-forest underline decoration-forest/30 transition-colors hover:text-emerald hover:decoration-emerald"
+          >
+            Innerloop Atelier
+          </a>
         </p>
       </Container>
     </footer>

@@ -545,6 +545,7 @@ export const content = {
 
     footer: {
       rights: 'সর্বস্বত্ব সংরক্ষিত',
+      designedBy: 'ডিজাইন ও নির্মাণে',
       fontCredit: 'বাংলা ডিসপ্লে ফন্ট: Li Ador Noirrit (Lipighor Font Foundry)',
       photoCredit: 'ছবি: পেক্সেলস-এর আলোকচিত্রীবৃন্দ',
     },
@@ -1068,6 +1069,7 @@ export const content = {
 
     footer: {
       rights: 'All rights reserved',
+      designedBy: 'Designed by',
       fontCredit: 'Bangla display type: Li Ador Noirrit (Lipighor Font Foundry)',
       photoCredit: 'Photography: Pexels contributors',
     },
