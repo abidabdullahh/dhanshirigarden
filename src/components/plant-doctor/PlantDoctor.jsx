@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Check, Loader2, MessageCircle, ScanSearch, Sparkles, TriangleAlert, X } from 'lucide-react'
+import { Check, Leaf, Loader2, MessageCircle, ScanSearch, Sparkles, TriangleAlert, X } from 'lucide-react'
 import { site } from '../../data/site'
 import { resizeImage } from '../../lib/imageUtils'
 import { useLocale } from '../../lib/locale'
+import { useRouter } from '../../lib/router'
 import { analyzePlant, normalizeReport } from '../../lib/plantDoctorApi'
 import { getCustomWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
@@ -133,6 +134,7 @@ function FailurePanel({ kind, onRetry, onReset }) {
 
 export default function PlantDoctor() {
   const { t, lang } = useLocale()
+  const { navigate } = useRouter()
   const copy = t.plantDoctor
   const [photo, setPhoto] = useState(null)
   const [stage, setStage] = useState('idle') // idle | ready | scanning | result | error
@@ -290,6 +292,43 @@ export default function PlantDoctor() {
         </div>
 
         <CommonProblems />
+
+        {/* Cross-Link: PictureThis Plant Wiki */}
+        <div className="mt-10 rounded-3xl glass-card p-6 sm:p-8 border border-white/80 shadow-soft">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-emerald/10 text-emerald">
+                <Leaf className="size-6" />
+              </span>
+              <div>
+                <span className="text-[0.7rem] font-bold uppercase tracking-wider text-emerald block">
+                  {lang === 'bn' ? 'পিকচার-দিস উদ্ভিদ বিশ্বকোষ · PICTURETHIS' : 'PICTURETHIS BOTANICAL WIKI'}
+                </span>
+                <h4 className="mt-1 font-display text-lg font-bold text-forest">
+                  {lang === 'bn' ? 'অপরিচিত উদ্ভিদের ছবি তুলে প্রজাতি শনাক্ত করতে চান?' : 'Want to identify an unknown garden plant?'}
+                </h4>
+                <p className="mt-1 text-xs sm:text-sm text-charcoal/80 max-w-xl">
+                  {lang === 'bn'
+                    ? 'আমাদের পিকচার-দিস স্টাইল উদ্ভিদ আইডেন্টিফায়ার ব্যবহার করুন। পাতা বা ফুলের ছবি তুললেই প্রজাতি, বৈজ্ঞানিক নাম এবং কৃষি সম্প্রসারণ অধিদপ্তরের (DAE) যত্ন বিধি পেয়ে যাবেন।'
+                    : 'Use our PictureThis-style botanical encyclopedia. Snap any leaf or flower to instantly discover binomial names, sunlight rules, watering schedules, and DAE soil mixes.'}
+                </p>
+              </div>
+            </div>
+
+            <Button
+              href="#/plant-wiki"
+              onClick={(e) => {
+                e.preventDefault()
+                navigate('/plant-wiki')
+              }}
+              variant="primary"
+              className="shrink-0 text-xs font-bold uppercase tracking-wider shadow-soft"
+            >
+              <Leaf className="size-4" />
+              <span>{lang === 'bn' ? 'উদ্ভিদকোষ খুলুন' : 'Open Plant Wiki'}</span>
+            </Button>
+          </div>
+        </div>
       </Container>
     </Section>
   )

@@ -128,7 +128,17 @@ export default function Footer() {
                   className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
                 >
                   <span className="size-2 rounded-full bg-bloom animate-ping" />
-                  <span>{t.nav.plantDoctor} (AI Diagnosis)</span>
+                  <span>{t.nav.plantDoctor} (AI Diagnosis USP)</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={(e) => handleLink(e, '/plant-wiki')}
+                  className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
+                >
+                  <span className="size-2 rounded-full bg-emerald" />
+                  <span>{lang === 'bn' ? 'উদ্ভিদকোষ ও প্রজাতি শনাক্তকরণ' : 'Plant Wikipedia & Identifier'}</span>
                 </button>
               </li>
               <li>

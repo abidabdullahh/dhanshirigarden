@@ -1,4 +1,4 @@
-import { Compass, Droplets, MapPin, ShieldCheck, Sparkles, Sun, Thermometer } from 'lucide-react'
+import { Compass, Droplets, Leaf, MapPin, ScanSearch, ShieldCheck, Sparkles, Sun, Thermometer } from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
@@ -97,6 +97,57 @@ export default function Hero() {
                 <Compass className="size-4 text-emerald" />
                 <span>{copy.exploreStudio}</span>
               </Button>
+            </div>
+
+            {/* Apple-Grade Key USP Spotlight: AI Plant Doctor & PictureThis Plant Wiki */}
+            <div className="mt-8 rounded-3xl glass-panel p-4 sm:p-5 shadow-soft border border-emerald/25 bg-gradient-to-br from-white/95 via-mint/35 to-white/80 transition-all duration-300 hover:shadow-lift">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-xl bg-emerald text-white shadow-xs">
+                    <ScanSearch className="size-4" />
+                  </span>
+                  <div>
+                    <span className="text-[0.68rem] font-extrabold uppercase tracking-widest text-emerald block">
+                      {lang === 'bn' ? 'প্রধান ইউএসপি · KEY USP' : 'CORE USP · AI AGRONOMY'}
+                    </span>
+                    <strong className="text-forest text-sm font-display font-bold">
+                      {lang === 'bn' ? 'এআই প্ল্যান্ট ডক্টর ও উদ্ভিদ বিশ্বকোষ' : 'AI Plant Doctor & Botanical Wiki'}
+                    </strong>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-1 rounded-full bg-bright/25 px-2.5 py-1 text-[0.65rem] font-extrabold text-emerald shadow-xs">
+                  <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
+                  {lang === 'bn' ? '১০০% ফ্রি' : '100% FREE'}
+                </span>
+              </div>
+
+              <p className="mt-2.5 text-xs sm:text-[0.84rem] font-medium text-forest/85 leading-relaxed">
+                {lang === 'bn'
+                  ? 'গাছের পাতা হলুদ বা রোগাক্রান্ত? কিংবা অপরিচিত গাছ চিনতে চান? পাতার ছবি তুললেই ৫ সেকেন্ডে এআই রোগ নির্ণয় ও পিকচার-দিস স্টাইল প্রজাতি শনাক্তকরণ।'
+                  : 'Leaves yellowing or spotted? Want to identify an unknown garden plant? Upload a photo for 5-second AI pathology diagnosis & PictureThis-style botanical ID.'}
+              </p>
+
+              <div className="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => navigate('/plant-doctor')}
+                  className="flex items-center justify-center gap-2 rounded-xl bg-forest px-3.5 py-2.5 text-xs font-bold text-white shadow-soft transition-all duration-200 hover:bg-emerald hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <Sparkles className="size-3.5 text-bright" />
+                  <span>{lang === 'bn' ? 'রোগ নির্ণয় করুন (Plant Doctor)' : 'Diagnose Plant (Plant Doctor)'}</span>
+                  <span className="text-[0.65rem] opacity-75">→</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => navigate('/plant-wiki')}
+                  className="flex items-center justify-center gap-2 rounded-xl glass-pill border border-emerald/20 px-3.5 py-2.5 text-xs font-bold text-forest transition-all duration-200 hover:bg-white hover:text-emerald hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <Leaf className="size-3.5 text-emerald" />
+                  <span>{lang === 'bn' ? 'গাছ চিনুন (PictureThis)' : 'Identify Plant (PictureThis)'}</span>
+                  <span className="text-[0.65rem] opacity-75">→</span>
+                </button>
+              </div>
             </div>
           </div>
 

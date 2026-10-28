@@ -7,24 +7,22 @@ const SOUND_KEY = 'dg-sound'
 
 function getAutoAtmosphere() {
   const now = new Date()
-  // Bangladesh is UTC+6
   const utcHours = now.getUTCHours()
   const bdHours = (utcHours + 6) % 24
-  if (bdHours >= 6 && bdHours < 16) return 'sun'
-  if (bdHours >= 16 && bdHours < 19) return 'sunset'
-  return 'night'
+  if (bdHours >= 17 && bdHours < 19) return 'sunset'
+  return 'sun'
 }
 
 function readSavedAtmosphere() {
   try {
     const saved = window.localStorage.getItem(STORAGE_KEY)
-    if (['sun', 'rain', 'sunset', 'night', 'auto'].includes(saved)) {
+    if (['sun', 'rain', 'sunset', 'auto'].includes(saved)) {
       return saved
     }
   } catch {
     // ignore
   }
-  return 'auto'
+  return 'sun'
 }
 
 function readSavedSound() {

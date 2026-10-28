@@ -17,6 +17,7 @@ import Projects from './components/sections/Projects'
 import Rooftop from './components/sections/Rooftop'
 import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
+import PlantDoctor from './components/plant-doctor/PlantDoctor'
 
 // Dynamic high-utility client features
 import GardenStudio from './components/dynamic/GardenStudio'
@@ -25,6 +26,7 @@ import BeforeAfterShowcase from './components/dynamic/BeforeAfterShowcase'
 
 // Code-split Dedicated Standalone Pages
 const PlantDoctorPage = lazy(() => import('./pages/PlantDoctorPage'))
+const PlantWikiPage = lazy(() => import('./pages/PlantWikiPage'))
 const BlogPage = lazy(() => import('./pages/BlogPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const StudioPage = lazy(() => import('./pages/StudioPage'))
@@ -63,6 +65,9 @@ function HomePage() {
 
         {/* Core Credentials & Authority Stats */}
         <Stats />
+
+        {/* Key USP: AI Plant Doctor Interactive Diagnostics Suite */}
+        <PlantDoctor />
 
         {/* CAD Studio & Itemized BOQ Estimator */}
         <GardenStudio />
@@ -135,6 +140,13 @@ function MainContent() {
     return (
       <Suspense fallback={<PageFallback />}>
         <PlantDoctorPage />
+      </Suspense>
+    )
+  }
+  if (route === '/plant-wiki') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <PlantWikiPage />
       </Suspense>
     )
   }

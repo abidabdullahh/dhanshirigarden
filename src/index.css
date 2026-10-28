@@ -415,71 +415,30 @@ html[lang='bn'] .leading-snug {
 }
 
 /* ------------------------------------------------------------------
-   DYNAMIC LIVING ATMOSPHERES (Night, Sunset, Rain, Sun)
-   Adaptive Glassmorphic surfaces that respond to daylight/time
+   PURE LUMINOUS LIGHT MODE (Apple-Grade Glassmorphism & High White Space)
+   Permanently locked to crisp, bright, airy botanical daylight.
 ------------------------------------------------------------------- */
 html {
-  transition: background-color 0.8s ease, color 0.8s ease;
+  transition: background-color 0.6s ease;
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
 }
 
-html[data-atmosphere='night'] {
-  --color-cream: #101c16;
-  --color-charcoal: #e2e8f0;
-}
-html[data-atmosphere='night'] body {
-  background-color: #0e1913;
-  color: #e2e8f0;
-}
-html[data-atmosphere='night'] h1,
-html[data-atmosphere='night'] h2,
-html[data-atmosphere='night'] h3,
-html[data-atmosphere='night'] h4 {
-  color: #d1fae5;
+body {
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
 }
 
-html[data-atmosphere='night'] .glass-panel,
-html[data-atmosphere='night'] .glass-card,
-html[data-atmosphere='night'] .glass-surface,
-html[data-atmosphere='night'] .glass-nav {
-  background-color: rgb(16 28 22 / 0.78);
-  border-color: rgb(82 183 136 / 0.25);
-  box-shadow: 0 16px 44px -10px rgb(0 0 0 / 0.55), inset 0 1px 1px 0 rgb(255 255 255 / 0.12);
-  color: #e2e8f0;
-}
-
-html[data-atmosphere='night'] .glass-pill {
-  background-color: rgb(24 42 34 / 0.72);
-  border-color: rgb(82 183 136 / 0.3);
-  color: #d1fae5;
-}
-
-html[data-atmosphere='sunset'] {
-  --color-cream: #fbf5ed;
-}
+/* Subtle Apple-style ambient tints */
 html[data-atmosphere='sunset'] .mesh-glow {
   background-image:
-    radial-gradient(circle at 18% 22%, rgb(249 115 22 / 0.22), transparent 46%),
-    radial-gradient(circle at 82% 65%, rgb(217 154 43 / 0.22), transparent 44%),
-    radial-gradient(circle at 50% 8%, rgb(225 29 72 / 0.12), transparent 40%);
-}
-html[data-atmosphere='sunset'] .glass-panel,
-html[data-atmosphere='sunset'] .glass-card,
-html[data-atmosphere='sunset'] .glass-nav {
-  background-color: rgb(255 250 242 / 0.75);
-  border-color: rgb(255 237 213 / 0.8);
+    radial-gradient(circle at 18% 22%, rgb(249 115 22 / 0.16), transparent 46%),
+    radial-gradient(circle at 82% 65%, rgb(217 154 43 / 0.16), transparent 44%),
+    radial-gradient(circle at 50% 8%, rgb(225 29 72 / 0.08), transparent 40%);
 }
 
-html[data-atmosphere='rain'] {
-  --color-cream: #f0f7f5;
-}
 html[data-atmosphere='rain'] .mesh-glow {
   background-image:
-    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.2), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.22), transparent 45%);
-}
-html[data-atmosphere='rain'] .glass-panel,
-html[data-atmosphere='rain'] .glass-card,
-html[data-atmosphere='rain'] .glass-nav {
-  background-color: rgb(240 248 246 / 0.75);
-  border-color: rgb(224 242 254 / 0.8);
+    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.14), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.16), transparent 45%);
 }

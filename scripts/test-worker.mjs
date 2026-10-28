@@ -234,6 +234,35 @@ test('generates seasonal Bangladeshi microclimate agro advisory', async () => {
   assert.ok(data.priorityTasks.length > 0)
 })
 
+test('identifies plant species in picture-this style endpoint', async () => {
+  const modelIdResponse = {
+    isPlant: true,
+    name: 'BARI Malta-1',
+    banglaName: 'বারি মাল্টা-১',
+    scientificName: 'Citrus sinensis',
+    family: 'Rutaceae',
+    confidence: 'high',
+    category: 'rooftop-fruit',
+    description: 'Juicy sweet rooftop citrus cultivar.',
+    sunlight: 'Full Sun',
+    watering: 'Moderate',
+    difficulty: 'beginner',
+    petSafe: true,
+    funFact: 'Rich in vitamin C and thrives in rooftop containers across Bangladesh.',
+  }
+
+  const res = await call(good, {
+    url: 'https://worker.test/api/identify-plant',
+    fetchImpl: claudeReturns(JSON.stringify(modelIdResponse)),
+  })
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.isPlant, true)
+  assert.equal(data.name, 'BARI Malta-1')
+  assert.equal(data.scientificName, 'Citrus sinensis')
+  assert.equal(data.confidence, 'high')
+})
+
 let failed = 0
 const silence = console.error
 console.error = () => {} // the Worker logs upstream failures on purpose; keep the test output readable

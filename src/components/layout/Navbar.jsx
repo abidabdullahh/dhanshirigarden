@@ -7,6 +7,7 @@ import {
   Info,
   Layers,
   LayoutGrid,
+  Leaf,
   Menu,
   Phone,
   ScanSearch,
@@ -35,10 +36,11 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/', label: t.nav.home, icon: Trees },
+    { path: '/plant-doctor', label: t.nav.plantDoctor, badge: 'AI USP', icon: ScanSearch },
+    { path: '/plant-wiki', label: lang === 'bn' ? 'উদ্ভিদকোষ' : 'Plant Wiki', badge: 'NEW', icon: Leaf },
     { path: '/services', label: t.nav.services, icon: Layers },
     { path: '/studio', label: t.nav.studio, icon: Compass },
     { path: '/projects', label: t.nav.projects, icon: LayoutGrid },
-    { path: '/plant-doctor', label: t.nav.plantDoctor, badge: 'AI', icon: ScanSearch },
     { path: '/blog', label: t.nav.blog, icon: BookOpen },
     { path: '/about', label: t.nav.about, icon: Info },
     { path: '/contact', label: t.nav.contact, icon: Phone },
@@ -242,6 +244,14 @@ export default function Navbar() {
                 >
                   <Compass className="size-4 text-emerald" />
                   <span>{t.nav.studio}</span>
+                </a>
+                <a
+                  href="#/plant-wiki"
+                  onClick={(e) => handleNavClick(e, '/plant-wiki')}
+                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
+                >
+                  <Leaf className="size-4 text-emerald" />
+                  <span>{lang === 'bn' ? 'উদ্ভিদকোষ' : 'Plant Wiki'}</span>
                 </a>
                 <a
                   href="#/plant-doctor"

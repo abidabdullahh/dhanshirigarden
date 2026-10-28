@@ -1,0 +1,487 @@
+/**
+ * Dhanshiri Garden — Comprehensive Botanical Encyclopedia & Plant Wikipedia
+ *
+ * Curated for Bangladesh climate (hot humid monsoon, subtropical winter, urban concrete microclimates).
+ * Incorporates DAE (Department of Agricultural Extension) agronomic standards,
+ * Bangla Academy approved botanical spelling, and practical urban gardening protocols.
+ */
+
+export const PLANT_CATEGORIES = [
+  { id: 'all', en: 'All Plants', bn: 'সকল উদ্ভিদ' },
+  { id: 'rooftop-fruit', en: 'Rooftop Fruits', bn: 'ছাদবাগানের ফলদ বৃক্ষ' },
+  { id: 'indoor-air', en: 'Indoor Air-Purifying', bn: 'ইনডোর ও বায়ু শোধক' },
+  { id: 'lawn-turf', en: 'Lawn & Turf Grass', bn: 'কার্পেট ঘাস ও লন' },
+  { id: 'flowering', en: 'Ornamental & Flowering', bn: 'ফুল ও শোভাময় গাছ' },
+  { id: 'medicinal-herb', en: 'Herbal & Kitchen', bn: 'ভেষজ ও কিচেন গার্ডেন' },
+]
+
+export const PLANT_DATABASE = [
+  {
+    id: 'bari-malta-1',
+    name: 'BARI Malta-1',
+    banglaName: 'বারি মাল্টা-১',
+    scientificName: 'Citrus sinensis',
+    family: 'Rutaceae (লেবু পরিবার)',
+    category: 'rooftop-fruit',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'দৈনিক ৬-৮ ঘণ্টা সরাসরি রোদ প্রয়োজন',
+      en: '6–8 hours of direct full sunlight daily',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'মাটির উপরিভাগ ১ ইঞ্চি শুকিয়ে এলে পানি দিন; জলাবদ্ধতা সম্পূর্ণ পরিহার্য',
+      en: 'Water when top 1 inch of soil is dry; avoid standing water',
+    },
+    soil: {
+      bn: '৪০% দোআঁশ মাটি, ৩০% ভার্মিকম্পোস্ট, ২০% কোকোপিট এবং ১০% নদীর বালি',
+      en: '40% loamy soil, 30% vermicompost, 20% cocopeat, 10% coarse sand',
+    },
+    temperature: '18°C – 36°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/2090903/pexels-photo-2090903.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'বাংলাদেশ কৃষি গবেষণা ইনস্টিটিউট (BARI) উদ্ভাবিত অত্যন্ত রসালো, মিষ্টি ও উচ্চফলনশীল মাল্টার জাত। ঢাকার ছাদে হাফ-ড্রামে সহজেই প্রচুর ফল ধরে।',
+      en: 'A high-yielding sweet citrus cultivar developed in Bangladesh. Extremely well-suited for rooftop containers and half-drums in urban microclimates.',
+    },
+    nutrition: {
+      bn: 'প্রতি মাসে এক মুঠো সরিষার খোল পচা পানি ও হাড়ের গুঁড়া প্রয়োগ করুন। ফুল আসার সময় নাইট্রোজেন কমিয়ে বোরন স্প্রে করুন।',
+      en: 'Apply mustard cake tea and bone meal monthly. Reduce nitrogen during bloom; spray boron to prevent flower drop.',
+    },
+    pests: ['সাইট্রাস ক্যানকার (Citrus Canker)', 'লিফ মাইনার (Leaf Miner)', 'মিলিবাগ (Mealybug)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ড্রামের নিচে ৩ ইঞ্চি ইটের খোয়া ও ড্রেনেজ নেট দিয়ে পানি নিষ্কাশন নিশ্চিত না করলে বর্ষাকালে শিকড় পচে যাওয়ার ঝুঁকি থাকে।',
+      en: 'Amir Ali’s Protocol: Ensure a 3-inch gravel and drainage mesh layer at container base to prevent root rot during monsoon downpours.',
+    },
+  },
+  {
+    id: 'katimon-mango',
+    name: 'Katimon All-Season Mango',
+    banglaName: 'কাটিমন বারোমাসি আম',
+    scientificName: 'Mangifera indica',
+    family: 'Anacardiaceae',
+    category: 'rooftop-fruit',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: '৭-৮ ঘণ্টা প্রখর সূর্যালোক',
+      en: '7–8 hours of uninterrupted bright sunlight',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'নিয়মিত পরিমিত সেচ; গুটি ধরার পর পানির ঘাটতি হওয়া যাবে না',
+      en: 'Consistent watering; moisture stress drops young fruitlets',
+    },
+    soil: {
+      bn: 'বেলে-দোআঁশ মাটির সাথে পচা গোবর ও নিম খৈল মিশিয়ে ড্রামে রোপণ করুন',
+      en: 'Sandy-loam fortified with composted manure and neem cake',
+    },
+    temperature: '22°C – 38°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/2294471/pexels-photo-2294471.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'থাইল্যান্ডের জনপ্রিয় জাত যা বছরে তিনবার মিষ্টি আম দেয়। ড্রামে চমৎকার বৃদ্ধি পায় এবং ছাদে সহজে ফলন পাওয়া যায়।',
+      en: 'Prolific tri-annual fruiting Thai mango hybrid yielding intensely sweet, fiber-free fruits even in mid-winter on rooftops.',
+    },
+    nutrition: {
+      bn: 'ফল সংগ্রহের পর প্রুনিং করুন এবং টিএসপি, পটাশ ও জিংক সমৃদ্ধ সুষম সার প্রয়োগ করুন।',
+      en: 'Prune immediately after each harvest and top-dress with balanced potassium, phosphorus, and zinc.',
+    },
+    pests: ['হপার পোকা (Mango Hopper)', 'অ্যানথ্রাকনোজ ছত্রাক (Anthracnose)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: কুঁড়ি আসার সময় কোনো কীটনাশক স্প্রে করবেন না, এতে পরাগায়নকারী মৌমাছি ক্ষতিগ্রস্ত হয়।',
+      en: 'Amir Ali’s Protocol: Never apply systemic insecticides while inflorescences bloom to protect beneficial pollinators.',
+    },
+  },
+  {
+    id: 'dragon-fruit',
+    name: 'Red Pitahaya / Dragon Fruit',
+    banglaName: 'ড্রাগন ফল',
+    scientificName: 'Selenicereus undatus',
+    family: 'Cactaceae (ক্যাকটাস পরিবার)',
+    category: 'rooftop-fruit',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'পূর্ণ সূর্যালোক (ছাদের সবচেয়ে রোদযুক্ত স্থানে রাখুন)',
+      en: 'Direct full day sun (needs warmest rooftop exposure)',
+    },
+    watering: 'low',
+    wateringText: {
+      bn: 'মাটি শুকিয়ে গেলে পানি দিন; অতিরিক্ত পানিতে কাণ্ড পচে যায়',
+      en: 'Low water requirement; drought-tolerant succulent prone to stem rot in wet feet',
+    },
+    soil: {
+      bn: 'উচ্চ ড্রেনেজযুক্ত বালুপ্রধান মাটি, কাঠকয়লার গুঁড়া ও ভার্মিকম্পোস্ট',
+      en: 'High-drainage gritty cactus substrate blended with crushed biochar and compost',
+    },
+    temperature: '20°C – 40°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/1437598/pexels-photo-1437598.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'অ্যান্টিঅক্সিডেন্ট ও পুষ্টিসমৃদ্ধ বিদেশি ক্যাকটাস ফল। ছাদের কংক্রিট পিলারে সাপোর্ট দিয়ে চাষ করলে মে থেকে নভেম্বর টানা ফল দেয়।',
+      en: 'Vibrant exotic climbing cactus producing nutrient-dense fruits from May through November with minimal care.',
+    },
+    nutrition: {
+      bn: 'ফুল ফোটার মৌসুমে পটাশিয়াম ও ডিমের খোসার গুঁড়া (ক্যালসিয়াম) প্রয়োগে ফলের মিষ্টতা বৃদ্ধি পায়।',
+      en: 'Feed with potassium-rich organic banana-peel tea and crushed eggshells for enhanced Brix sweetness.',
+    },
+    pests: ['কাণ্ড পচা রোগ (Stem Rot)', 'লাল পিঁপড়া ও স্কেল পোকা (Scale Insects)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ডাল যখন ৪-৫ ফুট লম্বা হবে, তখন মাথার ডগা কেটে দিন যাতে একাধিক শাখা ছড়িয়ে ছাতার মতো রূপ নেয়।',
+      en: 'Amir Ali’s Protocol: Tip terminal shoots at 4.5 feet over a tire ring trellis to force lateral fruit-bearing cascades.',
+    },
+  },
+  {
+    id: 'monstera-deliciosa',
+    name: 'Monstera Deliciosa (Swiss Cheese Plant)',
+    banglaName: 'মনস্টেরা ডেলিসিওসা',
+    scientificName: 'Monstera deliciosa',
+    family: 'Araceae',
+    category: 'indoor-air',
+    difficulty: 'beginner',
+    sunlight: 'bright-indirect',
+    sunlightText: {
+      bn: 'উজ্জ্বল পরোক্ষ আলো; সরাসরি দুপুরের রোদ পাতার রং পুড়িয়ে দেয়',
+      en: 'Bright indirect filtered light; harsh noon sun scorches fenestrations',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'সপ্তাহে ১-২ দিন; টবের মাটির উপরের দুই ইঞ্চি শুকালে সেচ দিন',
+      en: 'Once weekly when top 2 inches dry; tolerate slight neglect',
+    },
+    soil: {
+      bn: 'অ্যারয়েড মিক্স: কোকোপিট, পাইন বার্ক/কাঠকয়লা ও পার্লাইটের হালকা মিশ্রণ',
+      en: 'Chunkier aroid blend: orchid bark, perlite, cocopeat, and worm castings',
+    },
+    temperature: '18°C – 32°C',
+    petSafe: false,
+    image: 'https://images.pexels.com/photos/3125195/pexels-photo-3125195.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'অভিজাত ড্রয়িংরুম ও ব্যালকনির প্রিয় শোভাবর্ধক ইনডোর উদ্ভিদ। এর বড় বড় কাটা পাতা গৃহের অভ্যন্তরীণ বাতাসকে পরিশোধন করে।',
+      en: 'Architectural biophilic centerpiece with dramatic split leaves. Effective indoor VOC air filtration and high aesthetic value.',
+    },
+    nutrition: {
+      bn: 'গ্রীষ্ম ও বর্ষায় প্রতি মাসে একবার তরল অনুখাদ্য বা সি-উইড স্প্রে করুন।',
+      en: 'Dilute balanced organic seaweed feed monthly during warm spring and monsoon flushes.',
+    },
+    pests: ['মাকড়সা মাইট (Spider Mites)', 'থ্রিপস (Thrips)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: মস স্টিক বা শ্যাওলার খুঁটি ব্যবহার করলে বায়বীয় শিকড় খাদ্য পেয়ে পাতার সাইজ দ্বিগুণ বড় হয়।',
+      en: 'Amir Ali’s Protocol: Train aerial roots into a moist coir totem to stimulate giant mature leaf fenestrations.',
+    },
+  },
+  {
+    id: 'snake-plant',
+    name: 'Sansevieria / Snake Plant',
+    banglaName: 'স্নেক প্ল্যান্ট',
+    scientificName: 'Dracaena trifasciata',
+    family: 'Asparagaceae',
+    category: 'indoor-air',
+    difficulty: 'beginner',
+    sunlight: 'bright-indirect',
+    sunlightText: {
+      bn: 'অল্প আলো থেকে তীব্র রোদ—সব পরিবেশেই বেঁচে থাকে',
+      en: 'Ultra adaptable from dim bedroom corners to sunny balconies',
+    },
+    watering: 'low',
+    wateringText: {
+      bn: '১০-১৫ দিনে একবার; শীতকালে মাসে একবার পানি দেওয়াই যথেষ্ট',
+      en: 'Allow substrate to dry completely between waterings; once every 2 weeks',
+    },
+    soil: {
+      bn: '৫০% বালি ও ৫০% দোআঁশ মাটির অত্যন্ত হালকা মিশ্রণ',
+      en: 'Gritty, well-draining succulent potting mix with coarse sand',
+    },
+    temperature: '15°C – 38°C',
+    petSafe: false,
+    image: 'https://images.pexels.com/photos/2123482/pexels-photo-2123482.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'নাসা (NASA) সার্টিফাইড শ্রেষ্ঠ এয়ার-পিউরিফায়ার যা রাতেও অক্সিজেন সরবরাহ করে এবং বেনজিন ও ফরমালডিহাইড শোষণ করে।',
+      en: 'Top-ranked NASA clean air study plant converting nighttime CO2 into oxygen. Impervious to neglect.',
+    },
+    nutrition: {
+      bn: 'বছরে মাত্র দুইবার সামান্য ভার্মিকম্পোস্ট টপ ড্রেসিং করলেই যথেষ্ট।',
+      en: 'Requires almost zero feeding; light compost top-dressing twice a year.',
+    },
+    pests: ['গোড়াপচা ছত্রাক (Root Rot from overwatering)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: এই গাছ মারা যাওয়ার একমাত্র কারণ হলো অতিরিক্ত পানি দেওয়া। পাত্রের নিচে ছিদ্র যেন কখনো বন্ধ না থাকে।',
+      en: 'Amir Ali’s Protocol: Overwatering is the only killer. Always err on the side of underwatering in city apartments.',
+    },
+  },
+  {
+    id: 'bermuda-grass',
+    name: 'Bermuda Carpet Grass',
+    banglaName: 'বারমুডা কার্পেট ঘাস',
+    scientificName: 'Cynodon dactylon',
+    family: 'Poaceae (ঘাস পরিবার)',
+    category: 'lawn-turf',
+    difficulty: 'intermediate',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'সারাদিন সরাসরি রোদ (ছায়ায় ঘাস দুর্বল হয়ে যায়)',
+      en: 'Minimum 6 hours direct sunshine; thins out in heavy tree shade',
+    },
+    watering: 'frequent',
+    wateringText: {
+      bn: 'গ্রীষ্মে প্রতিদিন সকালে গভীর সেচ; বর্ষায় প্রয়োজন অনুযায়ী',
+      en: 'Deep morning irrigation 3–4 times weekly; tolerates high foot traffic',
+    },
+    soil: {
+      bn: '২ ইঞ্চি বালু ও দোআঁশ মাটির লেভেলিং বেড সহ ১.৫% নিষ্কাশন ঢাল',
+      en: 'Graded sand-loam sub-base with 1.5% positive drainage gradient',
+    },
+    temperature: '24°C – 40°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/413195/pexels-photo-413195.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'বাংলাদেশের আবহাওয়া উপযোগী সবচেয়ে টেকসই ও আকর্ষণীয় সবুজ লন ঘাস। হাঁটাচলা ও খেলার চাপ সহজেই সহ্য করে দ্রুত নতুন পাতা গজায়।',
+      en: 'The premier warm-season turfgrass in Bangladesh. Dense emerald carpet with rapid lateral rhizome recovery under heavy use.',
+    },
+    nutrition: {
+      bn: 'মৌসুম শুরুর সময় ইউরিয়া ও জিপসাম সার এবং প্রতি বর্ষার পর ভার্মিকম্পোস্ট ছড়ানো।',
+      en: 'Nitrogen fertilization post-winter and light top-dressing with organic compost to boost density.',
+    },
+    pests: ['আর্মিওয়ার্ম শুঁয়োপোকা (Armyworm)', 'ব্রাউন প্যাচ ছত্রাক (Brown Patch)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ঘাস কাটার সময় কখনো দৈর্ঘ্যের এক-তৃতীয়াংশের বেশি কাটবেন না। রোলার ব্যবহারে লন সমান্তরাল থাকে।',
+      en: 'Amir Ali’s Protocol: Obey the 1/3 mowing rule. Reel mowing keeps stolons tight and chokes out weeds naturally.',
+    },
+  },
+  {
+    id: 'korean-velvet-turf',
+    name: 'Korean Velvet Grass / Zoysia',
+    banglaName: 'কোরিয়ান ভেলভেট ঘাস',
+    scientificName: 'Zoysia japonica',
+    family: 'Poaceae',
+    category: 'lawn-turf',
+    difficulty: 'intermediate',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'পূর্ণ রোদ থেকে আংশিক রোদ',
+      en: 'Full sun to partial dappled shade',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'মাঝারি পানি; বারমুডার চেয়ে খরা সহনশীলতা বেশি',
+      en: 'Moderate watering with superior drought tolerance once established',
+    },
+    soil: {
+      bn: 'উন্নত নিষ্কাশনযুক্ত মিহি বালুকাময় দোআঁশ',
+      en: 'Porous sandy-loam with organic humus',
+    },
+    temperature: '20°C – 38°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/158028/bellingrath-gardens-alabama-landscape-scenic-158028.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'মখমলের মতো মসৃণ ও ঘন পাতার অভিজাত ঘাস। ধীরগতির বৃদ্ধির কারণে বারবার কাটার ঝামেলা কম।',
+      en: 'Luxurious ultra-fine textured velvet lawn. Slow vertical growth reduces required mowing frequency by half.',
+    },
+    nutrition: {
+      bn: 'বছরে তিনবার সুষম জৈব নাইট্রোজেন স্প্রে।',
+      en: 'Apply slow-release organic nitrogen thrice annually.',
+    },
+    pests: ['হোয়াইট গ্রাব (White Grubs)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ছাদবাগানের সবুজ উঠোন তৈরিতে কোরিয়ান ঘাস আদর্শ কারণ এর রুট সিস্টেম অগভীর ও নিবিড়।',
+      en: 'Amir Ali’s Protocol: Ideal for rooftop turf because its root architecture remains compact and non-invasive.',
+    },
+  },
+  {
+    id: 'bougainvillea',
+    name: 'Bougainvillea / Paperflower',
+    banglaName: 'বাগানবিলাস / বোগেনভিলিয়া',
+    scientificName: 'Bougainvillea spectabilis',
+    family: 'Nyctaginaceae',
+    category: 'flowering',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'তীব্র কড়া রোদ (রোদ কম পেলে ফুল না এসে শুধু পাতা বাড়ে)',
+      en: 'Blazing direct sunlight essential for vibrant bract flowering',
+    },
+    watering: 'low',
+    wateringText: {
+      bn: 'মাটি শুকিয়ে পাতা একটু ঝিমিয়ে পড়লে পানি দিন—এতে বেশি ফুল ফোটে',
+      en: 'Water sparingly; slight moisture stress triggers massive blooming',
+    },
+    soil: {
+      bn: 'দোআঁশ ও লালমাটির মিশ্রণে সামান্য চুন ও হাঁড়ের গুঁড়ো',
+      en: 'Well-draining loamy or clay-loam mix with bone meal and lime',
+    },
+    temperature: '22°C – 42°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/5412431/pexels-photo-5412431.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'ছাদের রেলিং ও সীমানা প্রাচীরের প্রধান আকর্ষণ। লাল, গোলাপি, হলুদ ও সাদা রঙের অজস্র কাগজের মতো ফুলে পুরো ছাদ ঢেকে যায়।',
+      en: 'The quintessential tropical flowering climber. Thrives in scorching summer heat, cascading vibrant blooms across rooftop parapets.',
+    },
+    nutrition: {
+      bn: 'পটাশিয়াম ও ফসফরাস সমৃদ্ধ সার ফুল আনতে সাহায্য করে; অতিরিক্ত ইউরিয়া দিলে ফুল কমে যায়।',
+      en: 'Feed high-potassium organic fertilizer; avoid excess nitrogen to prevent leafy foliage over blooms.',
+    },
+    pests: ['ক্যাটারপিলার (Caterpillars)', 'পাতা কোঁকড়ানো পোকা (Aphids)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: বর্ষার শেষে ডাল ছাঁটাই (হার্ড প্রুনিং) করে দিলে শীত ও বসন্তে চোখ জুড়ানো ফুলের মেলা বসে।',
+      en: 'Amir Ali’s Protocol: Perform hard pruning right after monsoon to force dense flowering spurs for winter and spring.',
+    },
+  },
+  {
+    id: 'arabian-jasmine-beli',
+    name: 'Arabian Jasmine (Beli Phul)',
+    banglaName: 'বেলি ফুল',
+    scientificName: 'Jasminum sambac',
+    family: 'Oleaceae',
+    category: 'flowering',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'কমপক্ষে ৫-৬ ঘণ্টা সূর্যালোক',
+      en: '5–6 hours of direct sun for rich essential oil fragrance',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'নিয়মিত পানি দিন; টবের মাটি ভেজা কিন্তু ঝরঝরে থাকবে',
+      en: 'Keep soil moist but well-drained; daily in peak summer',
+    },
+    soil: {
+      bn: 'ভার্মিকম্পোস্ট ও দোআঁশ মাটির উর্বর মিশ্রণ',
+      en: 'Fertile organic loam rich in humic compost',
+    },
+    temperature: '20°C – 35°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/878846/pexels-photo-878846.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'বাঙালির চিরচেনা তীব্র সুবাসিত শুভ্র ফুল। গ্রীষ্ম ও বর্ষাকালে প্রতিদিন সন্ধ্যায় ডালভর্তি কুঁড়ি ফুটে ঘর-ছাদ সুবাসে ভরিয়ে তোলে।',
+      en: 'Beloved intensely fragrant nocturnal white blooms indispensable in Bengali homestead gardens and rooftop terraces.',
+    },
+    nutrition: {
+      bn: 'মাসে দুইবার সরিষার খোল পচানো পানি ও কলার খোসা ভেজানো পানি দিলে ফুলের সাইজ বড় হয়।',
+      en: 'Mustard oil cake ferment and banana peel potassium steep double bloom diameter.',
+    },
+    pests: ['সাদা মাছি (Whitefly)', 'মুকুল পোকা (Bud Borer)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ফুল ঝরে যাওয়ার সাথে সাথে বোঁটা কেটে দিলে সেই স্থান থেকে দুটি নতুন শাখা গজায় ও দ্বিগুণ কুঁড়ি আসে।',
+      en: 'Amir Ali’s Protocol: Deadhead spent flowers immediately down to the next node to trigger twin lateral flower buds.',
+    },
+  },
+  {
+    id: 'neem-tree',
+    name: 'Neem / Indian Lilac',
+    banglaName: 'নিম গাছ',
+    scientificName: 'Azadirachta indica',
+    family: 'Meliaceae',
+    category: 'medicinal-herb',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: 'পূর্ণ দিন সূর্যালোক',
+      en: 'Full unobstructed sunlight',
+    },
+    watering: 'low',
+    wateringText: {
+      bn: 'মাটি শুকিয়ে গেলে পানি দিন; প্রচণ্ড খরা সহনশীল',
+      en: 'Highly drought-resistant once root system settles',
+    },
+    soil: {
+      bn: 'যেকোনো সাধারণ মাটিতে জন্মায়; পানি নিষ্কাশন ভালো হতে হবে',
+      en: 'Adaptable to almost all soils with adequate drainage',
+    },
+    temperature: '20°C – 44°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/808510/pexels-photo-808510.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'প্রাকৃতিক জীবাণুনাশক ও ভেষজ গুণসম্পন্ন মহাঔষধি গাছ। এর ছায়া বাতাসকে বিশুদ্ধ করে এবং কীট-পতঙ্গ দূরে রাখে।',
+      en: 'Ancient Ayurvedic medicinal miracle tree. Natural insect repellent purifying surrounding ambient air and warding off garden pests.',
+    },
+    nutrition: {
+      bn: 'অতিরিক্ত সারের প্রয়োজন নেই; সামান্য গোবর সারেই আজীবন সতেজ থাকে।',
+      en: 'Zero synthetic fertilizer required; light compost once per year.',
+    },
+    pests: ['প্রাকৃতিক কীটনাশক গুণ থাকায় এটি প্রায় রোগমুক্ত'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: ছাদের নিমের পাতা ফুটিয়ে ঠান্ডা করে বাগানের অন্যান্য গাছে স্প্রে করলে সম্পূর্ণ জৈব উপায়ে পোকা দমন করা যায়।',
+      en: 'Amir Ali’s Protocol: Boil fresh leaves to create natural home-brewed insecticidal spray for your other balcony vegetables.',
+    },
+  },
+  {
+    id: 'tulsi-holy-basil',
+    name: 'Holy Basil / Tulsi',
+    banglaName: 'পবিত্র তুলসী',
+    scientificName: 'Ocimum tenuiflorum',
+    family: 'Lamiaceae',
+    category: 'medicinal-herb',
+    difficulty: 'beginner',
+    sunlight: 'full-sun',
+    sunlightText: {
+      bn: '৪-৬ ঘণ্টা সকালের নরম রোদ',
+      en: '4–6 hours of morning direct sun',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'মাটি সবসময় হালকা ভেজা থাকবে; গোড়ায় পানি জমতে দেওয়া যাবে না',
+      en: 'Keep soil evenly moist but never saturated',
+    },
+    soil: {
+      bn: 'উর্বর দোআঁশ মাটি ও ভার্মিকম্পোস্টের ১:১ মিশ্রণ',
+      en: 'Nutrient-dense loamy topsoil with worm compost',
+    },
+    temperature: '20°C – 35°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/4040589/pexels-photo-4040589.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'সর্দি-কাশি নিরাময়কারী ঔষধি গুণযুক্ত পাতা। ছাদ বা জানালার গ্রিলে খুব অল্প জায়গায় সুবাস ও সতেজতা ছড়ায়।',
+      en: 'Renowned medicinal adaptogen packed with essential volatile oils. Enhances balcony microclimate with crisp herbal scent.',
+    },
+    nutrition: {
+      bn: 'মাসে একবার সামান্য চা-পাতার সার বা কেঁচো সার দিন।',
+      en: 'Feed used spent tea grounds and vermicompost monthly.',
+    },
+    pests: ['জাবপোকা (Aphids)', 'পাতার দাগ রোগ (Leaf Spot)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: তুলসীর মঞ্জুরি বা ফুল আসার সাথে সাথে কেটে ফেলুন; ফুল না কাটলে গাছের বৃদ্ধি বন্ধ হয়ে দ্রুত শুকিয়ে যায়।',
+      en: 'Amir Ali’s Protocol: Pinch off flower spikes (manjari) as soon as they emerge to keep foliage bushy and perennial.',
+    },
+  },
+  {
+    id: 'areca-palm',
+    name: 'Areca Palm (Butterfly Palm)',
+    banglaName: 'এরিকা পাম',
+    scientificName: 'Dypsis lutescens',
+    family: 'Arecaceae',
+    category: 'indoor-air',
+    difficulty: 'beginner',
+    sunlight: 'bright-indirect',
+    sunlightText: {
+      bn: 'উজ্জ্বল ফিল্টার করা আলো; ঘরের জানালার পাশে দারুণ বাড়ে',
+      en: 'Filtered daylight near windows; avoid harsh direct glare',
+    },
+    watering: 'moderate',
+    wateringText: {
+      bn: 'সপ্তাহে ২-৩ দিন; পাতার অগ্রভাগে যেন পানি স্প্রে করা হয়',
+      en: 'Keep root zone evenly moist; mist fronds in dry winter air',
+    },
+    soil: {
+      bn: 'দোআঁশ, পিটমস ও পার্লাইটের মসৃণ হালকা মিডিয়া',
+      en: 'Well-draining rich peat-loam blend',
+    },
+    temperature: '18°C – 32°C',
+    petSafe: true,
+    image: 'https://images.pexels.com/photos/1084199/pexels-photo-1084199.jpeg?auto=compress&cs=tinysrgb&w=800',
+    summary: {
+      bn: 'ঘরের কোণকে চমৎকার ট্রপিক্যাল রূপ দেয়। বাতাসে আর্দ্রতা বাড়াতে ও বিষাক্ত টক্সিন দূর করতে এর তুলনা নেই। পোষা প্রাণীর জন্য সম্পূর্ণ নিরাপদ।',
+      en: 'Feathery tropical clumping palm acting as natural indoor humidifier while eliminating formaldehyde. 100% pet safe.',
+    },
+    nutrition: {
+      bn: 'বসন্ত ও বর্ষাকালে মাসে একবার লিকুইড এনপিকে সার।',
+      en: 'Monthly balanced liquid fertilizer during active spring/monsoon growing season.',
+    },
+    pests: ['স্কেল পোকা (Scales)', 'মাকড়সা মাইট (Spider Mites)'],
+    proTip: {
+      bn: 'আমির আলীর পরামর্শ: পাতার ডগা বাদামী হয়ে গেলে ট্যাপের পানির ক্লোরিনের বদলে সংরক্ষিত বৃষ্টির পানি বা ফিল্টার পানি দিন।',
+      en: 'Amir Ali’s Protocol: Brown frond tips signal fluoride or chlorine in municipal water; switch to rainwater or aerated standing water.',
+    },
+  },
+]

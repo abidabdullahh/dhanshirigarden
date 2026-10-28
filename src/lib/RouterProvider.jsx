@@ -6,6 +6,7 @@ const KNOWN_ROUTES = [
   '/studio',
   '/projects',
   '/plant-doctor',
+  '/plant-wiki',
   '/blog',
   '/about',
   '/contact',

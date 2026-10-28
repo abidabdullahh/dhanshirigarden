@@ -65,6 +65,56 @@ Reply with ONE JSON object only (no text before or after, no code fences) in exa
 "schedule" has at most 6 rows covering the next two to three weeks.`
 }
 
+function identifierSystemPrompt(lang) {
+  return `You are the master botanical taxonomist & plant identifier for Dhanshiri Garden (like PictureThis app for Bangladesh). You look at ONE photo of a plant (flower, leaf, fruit, or stem) and accurately identify the botanical species.
+
+Rules
+- If the image does not show a plant, flower, tree, or plant part, return {"isPlant": false} and nothing else.
+- Identify the common name in ${LANGUAGE_NAME[lang] || LANGUAGE_NAME.bn}, the scientific name (binomial nomenclature, e.g. Citrus sinensis), and the botanical family.
+- Gauge sunlight and watering requirements suited for hot, humid and subtropical conditions like Bangladesh.
+- Rate difficulty: beginner | intermediate | advanced.
+- Provide a clear, engaging 2-3 sentence description.
+- Include one captivating funFact about this plant.
+- Write human-readable values in ${LANGUAGE_NAME[lang] || LANGUAGE_NAME.bn}. No markdown formatting.
+
+Reply with ONE JSON object only (no prose, no markdown fences):
+{
+  "isPlant": true,
+  "name": "English common name",
+  "banglaName": "Bangla Academy approved Bengali name",
+  "scientificName": "Genus species",
+  "family": "Family name",
+  "confidence": "high | medium | low",
+  "category": "rooftop-fruit | indoor-air | lawn-turf | flowering | medicinal-herb",
+  "description": "Short engaging description",
+  "sunlight": "Full Sun | Partial Shade | Bright Indirect",
+  "watering": "Low | Moderate | Frequent",
+  "difficulty": "beginner | intermediate | advanced",
+  "petSafe": true,
+  "funFact": "One fascinating historical or biological fact"
+}`
+}
+
+export function normalizeIdentification(raw) {
+  const data = raw && typeof raw === 'object' ? raw : {}
+  if (data.isPlant === false) return { isPlant: false }
+  return {
+    isPlant: true,
+    name: text(data.name, 120) || 'Unknown Plant',
+    banglaName: text(data.banglaName, 120),
+    scientificName: text(data.scientificName, 120),
+    family: text(data.family, 120),
+    confidence: CONFIDENCES.includes(data.confidence) ? data.confidence : 'medium',
+    category: text(data.category, 60) || 'flowering',
+    description: text(data.description, 600),
+    sunlight: text(data.sunlight, 100),
+    watering: text(data.watering, 100),
+    difficulty: ['beginner', 'intermediate', 'advanced'].includes(data.difficulty) ? data.difficulty : 'beginner',
+    petSafe: data.petSafe !== false,
+    funFact: text(data.funFact, 400),
+  }
+}
+
 /* ---------- helpers ---------- */
 
 const text = (value, max = 600) => (typeof value === 'string' ? value.trim().slice(0, max) : '')
@@ -490,7 +540,93 @@ export async function handleRequest(request, env, fetchImpl = (...args) => fetch
     return reply(res.data, res.status, cors)
   }
 
-  // 5. Plant Doctor AI Endpoint (POST to /api/plant-doctor or root '/')
+  // 5. Plant Identifier API (PictureThis app feature)
+  if (pathname === '/api/identify-plant') {
+    if (!env.ANTHROPIC_API_KEY) {
+      console.error('Plant Identifier is not configured: set ANTHROPIC_API_KEY.')
+      return reply({ error: 'not_configured' }, 500, cors)
+    }
+    if (request.method !== 'POST') return reply({ error: 'method_not_allowed' }, 405, cors)
+    if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
+      return reply({ error: 'too_large' }, 413, cors)
+    }
+
+    let payload
+    try {
+      payload = await request.json()
+    } catch {
+      return reply({ error: 'bad_request' }, 400, cors)
+    }
+
+    const image = typeof payload?.image === 'string' ? payload.image.replace(/^data:[^,]*,/, '') : ''
+    const mediaType = typeof payload?.mediaType === 'string' ? payload.mediaType.toLowerCase() : ''
+    const lang = payload?.lang === 'en' ? 'en' : 'bn'
+
+    if (!image || !MEDIA_TYPES.has(mediaType)) return reply({ error: 'bad_request' }, 400, cors)
+    if (image.length > MAX_IMAGE_CHARS) return reply({ error: 'too_large' }, 413, cors)
+    if (!BASE64.test(image)) return reply({ error: 'bad_request' }, 400, cors)
+
+    let upstream
+    try {
+      upstream = await fetchImpl(ANTHROPIC_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': env.ANTHROPIC_API_KEY,
+          'anthropic-version': ANTHROPIC_VERSION,
+        },
+        body: JSON.stringify({
+          model: env.MODEL || DEFAULT_MODEL,
+          max_tokens: 2500,
+          system: identifierSystemPrompt(lang),
+          messages: [
+            {
+              role: 'user',
+              content: [
+                { type: 'image', source: { type: 'base64', media_type: mediaType, data: image } },
+                { type: 'text', text: 'Identify this plant species and return the single JSON response.' },
+              ],
+            },
+          ],
+        }),
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      })
+    } catch (error) {
+      const timedOut = error?.name === 'TimeoutError' || error?.name === 'AbortError'
+      console.error('Plant Identifier Anthropic request failed:', timedOut ? 'timeout' : error?.message)
+      return reply({ error: timedOut ? 'timeout' : 'upstream' }, timedOut ? 504 : 502, cors)
+    }
+
+    if (!upstream.ok) {
+      const detail = (await upstream.text().catch(() => '')).slice(0, 300)
+      console.error('Anthropic responded', upstream.status, detail)
+      if (upstream.status === 429) return reply({ error: 'rate_limited' }, 429, cors)
+      if (upstream.status === 401 || upstream.status === 403) return reply({ error: 'not_configured' }, 500, cors)
+      if (upstream.status === 400) return reply({ error: 'bad_image' }, 400, cors)
+      return reply({ error: 'upstream' }, 502, cors)
+    }
+
+    let data
+    try {
+      data = await upstream.json()
+    } catch {
+      return reply({ error: 'upstream' }, 502, cors)
+    }
+
+    const answer = (Array.isArray(data?.content) ? data.content : [])
+      .filter((block) => block?.type === 'text' && typeof block.text === 'string')
+      .map((block) => block.text)
+      .join('\n')
+    const parsed = extractJson(answer)
+    if (!parsed || typeof parsed !== 'object') {
+      return reply({ error: 'upstream' }, 502, cors)
+    }
+
+    const result = normalizeIdentification(parsed)
+    return reply(result, 200, cors)
+  }
+
+  // 6. Plant Doctor AI Endpoint (POST to /api/plant-doctor or root '/')
   if (pathname === '/api/plant-doctor' || pathname === '/') {
     // Requires ANTHROPIC_API_KEY
     if (!env.ANTHROPIC_API_KEY) {
