@@ -57,9 +57,16 @@ export default function ServicesPage() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button href="#services" variant="primary" size="md">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('services')
+                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className="inline-flex items-center justify-center rounded-full bg-forest px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lift hover:bg-emerald transition"
+                >
                   {lang === 'bn' ? 'সকল সেবা এক্সপ্লোর করুন' : 'Explore All Services'}
-                </Button>
+                </button>
                 <button
                   type="button"
                   onClick={() => navigate('/studio')}

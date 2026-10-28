@@ -1,3 +1,4 @@
+import { Suspense, lazy } from 'react'
 import { useLocale } from './lib/locale'
 import { RouterProvider, useRouter } from './lib/router'
 import { AtmosphereProvider } from './lib/AtmosphereProvider'
@@ -22,14 +23,25 @@ import GardenStudio from './components/dynamic/GardenStudio'
 import GrowthSimulator from './components/dynamic/GrowthSimulator'
 import BeforeAfterShowcase from './components/dynamic/BeforeAfterShowcase'
 
-// Dedicated Standalone Pages
-import PlantDoctorPage from './pages/PlantDoctorPage'
-import BlogPage from './pages/BlogPage'
-import ServicesPage from './pages/ServicesPage'
-import StudioPage from './pages/StudioPage'
-import ProjectsPage from './pages/ProjectsPage'
-import AboutPage from './pages/AboutPage'
-import ContactPage from './pages/ContactPage'
+// Code-split Dedicated Standalone Pages
+const PlantDoctorPage = lazy(() => import('./pages/PlantDoctorPage'))
+const BlogPage = lazy(() => import('./pages/BlogPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const StudioPage = lazy(() => import('./pages/StudioPage'))
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+
+function PageFallback() {
+  return (
+    <div className="min-h-screen bg-cream flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3 rounded-3xl glass-panel p-8 shadow-lift border border-white/85">
+        <div className="size-9 rounded-full border-3 border-emerald/25 border-t-emerald animate-spin" />
+        <span className="font-display text-xs font-bold uppercase tracking-wider text-forest">Dhanshiri Garden</span>
+      </div>
+    </div>
+  )
+}
 
 function HomePage() {
   const { t } = useLocale()
@@ -83,14 +95,56 @@ function HomePage() {
 function MainContent() {
   const { route } = useRouter()
 
-  // Multi-Page Routes
-  if (route === '/services') return <ServicesPage />
-  if (route === '/studio') return <StudioPage />
-  if (route === '/projects') return <ProjectsPage />
-  if (route === '/about') return <AboutPage />
-  if (route === '/contact') return <ContactPage />
-  if (route === '/plant-doctor') return <PlantDoctorPage />
-  if (route === '/blog') return <BlogPage />
+  // Multi-Page Routes with Suspense
+  if (route === '/services') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <ServicesPage />
+      </Suspense>
+    )
+  }
+  if (route === '/studio') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <StudioPage />
+      </Suspense>
+    )
+  }
+  if (route === '/projects') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <ProjectsPage />
+      </Suspense>
+    )
+  }
+  if (route === '/about') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <AboutPage />
+      </Suspense>
+    )
+  }
+  if (route === '/contact') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <ContactPage />
+      </Suspense>
+    )
+  }
+  if (route === '/plant-doctor') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <PlantDoctorPage />
+      </Suspense>
+    )
+  }
+  if (route === '/blog') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <BlogPage />
+      </Suspense>
+    )
+  }
 
   // Default Route: Home Landing Page
   return <HomePage />

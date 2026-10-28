@@ -25,7 +25,14 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-12 lg:gap-14">
           {/* Col 1: Brand & Credentials */}
           <div className="md:col-span-5">
-            <Logo />
+            <a
+              href="#/"
+              onClick={(e) => handleLink(e, '/')}
+              aria-label={t.nav.home}
+              className="inline-block transition-transform hover:scale-[1.02]"
+            >
+              <Logo />
+            </a>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-charcoal/80">
               {t.meta.description}
             </p>

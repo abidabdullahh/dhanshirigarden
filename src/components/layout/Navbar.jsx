@@ -167,7 +167,9 @@ export default function Navbar() {
           <div className="flex h-full w-full max-w-sm flex-col glass-panel p-6 shadow-2xl">
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-forest/10 pb-4">
-              <Logo />
+              <a href="#/" onClick={(e) => handleNavClick(e, '/')} aria-label={t.nav.home}>
+                <Logo />
+              </a>
               <button
                 type="button"
                 aria-label={t.nav.close}
