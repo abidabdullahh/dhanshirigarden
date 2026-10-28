@@ -3,22 +3,24 @@ const base =
 
 const sizes = {
   sm: 'px-4 py-2 text-sm',
-  md: 'px-5 py-3 text-[0.95rem]',
-  lg: 'px-7 py-4 text-base',
+  md: 'px-5 py-2.5 text-[0.95rem]',
+  lg: 'px-6 py-3.5 text-base',
 }
 
 const variants = {
-  primary: 'bg-forest text-white shadow-soft hover:bg-emerald hover:shadow-lift',
+  primary:
+    'bg-gradient-to-r from-forest via-emerald to-forest text-white shadow-soft hover:shadow-lift border border-emerald-400/30 backdrop-blur-md',
   bright: 'bg-bright text-forest shadow-soft hover:bg-[#6cc59b]',
-  sun: 'bg-bloom text-charcoal shadow-soft hover:bg-[#e3a73c]',
-  white: 'bg-white text-forest shadow-soft hover:bg-mint',
-  glass: 'glass-green text-forest hover:bg-bright/25',
-  outline: 'border border-forest/25 text-forest hover:border-forest hover:bg-forest hover:text-white',
+  sun: 'glass-amber text-charcoal shadow-soft hover:brightness-105',
+  white: 'bg-white/90 backdrop-blur-md text-forest border border-white shadow-soft hover:bg-white hover:shadow-lift',
+  glass: 'glass-card text-forest hover:bg-white/90 hover:text-emerald hover:border-emerald-300 shadow-soft',
+  'glass-emerald': 'glass-emerald hover:brightness-110 shadow-lift',
+  outline: 'border border-forest/25 bg-white/40 backdrop-blur-md text-forest hover:border-forest hover:bg-forest hover:text-white',
 }
 
 /** Link-styled-as-button when `href` is given, otherwise a real <button>. */
 export default function Button({ href, variant = 'primary', size = 'md', icon: Icon, className = '', children, ...rest }) {
-  const classes = `${base} ${sizes[size]} ${variants[variant]} ${className}`
+  const classes = `${base} ${sizes[size]} ${variants[variant] || variants.primary} ${className}`
   const content = (
     <>
       {Icon && (

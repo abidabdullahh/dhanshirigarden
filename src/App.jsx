@@ -17,30 +17,23 @@ import Rooftop from './components/sections/Rooftop'
 import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
 
-// High-utility client features
+// Dynamic high-utility client features
 import GardenStudio from './components/dynamic/GardenStudio'
 import GrowthSimulator from './components/dynamic/GrowthSimulator'
 import BeforeAfterShowcase from './components/dynamic/BeforeAfterShowcase'
 
-// Dedicated Pages (Separated with permalinks)
+// Dedicated Standalone Pages
 import PlantDoctorPage from './pages/PlantDoctorPage'
 import BlogPage from './pages/BlogPage'
+import ServicesPage from './pages/ServicesPage'
+import StudioPage from './pages/StudioPage'
+import ProjectsPage from './pages/ProjectsPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
 
-function MainContent() {
+function HomePage() {
   const { t } = useLocale()
-  const { route } = useRouter()
 
-  // Route 1: Standalone Plant Doctor AI Diagnostic Suite
-  if (route === '/plant-doctor') {
-    return <PlantDoctorPage />
-  }
-
-  // Route 2: Standalone Agronomy Blog & Guides Collection
-  if (route === '/blog') {
-    return <BlogPage />
-  }
-
-  // Route 3: Main Landing Page (Clean, Swiss Architectural Layout)
   return (
     <>
       <a
@@ -53,19 +46,19 @@ function MainContent() {
       <Navbar />
 
       <main id="main">
-        {/* Hero with blurred video background + integrated compact climate bulletin */}
+        {/* Hero with blurred video background + climate bulletin */}
         <Hero />
 
         {/* Core Credentials & Authority Stats */}
         <Stats />
 
-        {/* Swiss Architectural CAD Studio & Itemized BOQ Estimator */}
+        {/* CAD Studio & Itemized BOQ Estimator */}
         <GardenStudio />
 
-        {/* Focused Core Services (No respecialties clutter) */}
+        {/* Focused Core Services */}
         <Services />
 
-        {/* Engineering Sections */}
+        {/* Engineering Deep Dives */}
         <Rooftop />
         <Lawn />
 
@@ -85,6 +78,22 @@ function MainContent() {
       <FloatingActions />
     </>
   )
+}
+
+function MainContent() {
+  const { route } = useRouter()
+
+  // Multi-Page Routes
+  if (route === '/services') return <ServicesPage />
+  if (route === '/studio') return <StudioPage />
+  if (route === '/projects') return <ProjectsPage />
+  if (route === '/about') return <AboutPage />
+  if (route === '/contact') return <ContactPage />
+  if (route === '/plant-doctor') return <PlantDoctorPage />
+  if (route === '/blog') return <BlogPage />
+
+  // Default Route: Home Landing Page
+  return <HomePage />
 }
 
 export default function App() {

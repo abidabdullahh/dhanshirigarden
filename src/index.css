@@ -1,13 +1,10 @@
 @import 'tailwindcss';
 
 /* ------------------------------------------------------------------
-   DESIGN TOKENS
-   Palette: forest / emerald / bright (greens), mint (tint), cream (light
-   ground), ink (blueprint blue-grey), bloom (marigold — the one playful
-   accent), charcoal (text).
-   Fonts are bundled through fontsource (see main.jsx) so the site never
-   depends on a third-party font CDN. Li Ador Noirrit is loaded at runtime
-   from src/assets/fonts when the font file is present (see lib/brandFont.js).
+   DESIGN TOKENS — DHANSHIRI GARDEN GLASSMORPHISM
+   Palette: forest / emerald / bright (botanical greens), mint (translucent tint),
+   cream (luminous ground), ink (blueprint blue-grey), bloom (golden marigold),
+   charcoal (readable typography).
 ------------------------------------------------------------------- */
 @theme static {
   --color-forest: #1b4332;
@@ -27,8 +24,9 @@
   --font-display-bn: 'Li Ador Noirrit', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
   --font-body-bn: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
 
-  --shadow-soft: 0 10px 30px -14px rgb(27 67 50 / 0.28);
-  --shadow-lift: 0 26px 56px -22px rgb(27 67 50 / 0.42);
+  --shadow-soft: 0 10px 30px -14px rgb(27 67 50 / 0.25);
+  --shadow-lift: 0 24px 50px -18px rgb(27 67 50 / 0.35);
+  --shadow-glass: 0 12px 38px -10px rgb(27 67 50 / 0.12), inset 0 1px 1px 0 rgb(255 255 255 / 0.85);
 
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 11s ease-in-out infinite;
@@ -40,7 +38,7 @@
   --animate-grow: grow 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
   --animate-sway: sway 6s ease-in-out infinite;
   --animate-drip: drip 1.9s ease-in infinite;
-  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 @keyframes float {
@@ -107,15 +105,6 @@
   }
 }
 
-@keyframes vine-grow {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
 @keyframes grow {
   from {
     opacity: 0;
@@ -154,7 +143,7 @@
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(22px);
   }
   to {
     opacity: 1;
@@ -169,10 +158,10 @@
 :root {
   --font-display: var(--font-display-en);
   --font-body: var(--font-body-en);
-  --lh-display: 1.06;
-  --ls-display: -0.028em;
+  --lh-display: 1.08;
+  --ls-display: -0.025em;
   --lh-body: 1.7;
-  --ls-eyebrow: 0.14em;
+  --ls-eyebrow: 0.12em;
 }
 
 html[lang='bn'] {
@@ -204,62 +193,111 @@ html[lang='bn'] {
 }
 
 /* ------------------------------------------------------------------
-   GREEN-TINTED GLASS (light backgrounds) + BLUEPRINT TEXTURE
+   GLASSMORPHISM DESIGN SYSTEM (Light, Night, Sunset, Rain)
+   Frosted translucent surfaces, specular lighting, luminous borders,
+   diffuse botanical depth, and smooth sheen reflections.
 ------------------------------------------------------------------- */
+@utility glass-surface {
+  background-color: rgb(255 255 255 / 0.65);
+  backdrop-filter: blur(22px) saturate(190%);
+  -webkit-backdrop-filter: blur(22px) saturate(190%);
+  border: 1px solid rgb(255 255 255 / 0.75);
+  box-shadow: 0 10px 32px -8px rgb(27 67 50 / 0.08), inset 0 1px 1px 0 rgb(255 255 255 / 0.9);
+}
+
+@utility glass-panel {
+  background-color: rgb(255 255 255 / 0.75);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgb(255 255 255 / 0.85);
+  box-shadow: 0 16px 44px -10px rgb(27 67 50 / 0.12), inset 0 1px 2px 0 rgb(255 255 255 / 0.95);
+}
+
+@utility glass-card {
+  background-color: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgb(255 255 255 / 0.8);
+  box-shadow: 0 12px 34px -8px rgb(27 67 50 / 0.09), inset 0 1px 1px 0 rgb(255 255 255 / 0.9);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility glass-nav {
+  background-color: rgb(255 255 255 / 0.78);
+  backdrop-filter: blur(26px) saturate(200%);
+  -webkit-backdrop-filter: blur(26px) saturate(200%);
+  border: 1px solid rgb(255 255 255 / 0.85);
+  box-shadow: 0 12px 36px -10px rgb(27 67 50 / 0.1), inset 0 1px 1px 0 rgb(255 255 255 / 0.95);
+}
+
+@utility glass-pill {
+  background-color: rgb(255 255 255 / 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgb(255 255 255 / 0.8);
+  box-shadow: 0 4px 18px -4px rgb(27 67 50 / 0.07), inset 0 1px 1px rgb(255 255 255 / 0.9);
+}
+
+@utility glass-emerald {
+  background: linear-gradient(135deg, rgb(45 106 79 / 0.9), rgb(27 67 50 / 0.95));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgb(130 224 170 / 0.45);
+  box-shadow: 0 14px 36px -8px rgb(27 67 50 / 0.35), inset 0 1px 1px 0 rgb(255 255 255 / 0.35);
+  color: #ffffff;
+}
+
+@utility glass-amber {
+  background: linear-gradient(135deg, rgb(217 154 43 / 0.18), rgb(251 239 210 / 0.65));
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgb(217 154 43 / 0.35);
+  box-shadow: 0 10px 28px -8px rgb(217 154 43 / 0.15), inset 0 1px 1px 0 rgb(255 255 255 / 0.8);
+}
+
 @utility glass-green {
-  background-color: rgb(82 183 136 / 0.14);
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid rgb(82 183 136 / 0.35);
+  background-color: rgb(82 183 136 / 0.18);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgb(82 183 136 / 0.4);
+  box-shadow: 0 8px 28px -6px rgb(27 67 50 / 0.1), inset 0 1px 1px 0 rgb(255 255 255 / 0.7);
 }
 
 @utility glass-green-strong {
-  background-color: rgb(216 243 220 / 0.62);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgb(82 183 136 / 0.42);
+  background-color: rgb(216 243 220 / 0.7);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid rgb(82 183 136 / 0.5);
+  box-shadow: 0 10px 32px -8px rgb(27 67 50 / 0.12), inset 0 1px 2px 0 rgb(255 255 255 / 0.9);
 }
 
 @utility glass-white {
-  background-color: rgb(255 255 255 / 0.6);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgb(255 255 255 / 0.75);
-}
-
-/* Green-tinted glass that stays readable on top of photographs. */
-@utility glass-card {
-  background-color: rgb(246 252 248 / 0.92);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-  border: 1px solid rgb(82 183 136 / 0.5);
-}
-
-@utility blueprint-grid {
-  background-image:
-    linear-gradient(rgb(27 67 50 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(27 67 50 / 0.06) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-color: rgb(255 255 255 / 0.68);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.85);
+  box-shadow: 0 10px 30px -8px rgb(27 67 50 / 0.08), inset 0 1px 1px 0 rgb(255 255 255 / 0.95);
 }
 
 @utility mesh-glow {
   background-image:
-    radial-gradient(circle at 12% 18%, rgb(82 183 136 / 0.24), transparent 42%),
-    radial-gradient(circle at 88% 70%, rgb(217 154 43 / 0.14), transparent 40%),
-    radial-gradient(circle at 70% 8%, rgb(45 106 79 / 0.14), transparent 38%);
+    radial-gradient(circle at 12% 18%, rgb(82 183 136 / 0.28), transparent 45%),
+    radial-gradient(circle at 86% 72%, rgb(217 154 43 / 0.2), transparent 44%),
+    radial-gradient(circle at 72% 12%, rgb(45 106 79 / 0.2), transparent 40%),
+    radial-gradient(circle at 38% 88%, rgb(56 189 248 / 0.15), transparent 42%);
 }
 
 /* Leaf-shaped frames: two opposite corners are swept, the other two stay soft. */
 @utility leaf-a {
-  border-radius: min(9rem, 42%) 1rem min(9rem, 42%) 1rem;
+  border-radius: min(9rem, 42%) 1.25rem min(9rem, 42%) 1.25rem;
 }
 @utility leaf-b {
-  border-radius: 1rem min(9rem, 42%) 1rem min(9rem, 42%);
+  border-radius: 1.25rem min(9rem, 42%) 1.25rem min(9rem, 42%);
 }
 
 /* Orchestrated page-load entrance: set --d (delay) inline. */
 @utility enter {
-  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   animation-delay: var(--d, 0s);
 }
 
@@ -325,13 +363,12 @@ html[lang='bn'] {
   [tabindex]:focus-visible {
     outline: 2px solid var(--color-emerald);
     outline-offset: 3px;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
   }
 }
 
 /* ------------------------------------------------------------------
-   SCROLL REVEAL — hidden state only applies once JS has opted in, so
-   content is never invisible without JavaScript.
+   SCROLL REVEAL
 ------------------------------------------------------------------- */
 .reveal {
   transition:
@@ -344,13 +381,10 @@ html[lang='bn'] {
   transform: translateY(22px);
 }
 
-/* Bangla has taller matras and below-line marks than Latin, so small body text needs more air.
-   Unlayered on purpose: it must win over the (layered) Tailwind leading utility. */
 html[lang='bn'] .leading-snug {
   line-height: 1.6;
 }
 
-/* hero squiggle underline: draws itself once on load */
 .squiggle-path {
   stroke-dasharray: 340;
   stroke-dashoffset: 340;
@@ -382,17 +416,18 @@ html[lang='bn'] .leading-snug {
 
 /* ------------------------------------------------------------------
    DYNAMIC LIVING ATMOSPHERES (Night, Sunset, Rain, Sun)
+   Adaptive Glassmorphic surfaces that respond to daylight/time
 ------------------------------------------------------------------- */
 html {
   transition: background-color 0.8s ease, color 0.8s ease;
 }
 
 html[data-atmosphere='night'] {
-  --color-cream: #141f1a;
+  --color-cream: #101c16;
   --color-charcoal: #e2e8f0;
 }
 html[data-atmosphere='night'] body {
-  background-color: #121d18;
+  background-color: #0e1913;
   color: #e2e8f0;
 }
 html[data-atmosphere='night'] h1,
@@ -402,21 +437,49 @@ html[data-atmosphere='night'] h4 {
   color: #d1fae5;
 }
 
+html[data-atmosphere='night'] .glass-panel,
+html[data-atmosphere='night'] .glass-card,
+html[data-atmosphere='night'] .glass-surface,
+html[data-atmosphere='night'] .glass-nav {
+  background-color: rgb(16 28 22 / 0.78);
+  border-color: rgb(82 183 136 / 0.25);
+  box-shadow: 0 16px 44px -10px rgb(0 0 0 / 0.55), inset 0 1px 1px 0 rgb(255 255 255 / 0.12);
+  color: #e2e8f0;
+}
+
+html[data-atmosphere='night'] .glass-pill {
+  background-color: rgb(24 42 34 / 0.72);
+  border-color: rgb(82 183 136 / 0.3);
+  color: #d1fae5;
+}
+
 html[data-atmosphere='sunset'] {
-  --color-cream: #fbf6ee;
+  --color-cream: #fbf5ed;
 }
 html[data-atmosphere='sunset'] .mesh-glow {
   background-image:
     radial-gradient(circle at 18% 22%, rgb(249 115 22 / 0.22), transparent 46%),
-    radial-gradient(circle at 82% 65%, rgb(217 154 43 / 0.2), transparent 44%),
+    radial-gradient(circle at 82% 65%, rgb(217 154 43 / 0.22), transparent 44%),
     radial-gradient(circle at 50% 8%, rgb(225 29 72 / 0.12), transparent 40%);
+}
+html[data-atmosphere='sunset'] .glass-panel,
+html[data-atmosphere='sunset'] .glass-card,
+html[data-atmosphere='sunset'] .glass-nav {
+  background-color: rgb(255 250 242 / 0.75);
+  border-color: rgb(255 237 213 / 0.8);
 }
 
 html[data-atmosphere='rain'] {
-  --color-cream: #f2f7f5;
+  --color-cream: #f0f7f5;
 }
 html[data-atmosphere='rain'] .mesh-glow {
   background-image:
-    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.18), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.2), transparent 45%);
+    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.2), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.22), transparent 45%);
+}
+html[data-atmosphere='rain'] .glass-panel,
+html[data-atmosphere='rain'] .glass-card,
+html[data-atmosphere='rain'] .glass-nav {
+  background-color: rgb(240 248 246 / 0.75);
+  border-color: rgb(224 242 254 / 0.8);
 }

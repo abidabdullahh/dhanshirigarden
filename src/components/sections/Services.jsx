@@ -37,25 +37,35 @@ function ServiceDetail({ serviceKey }) {
   const meta = serviceMeta[serviceKey]
   return (
     <div className="animate-rise [animation-duration:0.4s]">
-      <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-mint border border-forest/15">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-mint border border-white/60 shadow-inner">
         <Img photo={photos[meta.photo]} width={1000} sizes="(min-width: 1024px) 45vw, 92vw" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-transparent to-transparent" />
+        <div className="absolute bottom-3 left-4 right-4 text-white">
+          <span className="font-mono text-[0.68rem] tracking-widest uppercase text-bright">
+            ENGINEERING SPECIFICATION
+          </span>
+          <h4 className="font-display text-xl font-bold text-white">{item.title}</h4>
+        </div>
       </div>
-      <h3 className="mt-5 font-display text-2xl font-bold text-forest">{item.title}</h3>
-      <p className="mt-2.5 text-base leading-relaxed text-charcoal/80">{item.desc}</p>
-      <ul className="mt-4 grid gap-2">
+
+      <p className="mt-4 text-base leading-relaxed text-charcoal/85">{item.desc}</p>
+      
+      <ul className="mt-4 grid gap-2.5">
         {item.points.map((point) => (
-          <li key={point} className="flex items-start gap-3 text-sm leading-snug text-charcoal/85">
-            <span className="mt-0.5 grid size-4 shrink-0 place-items-center rounded-full bg-emerald/20 text-emerald">
+          <li key={point} className="flex items-start gap-3 text-sm leading-snug text-charcoal/90">
+            <span className="mt-0.5 grid size-4.5 shrink-0 place-items-center rounded-full glass-emerald text-white shadow-xs">
               <Check className="size-3" strokeWidth={3} aria-hidden="true" />
             </span>
-            <span>{point}</span>
+            <span className="font-medium">{point}</span>
           </li>
         ))}
       </ul>
-      <div className="mt-6 border-t border-forest/10 pt-4">
-        <Button href={getWhatsAppLink(item.title, null, lang)} icon={MessageCircle} size="md">
+
+      <div className="mt-6 border-t border-forest/10 pt-4 flex items-center justify-between">
+        <Button href={getWhatsAppLink(item.title, null, lang)} icon={MessageCircle} size="md" variant="primary">
           {t.actions.whatsapp}
         </Button>
+        <span className="text-xs font-mono text-forest/70">DAE STANDARD PROTOCOL</span>
       </div>
     </div>
   )
@@ -74,7 +84,11 @@ export default function Services() {
   }, [])
 
   return (
-    <Section id="services" className="border-t border-forest/10">
+    <Section id="services" className="relative overflow-hidden">
+      {/* Background Glass Lighting */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-20 top-40 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-20 bottom-20 -z-10 size-96 rounded-full bg-bloom/20 blur-3xl" />
+
       <Container>
         <SectionHeading
           eyebrow={t.services.eyebrow}
@@ -85,7 +99,7 @@ export default function Services() {
 
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Services List Selector */}
-          <ul className="grid content-start gap-2.5 lg:col-span-5" aria-label={t.services.listLabel}>
+          <ul className="grid content-start gap-3 lg:col-span-5" aria-label={t.services.listLabel}>
             {serviceKeys.map((key) => {
               const item = t.services.items[key]
               const meta = serviceMeta[key]
@@ -98,33 +112,35 @@ export default function Services() {
                     type="button"
                     onClick={() => setActive(key)}
                     aria-current={isActive ? 'true' : undefined}
-                    className={`group flex w-full items-center justify-between rounded-xl border p-4 text-left transition-all duration-200 ${
+                    className={`group flex w-full items-center justify-between rounded-2xl p-4 text-left transition-all duration-300 ${
                       isActive
-                        ? 'border-forest bg-forest text-white shadow-soft'
-                        : 'border-forest/10 bg-white/70 text-forest hover:bg-forest/5'
+                        ? 'glass-emerald shadow-lift scale-[1.02]'
+                        : 'glass-card hover:bg-white hover:border-emerald-300 hover:shadow-soft'
                     }`}
                   >
                     <span className="flex items-center gap-3.5">
                       <span
-                        className={`grid size-10 shrink-0 place-items-center rounded-lg ${
-                          isActive ? 'bg-white/15 text-white' : 'bg-forest/5 text-emerald'
+                        className={`grid size-11 shrink-0 place-items-center rounded-xl transition-colors ${
+                          isActive ? 'bg-white/20 text-white' : 'glass-pill text-emerald'
                         }`}
                       >
                         <Icon className="size-5" aria-hidden="true" />
                       </span>
                       <span>
-                        <strong className="block font-display text-base font-bold leading-tight">{item.title}</strong>
-                        <span className={`block text-xs ${isActive ? 'text-white/75' : 'text-charcoal/65'}`}>
+                        <strong className={`block font-display text-base font-bold leading-tight ${isActive ? 'text-white' : 'text-forest'}`}>
+                          {item.title}
+                        </strong>
+                        <span className={`block text-xs mt-0.5 line-clamp-1 ${isActive ? 'text-white/80' : 'text-charcoal/70'}`}>
                           {item.desc}
                         </span>
                       </span>
                     </span>
-                    <ChevronRight className={`size-4 transition-transform ${isActive ? 'text-bright' : 'text-forest/30 group-hover:translate-x-1'}`} />
+                    <ChevronRight className={`size-4.5 transition-transform duration-200 ${isActive ? 'text-white translate-x-1' : 'text-forest/40 group-hover:translate-x-1'}`} />
                   </button>
 
                   {/* Mobile expansion */}
                   {isActive && (
-                    <div className="mt-3 rounded-xl border border-forest/15 bg-white p-4 shadow-sm lg:hidden">
+                    <div className="mt-3 rounded-2xl glass-panel p-5 shadow-soft lg:hidden">
                       <ServiceDetail serviceKey={key} />
                     </div>
                   )}
@@ -136,9 +152,9 @@ export default function Services() {
           {/* Desktop Detail Card */}
           <div className="hidden lg:col-span-7 lg:block">
             <InteractiveCard3D
-              maxTilt={3}
-              glare={false}
-              className="sticky top-28 rounded-2xl border border-forest/15 bg-white p-6 shadow-lift"
+              maxTilt={4}
+              glare={true}
+              className="sticky top-28 rounded-3xl glass-panel p-7 shadow-lift border border-white/80"
             >
               <ServiceDetail key={active} serviceKey={active} />
             </InteractiveCard3D>

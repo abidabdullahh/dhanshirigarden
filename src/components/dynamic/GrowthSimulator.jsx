@@ -16,9 +16,9 @@ export default function GrowthSimulator() {
   const progress = stageIndex / 4
 
   return (
-    <Section id="growth-simulator" className="relative overflow-hidden bg-gradient-to-b from-transparent via-mint/20 to-transparent">
-      <div aria-hidden="true" className="absolute -left-32 top-20 -z-10 size-96 rounded-full bg-bright/15 blur-3xl" />
-      <div aria-hidden="true" className="absolute -right-32 bottom-10 -z-10 size-96 rounded-full bg-bloom/10 blur-3xl" />
+    <Section id="growth-simulator" className="relative isolate overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-20 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-10 -z-10 size-96 rounded-full bg-bloom/15 blur-3xl" />
 
       <Container>
         <SectionHeading
@@ -32,14 +32,14 @@ export default function GrowthSimulator() {
           {/* Visual Transformation Stage Canvas */}
           <div className="lg:col-span-7">
             <InteractiveCard3D
-              maxTilt={5}
-              className="relative aspect-[16/10] w-full overflow-hidden rounded-[2.5rem] bg-gradient-to-b from-sky-100/70 via-cream to-mint/30 p-6 shadow-lift ring-1 ring-bright/30"
+              maxTilt={4}
+              className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl glass-panel p-6 shadow-lift border border-white/85"
             >
               {/* Sky & sun atmospheric background */}
               <div
                 className="absolute inset-0 transition-opacity duration-700"
                 style={{
-                  background: `linear-gradient(180deg, rgba(82, 183, 136, ${0.1 + progress * 0.25}) 0%, rgba(248, 249, 250, 0.9) 100%)`,
+                  background: `linear-gradient(180deg, rgba(82, 183, 136, ${0.1 + progress * 0.25}) 0%, rgba(248, 249, 250, 0.8) 100%)`,
                 }}
               />
 
@@ -214,13 +214,13 @@ export default function GrowthSimulator() {
 
           {/* Interactive Timeline Stepper & Details */}
           <div className="lg:col-span-5">
-            <div className="rounded-[2.25rem] glass-card p-6 shadow-lift ring-1 ring-bright/30 sm:p-8">
-              <span className="text-xs font-bold uppercase tracking-wider text-forest/70">
+            <div className="rounded-3xl glass-panel p-6 shadow-lift border border-white/85 sm:p-8">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald">
                 {copy.sliderLabel}
               </span>
 
               {/* 5-Stage Stepper Buttons */}
-              <div className="mt-4 grid grid-cols-5 gap-1.5 rounded-2xl bg-forest/5 p-1.5 ring-1 ring-forest/10">
+              <div className="mt-4 grid grid-cols-5 gap-1.5 rounded-2xl glass-surface p-1.5 border border-white/70">
                 {stages.map((stage, idx) => {
                   const isActive = stageIndex === idx
                   return (
@@ -228,10 +228,10 @@ export default function GrowthSimulator() {
                       key={stage.time}
                       type="button"
                       onClick={() => setStageIndex(idx)}
-                      className={`flex flex-col items-center justify-center rounded-xl py-2 text-xs font-semibold transition-all duration-300 ${
+                      className={`flex flex-col items-center justify-center rounded-xl py-2 text-xs font-bold transition-all duration-300 ${
                         isActive
-                          ? 'bg-forest text-white shadow-soft scale-105'
-                          : 'text-forest/70 hover:bg-forest/10 hover:text-forest'
+                          ? 'glass-emerald text-white shadow-soft scale-105 border border-emerald-400/50'
+                          : 'text-forest/75 hover:bg-white/60 hover:text-forest'
                       }`}
                     >
                       <span className="text-[0.68rem] opacity-75">{n(idx + 1)}</span>

@@ -4,7 +4,6 @@ import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
-import { LeafDoodle, PlanTree, ScissorsDoodle } from '../ui/Doodles'
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from '../ui/Icons'
 import { Container, Section } from '../ui/Section'
 
@@ -17,17 +16,17 @@ function CopyButton({ text }) {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
-      /* clipboard may be blocked; the address stays selectable on the page */
+      /* clipboard fallback */
     }
   }
   return (
     <button
       type="button"
       onClick={copy}
-      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.85rem] font-semibold text-emerald transition-colors hover:bg-mint"
+      className="inline-flex items-center gap-1.5 rounded-full glass-pill px-3 py-1.5 text-xs font-bold text-emerald transition hover:bg-white"
       aria-live="polite"
     >
-      {copied ? <Check className="size-4" aria-hidden="true" /> : <Copy className="size-4" aria-hidden="true" />}
+      {copied ? <Check className="size-3.5" aria-hidden="true" /> : <Copy className="size-3.5" aria-hidden="true" />}
       {copied ? t.contact.copied : t.contact.copy}
     </button>
   )
@@ -35,16 +34,16 @@ function CopyButton({ text }) {
 
 function Office({ icon: Icon, title, address, note }) {
   return (
-    <div className="rounded-[2rem] glass-white p-6 shadow-soft">
+    <div className="rounded-3xl glass-card p-6 shadow-soft border border-white/75">
       <div className="flex items-center gap-3">
-        <span className="grid size-11 place-items-center rounded-xl bg-mint text-emerald">
+        <span className="grid size-11 place-items-center rounded-2xl glass-emerald text-white shadow-soft">
           <Icon className="size-5" aria-hidden="true" />
         </span>
-        <h3 className="text-lg">{title}</h3>
+        <h3 className="text-lg font-bold text-forest">{title}</h3>
       </div>
-      <address className="mt-4 text-[1rem] not-italic leading-body text-charcoal/85">{address}</address>
-      {note && <p className="mt-1 text-sm text-emerald">{note}</p>}
-      <div className="mt-3 -ml-3">
+      <address className="mt-4 text-sm not-italic leading-relaxed text-charcoal/85">{address}</address>
+      {note && <p className="mt-1.5 text-xs font-semibold text-emerald">{note}</p>}
+      <div className="mt-4">
         <CopyButton text={address} />
       </div>
     </div>
@@ -62,27 +61,29 @@ export default function Contact() {
   ].filter((item) => item.url)
 
   return (
-    <Section id="contact" compact className="pb-32 md:pb-24">
+    <Section id="contact" compact className="relative isolate overflow-hidden pb-32 md:pb-24">
+      {/* Background Glass Lighting */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-10 -z-10 size-96 rounded-full bg-bright/25 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-10 -z-10 size-96 rounded-full bg-emerald/20 blur-3xl" />
+
       <Container>
-        <div className="relative overflow-hidden rounded-[2.75rem] glass-green-strong p-7 shadow-lift sm:p-12 lg:p-16">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 blueprint-grid opacity-60" />
-          <PlanTree className="pointer-events-none absolute -right-16 -top-16 size-72 text-forest/[0.09]" />
-          <LeafDoodle className="pointer-events-none absolute bottom-6 right-8 hidden size-20 rotate-12 animate-sway text-emerald sm:block" />
-          <ScissorsDoodle className="pointer-events-none absolute right-40 top-10 hidden size-14 -rotate-12 animate-float text-forest md:block" style={{ '--r': '-12deg' }} />
+        <div className="relative overflow-hidden rounded-3xl glass-panel p-7 sm:p-12 lg:p-14 shadow-lift border border-white/85">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 mesh-glow opacity-30" />
 
           <div className="relative grid gap-10 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <span className="mb-5 inline-flex -rotate-1 items-center gap-2 rounded-full bg-bloom-soft px-3.5 py-1.5 text-sm font-semibold text-forest ring-1 ring-bloom/35">
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full glass-pill px-4 py-1.5 text-xs font-bold text-forest uppercase tracking-wider">
                 <Sprout className="size-4 text-bloom" aria-hidden="true" />
                 {copy.eyebrow}
               </span>
-              <h2 className="text-[clamp(1.9rem,4.2vw,3.3rem)]">{copy.title}</h2>
-              <p className="mt-4 max-w-xl text-base leading-body text-charcoal/75 sm:text-lg">{copy.sub}</p>
+              <h2 className="text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold text-forest leading-tight">{copy.title}</h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-charcoal/80 sm:text-lg">{copy.sub}</p>
+              
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button href={getWhatsAppLink(null, null, lang)} size="lg" icon={MessageCircle}>
+                <Button href={getWhatsAppLink(null, null, lang)} size="lg" icon={MessageCircle} variant="primary">
                   {t.actions.whatsapp}
                 </Button>
-                <Button href={`tel:${site.phones[0].tel}`} variant="white" size="lg" icon={Phone}>
+                <Button href={`tel:${site.phones[0].tel}`} variant="glass" size="lg" icon={Phone}>
                   {t.actions.callNow}
                 </Button>
               </div>
@@ -93,14 +94,14 @@ export default function Contact() {
                 <li key={phone.tel}>
                   <a
                     href={`tel:${phone.tel}`}
-                    className="group flex items-center gap-4 rounded-2xl bg-white/75 px-4 py-3.5 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft"
+                    className="group flex items-center gap-4 rounded-2xl glass-card p-4 transition-all duration-300 hover:bg-white hover:scale-[1.02] hover:shadow-soft"
                   >
-                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-forest text-white">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl glass-emerald text-white shadow-soft">
                       <Phone className="size-5" aria-hidden="true" />
                     </span>
                     <span>
-                      <span className="block text-sm text-charcoal/65">{phone.label[lang]}</span>
-                      <span className="block font-display text-xl font-bold tabular-nums text-forest">{phone.number}</span>
+                      <span className="block text-xs text-charcoal/65 font-medium">{phone.label[lang]}</span>
+                      <span className="block font-display text-lg font-bold tabular-nums text-forest">{phone.number}</span>
                     </span>
                   </a>
                 </li>
@@ -108,14 +109,14 @@ export default function Contact() {
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="group flex items-center gap-4 rounded-2xl bg-white/75 px-4 py-3.5 transition duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-soft"
+                  className="group flex items-center gap-4 rounded-2xl glass-card p-4 transition-all duration-300 hover:bg-white hover:scale-[1.02] hover:shadow-soft"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-forest text-white">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl glass-emerald text-white shadow-soft">
                     <Mail className="size-5" aria-hidden="true" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm text-charcoal/65">{copy.email}</span>
-                    <span className="block break-all font-semibold text-forest">{site.email}</span>
+                    <span className="block text-xs text-charcoal/65 font-medium">{copy.email}</span>
+                    <span className="block break-all font-bold text-forest text-sm">{site.email}</span>
                   </span>
                 </a>
               </li>
@@ -123,26 +124,45 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
-          <Office icon={MapPin} title={copy.corporate} address={copy.dhakaAddress} />
-          <Office icon={Sprout} title={copy.nursery} address={copy.naogaonAddress} note={copy.nurseryNote} />
+        {/* Dual Location Offices */}
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <Office
+            icon={MapPin}
+            title={copy.corporate}
+            address={copy.dhakaAddress}
+            note={copy.dhakaNote}
+          />
+          <Office
+            icon={Sprout}
+            title={copy.nursery}
+            address={copy.naogaonAddress}
+            note={copy.naogaonNote}
+          />
         </div>
 
+        {/* Social Follow Bar */}
         {socials.length > 0 && (
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <span className="font-display text-base font-semibold text-forest">{copy.follow}</span>
-            {socials.map(({ key, Icon, url, label }) => (
-              <a
-                key={key}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="grid size-11 place-items-center rounded-full glass-green text-forest transition duration-200 hover:-translate-y-0.5 hover:bg-forest hover:text-white"
-              >
-                <Icon size={20} />
-              </a>
-            ))}
+          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl glass-card p-5 border border-white/75">
+            <span className="text-xs font-bold uppercase tracking-wider text-forest/80 font-mono">
+              {lang === 'bn' ? 'সোশ্যাল মিডিয়ায় আমাদের সাথে যুক্ত থাকুন' : 'Connect on Social Media'}
+            </span>
+            <div className="flex items-center gap-2">
+              {socials.map((soc) => {
+                const Icon = soc.Icon
+                return (
+                  <a
+                    key={soc.key}
+                    href={soc.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={soc.label}
+                    className="grid size-10 place-items-center rounded-xl glass-pill text-forest transition hover:bg-white hover:scale-105"
+                  >
+                    <Icon size={18} />
+                  </a>
+                )
+              })}
+            </div>
           </div>
         )}
       </Container>

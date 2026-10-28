@@ -1,44 +1,44 @@
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ChevronRight } from 'lucide-react'
 import { useLocale } from '../lib/locale'
 import { useRouter } from '../lib/router'
-import Logo from '../components/ui/Logo'
-import LangToggle from '../components/ui/LangToggle'
-import PlantDoctor from '../components/plant-doctor/PlantDoctor'
+import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
+import FloatingActions from '../components/layout/FloatingActions'
+import PlantDoctor from '../components/plant-doctor/PlantDoctor'
+import { Container } from '../components/ui/Section'
 
 export default function PlantDoctorPage() {
-  const { lang } = useLocale()
+  const { t, lang } = useLocale()
   const { navigate } = useRouter()
 
   return (
-    <div className="min-h-screen bg-cream">
-      {/* Swiss Style Sub-Page Header */}
-      <header className="sticky top-0 z-50 border-b border-forest/10 bg-cream/90 backdrop-blur-md">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <button
-            type="button"
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-sm font-semibold text-forest hover:text-emerald transition"
-          >
-            <ArrowLeft className="size-4" />
-            <span>{lang === 'bn' ? 'প্রচ্ছদে ফিরে যান' : 'Back to Home'}</span>
-          </button>
+    <div className="min-h-screen bg-cream text-charcoal flex flex-col">
+      <Navbar />
 
-          <a href="#/" onClick={(e) => { e.preventDefault(); navigate('/'); }}>
-            <Logo />
-          </a>
+      <main className="flex-1 pt-24 pb-16">
+        {/* Breadcrumb Navigation */}
+        <section className="pt-6 pb-4">
+          <Container>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold text-forest/70">
+              <button
+                type="button"
+                onClick={() => navigate('/')}
+                className="flex items-center gap-1.5 hover:text-emerald transition"
+              >
+                <ArrowLeft className="size-3.5" />
+                <span>{lang === 'bn' ? 'হোম' : 'Home'}</span>
+              </button>
+              <ChevronRight className="size-3 text-forest/30" />
+              <span className="text-emerald font-bold">{t.nav.plantDoctor}</span>
+            </nav>
+          </Container>
+        </section>
 
-          <div className="flex items-center gap-2">
-            <LangToggle />
-          </div>
-        </div>
-      </header>
-
-      <main className="py-8 sm:py-12">
         <PlantDoctor />
       </main>
 
       <Footer />
+      <FloatingActions />
     </div>
   )
 }

@@ -250,9 +250,9 @@ export default function Rooftop() {
   const legend = useMemo(() => copy.layers.map((layer, index) => ({ ...layer, index })).reverse(), [copy.layers])
 
   return (
-    <Section id="rooftop" className="bg-linear-to-b from-mint/50 via-mint/30 to-transparent">
-      <div aria-hidden="true" className="absolute inset-0 -z-10 blueprint-grid opacity-60 [mask-image:linear-gradient(to_bottom,black,transparent_90%)]" />
-      <div aria-hidden="true" className="absolute -right-24 top-40 -z-10 size-96 rounded-full bg-bloom/15 blur-3xl" />
+    <Section id="rooftop" className="relative isolate overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 mesh-glow opacity-40" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-40 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
 
       <Container>
         <SectionHeading eyebrow={copy.eyebrow} icon={Building2} title={copy.title} sub={copy.intro} />
@@ -260,14 +260,14 @@ export default function Rooftop() {
         <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-5">
             <div className="relative">
-              <div className="aspect-[4/5] overflow-hidden bg-mint shadow-lift ring-8 ring-white/70 leaf-b">
+              <div className="aspect-[4/5] overflow-hidden rounded-3xl bg-mint shadow-lift ring-8 ring-white/60">
                 <Img photo={photos.rooftopTerrace} width={1000} sizes="(min-width: 1024px) 40vw, 92vw" />
               </div>
-              <div className="absolute -bottom-10 left-4 right-4 rounded-3xl glass-green-strong p-5 shadow-lift sm:left-8 sm:right-8">
-                <p className="font-display text-base font-semibold text-forest">{copy.usesTitle}</p>
-                <ul className="mt-3 flex flex-wrap gap-2">
+              <div className="absolute -bottom-10 left-4 right-4 rounded-3xl glass-panel p-5 shadow-lift sm:left-8 sm:right-8 border border-white/80">
+                <p className="font-display text-base font-bold text-forest">{copy.usesTitle}</p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
                   {copy.uses.map((use) => (
-                    <li key={use} className="rounded-full bg-white/80 px-3 py-1.5 text-sm font-medium text-forest">
+                    <li key={use} className="rounded-full glass-pill px-3 py-1 text-xs font-semibold text-forest">
                       {use}
                     </li>
                   ))}
@@ -275,17 +275,17 @@ export default function Rooftop() {
               </div>
             </div>
             <div className="mt-20">
-              <Button href={getWhatsAppLink(t.services.items.rooftopPlanter.title, null, lang)} size="lg" icon={MessageCircle}>
+              <Button href={getWhatsAppLink(t.services.items.rooftopPlanter.title, null, lang)} size="lg" variant="primary" icon={MessageCircle}>
                 {copy.cta}
               </Button>
             </div>
           </div>
 
-          <div ref={ref} className="rounded-[2.25rem] glass-white p-5 shadow-lift sm:p-8 lg:col-span-7">
-            <h3 className="text-xl sm:text-2xl">{copy.layersTitle}</h3>
-            <p className="mt-1.5 text-sm leading-body text-charcoal/65">{copy.layersHint}</p>
+          <div ref={ref} className="rounded-3xl glass-panel p-6 shadow-lift border border-white/85 sm:p-8 lg:col-span-7">
+            <h3 className="text-xl font-bold text-forest sm:text-2xl">{copy.layersTitle}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed text-charcoal/75">{copy.layersHint}</p>
 
-            <div className="mt-5">
+            <div className="mt-5 rounded-2xl glass-card p-3">
               <RooftopDrawing
                 focus={focus}
                 active={inView}
@@ -294,7 +294,7 @@ export default function Rooftop() {
               />
             </div>
 
-            <ol className="mt-6 grid gap-2 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-3">
+            <ol className="mt-6 grid gap-2.5 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-3">
               {legend.map((layer) => {
                 const on = focus === layer.index
                 return (
@@ -307,20 +307,20 @@ export default function Rooftop() {
                       onFocus={() => setHover(layer.index)}
                       onBlur={() => setHover(null)}
                       onClick={() => setPinned((current) => (current === layer.index ? null : layer.index))}
-                      className={`flex h-full w-full items-start gap-3 rounded-2xl p-3 text-left transition-colors duration-200 ${
-                        on ? 'bg-bloom-soft ring-1 ring-bloom/40' : 'hover:bg-mint/60'
+                      className={`flex h-full w-full items-start gap-3 rounded-2xl p-3 text-left transition-all duration-200 ${
+                        on ? 'glass-amber shadow-soft scale-[1.02]' : 'glass-card hover:bg-white hover:scale-[1.01]'
                       }`}
                     >
                       <span
-                        className={`grid size-8 shrink-0 place-items-center rounded-full font-display text-sm font-bold transition-colors ${
-                          on ? 'bg-bloom text-charcoal' : 'bg-forest text-white'
+                        className={`grid size-8 shrink-0 place-items-center rounded-xl font-display text-xs font-bold transition-colors ${
+                          on ? 'bg-bloom text-charcoal' : 'glass-emerald text-white'
                         }`}
                       >
                         {n(layer.index + 1)}
                       </span>
                       <span>
-                        <span className="block font-display text-[1rem] font-semibold leading-snug text-forest">{layer.title}</span>
-                        <span className="mt-0.5 block text-[0.88rem] leading-snug text-charcoal/70">{layer.desc}</span>
+                        <span className="block font-display text-sm font-bold leading-snug text-forest">{layer.title}</span>
+                        <span className="mt-0.5 block text-xs leading-snug text-charcoal/75">{layer.desc}</span>
                       </span>
                     </button>
                   </li>

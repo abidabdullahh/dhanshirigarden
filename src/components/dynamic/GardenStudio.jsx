@@ -48,112 +48,98 @@ export default function GardenStudio() {
     setActiveLayers((prev) => ({ ...prev, [key]: !prev[key] }))
   }
 
-  // Realistic Itemized Bill of Quantities (BOQ) calculation
+  // Realistic Agronomy & Structural BOQ Cost calculation
   const boq = useMemo(() => {
+    const baseSqft = areaSqft
+
+    // Base waterproofing and root barrier (BDT 110/sqft)
+    const waterproofingCost = activeLayers.waterproofing ? baseSqft * 115 : 0
+
+    // Drainage cell layer + geo-textile filter fabric (BDT 95/sqft)
+    const drainageCost = activeLayers.drainage ? baseSqft * 95 : 0
+
+    // Engineered lightweight soil media mix (BDT 135/sqft)
+    const soilCost = activeLayers.soil ? baseSqft * 135 : 0
+
+    // Turf cost depending on selection (Korean BDT 80, Bermuda BDT 65, Zoysia BDT 90, WPC Decking BDT 320)
+    const turfRates = [85, 70, 95, 340]
+    const turfCost = activeLayers.turf ? (baseSqft * 0.6) * turfRates[turfIndex] : 0
+
+    // Container fruit trees + potting substrate
+    const fruitTreeCost = activeLayers.fruitTrees ? Math.max(4, Math.floor(baseSqft / 90)) * 2600 : 0
+
+    // Treated timber / MS pergola structure
+    const pergolaCost = activeLayers.pergola ? Math.min(220, baseSqft * 0.25) * 650 : 0
+
+    // Automated timer-controlled micro-drip network
+    const dripCost = activeLayers.smartDrip ? baseSqft * 38 + 5500 : 0
+
+    // IP68 LED landscape uplighting
+    const lightingCost = activeLayers.lighting ? Math.max(3, Math.floor(baseSqft / 80)) * 1400 : 0
+
+    const subtotal = Math.round(
+      waterproofingCost +
+      drainageCost +
+      soilCost +
+      turfCost +
+      fruitTreeCost +
+      pergolaCost +
+      dripCost +
+      lightingCost
+    )
+
+    const minEstimate = Math.round(subtotal * 0.95)
+    const maxEstimate = Math.round(subtotal * 1.15)
+
+    // Structural dead load calculation (BNBC 2020 residential roof compliance is max 400 kg/sqm ~ 37 kg/sqft)
+    let deadLoadKg = 12 // base construction
+    if (activeLayers.waterproofing) deadLoadKg += 4
+    if (activeLayers.drainage) deadLoadKg += 3
+    if (activeLayers.soil) deadLoadKg += 14
+    if (activeLayers.turf) deadLoadKg += 3
+    if (activeLayers.fruitTrees) deadLoadKg += 6
+
+    const coolingDelta = (activeLayers.turf ? 3.5 : 0) + (activeLayers.soil ? 2.5 : 0) + (activeLayers.pergola ? 2.0 : 0)
+
     const items = [
-      {
-        name: lang === 'bn' ? '৩-স্তর ইলাস্টোমেরিক রুফ ওয়াটারপ্রুফিং কোটিং' : '3-Layer Elastomeric Waterproofing Membrane',
-        cost: activeLayers.waterproofing ? areaSqft * 38 : 0,
-        active: activeLayers.waterproofing,
-      },
-      {
-        name: lang === 'bn' ? 'উচ্চ ঘনত্বের জিও-টেক্সটাইল ড্রেনেজ সেল ম্যাট্রিক্স' : 'High-Density Geo-Textile Drainage Cell Matrix',
-        cost: activeLayers.drainage ? areaSqft * 32 : 0,
-        active: activeLayers.drainage,
-      },
-      {
-        name: lang === 'bn' ? 'ডিএই সার্টিফায়েড লাইটওয়েট অর্গানিক সাবস্ট্রেট' : 'DAE-Certified Engineered Lightweight Substrate',
-        cost: activeLayers.soil ? areaSqft * 42 : 0,
-        active: activeLayers.soil,
-      },
-      {
-        name: copy.turfOptions[turfIndex],
-        cost: activeLayers.turf && turfIndex !== 3 ? areaSqft * (turfIndex === 0 ? 35 : 28) : 0,
-        active: activeLayers.turf && turfIndex !== 3,
-      },
-      {
-        name: lang === 'bn' ? 'কলমের ফলদ বাগান জোন (পেয়ারা, লেবু, আম্রপালি)' : 'Grafted Container Fruit Orchard Zone',
-        cost: activeLayers.fruitTrees ? 18500 : 0,
-        active: activeLayers.fruitTrees,
-      },
-      {
-        name: lang === 'bn' ? 'কাঠের নান্দনিক পারগোলা ও লতাগুল্ম ক্যানোপি' : 'Architectural Timber Pergola & Flowering Canopy',
-        cost: activeLayers.pergola ? 48000 : 0,
-        active: activeLayers.pergola,
-      },
-      {
-        name: lang === 'bn' ? 'স্মার্ট অটোমেটেড ড্রিপ ইরিগেশন রেটিকুলেশন' : 'Smart Automated Micro-Drip Reticulation System',
-        cost: activeLayers.smartDrip ? 16500 : 0,
-        active: activeLayers.smartDrip,
-      },
-      {
-        name: lang === 'bn' ? 'নাইট ল্যান্ডস্কেপ ৩০০০কে এলইডি আপলাইটিং' : 'Architectural Night 3000K LED Uplighting',
-        cost: activeLayers.lighting ? 14000 : 0,
-        active: activeLayers.lighting,
-      },
+      { name: lang === 'bn' ? '৫-স্তর রুট-ব্যারিয়ার ওয়াটারপ্রুফিং মেমব্রেন' : '5-Layer Root Barrier Waterproofing', cost: waterproofingCost, active: activeLayers.waterproofing },
+      { name: lang === 'bn' ? 'এইচডিপিই ইন্টারলকিং ড্রেনেজ সেল ও জিওটেক্সটাইল' : 'HDPE Interlocking Drainage Cells & Geotextile', cost: drainageCost, active: activeLayers.drainage },
+      { name: lang === 'bn' ? 'হালকা ওজনের ভার্মিকম্পোস্ট-পার্লাইট গ্রোয়িং মিডিয়া' : 'Lightweight Vermicompost-Perlite Engineered Soil', cost: soilCost, active: activeLayers.soil },
+      { name: `${copy.turfOptions[turfIndex]} ${lang === 'bn' ? 'কার্পেটিং' : 'Carpeting'}`, cost: turfCost, active: activeLayers.turf },
+      { name: lang === 'bn' ? 'কলম করা ফলদ ও নান্দনিক উদ্ভিদের কালেকশন' : 'Grafted Fruit Trees & Architectural Flora', cost: fruitTreeCost, active: activeLayers.fruitTrees },
+      { name: lang === 'bn' ? 'ট্রিটেড টিম্বার পারগোলা ও লতা ট্রেলিস' : 'Treated Timber Pergola & Trellis Structure', cost: pergolaCost, active: activeLayers.pergola },
+      { name: lang === 'bn' ? 'স্মার্ট টাইমার নিয়ন্ত্রিত অটো-ড্রিপ ইরিগেশন' : 'Smart Timer Automated Micro-Drip Irrigation', cost: dripCost, active: activeLayers.smartDrip },
+      { name: lang === 'bn' ? 'ওয়াটারপ্রুফ ওয়ার্ম-হোয়াইট আর্কিটেকচারাল লাইটিং' : 'IP68 Waterproof Architectural Uplighting', cost: lightingCost, active: activeLayers.lighting },
     ]
 
-    const subtotal = items.reduce((acc, it) => acc + it.cost, 0)
-    const minEstimate = Math.round((subtotal * 0.92) / 1000) * 1000
-    const maxEstimate = Math.round((subtotal * 1.12) / 1000) * 1000
-
-    // Dead load per sqft (kg/sqft)
-    const deadLoadKg = Math.min(22.5, Math.round(14 + (areaSqft / 1200) * 2.2))
-
-    // Thermal cooling delta in Celsius
-    const coolingDelta = (3.8 + (areaSqft / 1500) * 0.8).toFixed(1)
-
-    // Daily oxygen output in liters
-    const oxygenLiters = Math.round(areaSqft * 0.28)
-
     return {
-      items,
       subtotal,
       minEstimate,
       maxEstimate,
       deadLoadKg,
-      coolingDelta,
-      oxygenLiters,
+      coolingDelta: coolingDelta.toFixed(1),
+      items,
     }
-  }, [areaSqft, turfIndex, activeLayers, copy, lang])
+  }, [areaSqft, turfIndex, activeLayers, lang, copy])
 
-  // Formulate WhatsApp message with prefilled engineering blueprint
   const whatsappBlueprint = useMemo(() => {
-    const spaceTitle = currentSpace.name
-    const turfName = copy.turfOptions[turfIndex]
-    const enabledLayers = Object.keys(activeLayers)
-      .filter((k) => activeLayers[k])
-      .join(', ')
-
-    if (lang === 'bn') {
-      return `আসসালামু আলাইকুম জনাব আমির আলী,
-আমি ধানসিঁড়ি ওয়েবসাইটের 'আর্কিটেকচারাল ডিজাইন স্টুডিও' থেকে আমার প্রকল্পের একটি কারিগরি পরিকল্পনা প্রস্তুত করেছি:
-• স্থান: ${spaceTitle}
-• আনুমানিক আয়তন: ${areaSqft} বর্গফুট
-• ঘাসের ধরন: ${turfName}
-• নির্বাচিত লেয়ার: ${enabledLayers}
-• স্ট্রাকচারাল ওজন রেটিং: ${boq.deadLoadKg} কেজি/বর্গফুট (ডিএই ও বিএনবিসি অনুমোদিত)
-• তাপমাত্রা হ্রাস সূচক: -${boq.coolingDelta}° সে.
-• আনুমানিক প্রাক্কলন (BOQ): ৳${boq.minEstimate.toLocaleString()} - ৳${boq.maxEstimate.toLocaleString()}
-
-আমি সরাসরি সাইট ভিজিট ও বাস্তবায়নের জন্য আপনার সাথে পরামর্শ করতে আগ্রহী।`
-    }
-
-    return `Hello Mr. Amir Ali,
-I have formulated an architectural garden specification on Dhanshiri Garden's Studio:
-• Space Type: ${spaceTitle}
-• Planned Area: ${areaSqft} sq.ft
-• Turf Variety: ${turfName}
-• Active Layers: ${enabledLayers}
-• Dead Load Rating: ${boq.deadLoadKg} kg/sq.ft (BNBC Safe)
-• Thermal Cooling: -${boq.coolingDelta}°C
+    return `Dhanshiri Garden Architecture Studio Blueprint:
+• Selected Space: ${currentSpace.name} (${areaSqft} sq.ft)
+• Selected Turf: ${copy.turfOptions[turfIndex]}
+• Active Layers: ${Object.keys(activeLayers).filter((k) => activeLayers[k]).join(', ')}
+• Structural Load: ${boq.deadLoadKg} kg/sq.ft (BNBC Compliant)
+• Expected Ambient Roof Cooling: -${boq.coolingDelta}°C
 • Estimated BOQ Budget: BDT ${boq.minEstimate.toLocaleString()} - ${boq.maxEstimate.toLocaleString()}
 
 I would like to book an on-site structural audit and consultation.`
-  }, [currentSpace, areaSqft, turfIndex, activeLayers, boq, copy, lang])
+  }, [currentSpace, areaSqft, turfIndex, activeLayers, boq, copy])
 
   return (
-    <Section id="studio" className="border-t border-forest/10 bg-forest/[0.02]">
+    <Section id="studio" className="relative isolate overflow-hidden">
+      {/* Diffuse glass glows */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-20 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-20 -z-10 size-96 rounded-full bg-emerald/20 blur-3xl" />
+
       <Container>
         <SectionHeading
           eyebrow={copy.eyebrow}
@@ -165,13 +151,13 @@ I would like to book an on-site structural audit and consultation.`
         {/* Master Studio Workspace */}
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           {/* LEFT: Architectural Controls */}
-          <div className="space-y-5 lg:col-span-5">
+          <div className="space-y-4 lg:col-span-5">
             {/* Space Type Selector */}
-            <div className="rounded-xl border border-forest/15 bg-white p-4 shadow-sm">
-              <span className="font-mono text-[0.72rem] font-bold tracking-wider text-forest/70 uppercase">
+            <div className="rounded-3xl glass-card p-5 border border-white/75">
+              <span className="text-[0.72rem] font-bold tracking-wider text-forest/75 uppercase block mb-3 font-mono">
                 1. {lang === 'bn' ? 'প্রকল্পের ক্ষেত্র নির্বাচন' : 'Project Space Type'}
               </span>
-              <div className="mt-3 grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {copy.spaces.map((sp, idx) => {
                   const isSelected = spaceIndex === idx
                   return (
@@ -179,10 +165,10 @@ I would like to book an on-site structural audit and consultation.`
                       key={sp.id}
                       type="button"
                       onClick={() => setSpaceIndex(idx)}
-                      className={`flex flex-col items-start rounded-lg border p-3 text-left transition-all ${
+                      className={`flex flex-col items-start rounded-2xl p-3 text-left transition-all duration-200 ${
                         isSelected
-                          ? 'border-forest bg-forest text-white shadow-xs font-bold'
-                          : 'border-forest/10 bg-cream hover:bg-forest/5 text-forest/80'
+                          ? 'glass-emerald text-white shadow-soft font-bold scale-[1.02]'
+                          : 'glass-pill text-forest hover:bg-white'
                       }`}
                     >
                       <span className="text-xs">{sp.name}</span>
@@ -193,16 +179,16 @@ I would like to book an on-site structural audit and consultation.`
             </div>
 
             {/* Area Slider */}
-            <div className="rounded-xl border border-forest/15 bg-white p-4 shadow-sm">
+            <div className="rounded-3xl glass-card p-5 border border-white/75">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-[0.72rem] font-bold tracking-wider text-forest/70 uppercase">
+                <span className="text-[0.72rem] font-bold tracking-wider text-forest/75 uppercase font-mono">
                   2. {copy.areaLabel}
                 </span>
-                <span className="font-mono text-sm font-bold text-forest">
+                <span className="rounded-full glass-pill px-3 py-1 font-mono text-xs font-bold text-forest">
                   {n(areaSqft)} {copy.sqftUnit}
                 </span>
               </div>
-              <div className="mt-3">
+              <div className="mt-3.5">
                 <input
                   type="range"
                   min="150"
@@ -210,9 +196,9 @@ I would like to book an on-site structural audit and consultation.`
                   step="50"
                   value={areaSqft}
                   onChange={(e) => setAreaSqft(Number(e.target.value))}
-                  className="w-full accent-forest cursor-pointer"
+                  className="w-full accent-emerald cursor-pointer"
                 />
-                <div className="mt-1 flex justify-between font-mono text-[0.7rem] text-charcoal/50">
+                <div className="mt-2 flex justify-between font-mono text-[0.7rem] text-charcoal/60">
                   <span>{n(150)} sq.ft</span>
                   <span>{n(1500)}</span>
                   <span>{n(3000)}</span>
@@ -222,11 +208,11 @@ I would like to book an on-site structural audit and consultation.`
             </div>
 
             {/* Turf Selection */}
-            <div className="rounded-xl border border-forest/15 bg-white p-4 shadow-sm">
-              <span className="font-mono text-[0.72rem] font-bold tracking-wider text-forest/70 uppercase">
+            <div className="rounded-3xl glass-card p-5 border border-white/75">
+              <span className="text-[0.72rem] font-bold tracking-wider text-forest/75 uppercase font-mono block mb-2.5">
                 3. {copy.turfLabel}
               </span>
-              <div className="mt-2.5 grid gap-1.5">
+              <div className="grid gap-2">
                 {copy.turfOptions.map((opt, idx) => {
                   const isSelected = turfIndex === idx
                   return (
@@ -234,14 +220,14 @@ I would like to book an on-site structural audit and consultation.`
                       key={opt}
                       type="button"
                       onClick={() => setTurfIndex(idx)}
-                      className={`flex items-center justify-between rounded-lg border p-2.5 text-xs font-medium transition-all ${
+                      className={`flex items-center justify-between rounded-xl p-2.5 text-xs font-medium transition-all ${
                         isSelected
-                          ? 'border-forest bg-mint/50 font-bold text-forest'
-                          : 'border-forest/10 bg-white text-charcoal/70 hover:bg-forest/5'
+                          ? 'glass-emerald text-white shadow-soft font-bold'
+                          : 'glass-pill text-charcoal/80 hover:bg-white'
                       }`}
                     >
                       <span>{opt}</span>
-                      {isSelected && <Check className="size-3.5 text-emerald" strokeWidth={3} />}
+                      {isSelected && <Check className="size-3.5 text-white" strokeWidth={3} />}
                     </button>
                   )
                 })}
@@ -249,11 +235,11 @@ I would like to book an on-site structural audit and consultation.`
             </div>
 
             {/* Engineering Layers Toggle */}
-            <div className="rounded-xl border border-forest/15 bg-white p-4 shadow-sm">
-              <span className="font-mono text-[0.72rem] font-bold tracking-wider text-forest/70 uppercase">
+            <div className="rounded-3xl glass-card p-5 border border-white/75">
+              <span className="text-[0.72rem] font-bold tracking-wider text-forest/75 uppercase font-mono block mb-2.5">
                 4. {lang === 'bn' ? 'ইঞ্জিনিয়ারিং লেয়ারসমূহ' : 'Engineering Layers'}
               </span>
-              <div className="mt-2.5 grid grid-cols-2 gap-1.5 text-xs">
+              <div className="grid grid-cols-2 gap-2 text-xs">
                 {Object.keys(activeLayers).map((key) => {
                   const isChecked = activeLayers[key]
                   const labels = {
@@ -271,13 +257,13 @@ I would like to book an on-site structural audit and consultation.`
                       key={key}
                       type="button"
                       onClick={() => toggleLayer(key)}
-                      className={`flex items-center gap-2 rounded-lg border p-2 text-left transition-all ${
+                      className={`flex items-center gap-2 rounded-xl p-2 text-left transition-all ${
                         isChecked
-                          ? 'border-emerald/40 bg-bright/15 text-forest font-bold'
-                          : 'border-forest/10 bg-white text-charcoal/60 hover:bg-forest/5'
+                          ? 'glass-emerald text-white font-bold shadow-xs'
+                          : 'glass-pill text-charcoal/70 hover:bg-white'
                       }`}
                     >
-                      <span className={`grid size-3.5 place-items-center rounded-sm border ${isChecked ? 'border-emerald bg-emerald text-white' : 'border-charcoal/30'}`}>
+                      <span className={`grid size-3.5 place-items-center rounded-sm ${isChecked ? 'bg-white text-forest' : 'border border-charcoal/30'}`}>
                         {isChecked && <Check className="size-2.5 stroke-[3]" />}
                       </span>
                       <span className="truncate">{labels[key]}</span>
@@ -288,22 +274,22 @@ I would like to book an on-site structural audit and consultation.`
             </div>
           </div>
 
-          {/* RIGHT: Swiss CAD Blueprint & Bill of Quantities */}
+          {/* RIGHT: CAD Blueprint & Bill of Quantities */}
           <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-forest/20 bg-white shadow-lift overflow-hidden">
+            <div className="rounded-3xl glass-panel shadow-lift border border-white/85 overflow-hidden">
               {/* Studio Canvas / BOQ Tab Switcher */}
-              <div className="flex items-center justify-between border-b border-forest/15 bg-forest/[0.04] px-5 py-3">
+              <div className="flex items-center justify-between border-b border-forest/10 bg-white/40 px-5 py-3.5 backdrop-blur-md">
                 <div className="flex items-center gap-2 font-mono text-xs font-bold text-forest uppercase">
                   <Compass className="size-4 text-emerald" />
                   <span>CAD DRAFTING & BOQ SPECIFICATION</span>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => setActiveTab('canvas')}
-                    className={`rounded-md px-3 py-1 text-xs font-mono font-bold transition ${
-                      activeTab === 'canvas' ? 'bg-forest text-white' : 'text-forest/70 hover:bg-forest/10'
+                    className={`rounded-full px-3.5 py-1 text-xs font-mono font-bold transition ${
+                      activeTab === 'canvas' ? 'glass-emerald text-white shadow-soft' : 'glass-pill text-forest/70 hover:text-forest'
                     }`}
                   >
                     CAD BLUEPRINT
@@ -311,21 +297,21 @@ I would like to book an on-site structural audit and consultation.`
                   <button
                     type="button"
                     onClick={() => setActiveTab('boq')}
-                    className={`rounded-md px-3 py-1 text-xs font-mono font-bold transition ${
-                      activeTab === 'boq' ? 'bg-forest text-white' : 'text-forest/70 hover:bg-forest/10'
+                    className={`rounded-full px-3.5 py-1 text-xs font-mono font-bold transition ${
+                      activeTab === 'boq' ? 'glass-emerald text-white shadow-soft' : 'glass-pill text-forest/70 hover:text-forest'
                     }`}
                   >
-                    BILL OF QUANTITIES (BOQ)
+                    BOQ ESTIMATE
                   </button>
                 </div>
               </div>
 
               {/* View 1: CAD Blueprint Visual Canvas */}
               {activeTab === 'canvas' ? (
-                <div className="relative aspect-[16/10] w-full bg-[#111c16] p-6 text-white font-mono overflow-hidden">
-                  {/* Grid Lines */}
+                <div className="relative aspect-[16/10] w-full bg-[#0e1913] p-6 text-white font-mono overflow-hidden">
+                  {/* Subtle Grid Lines */}
                   <div
-                    className="absolute inset-0 opacity-15"
+                    className="absolute inset-0 opacity-20"
                     style={{
                       backgroundImage: 'linear-gradient(to right, #52b788 1px, transparent 1px), linear-gradient(to bottom, #52b788 1px, transparent 1px)',
                       backgroundSize: '24px 24px',
@@ -341,21 +327,21 @@ I would like to book an on-site structural audit and consultation.`
                     </text>
 
                     {/* Base Concrete Slab */}
-                    <rect x="50" y="45" width="500" height="270" fill="#1e293b" stroke="#64748b" strokeWidth="1.5" />
+                    <rect x="50" y="45" width="500" height="270" rx="8" fill="#1e293b" stroke="#64748b" strokeWidth="1.5" />
 
                     {/* Waterproofing layer */}
                     {activeLayers.waterproofing && (
-                      <rect x="55" y="50" width="490" height="260" fill="#0f172a" stroke="#38bdf8" strokeWidth="1" />
+                      <rect x="55" y="50" width="490" height="260" rx="6" fill="#0f172a" stroke="#38bdf8" strokeWidth="1" />
                     )}
 
                     {/* Drainage grid cells */}
                     {activeLayers.drainage && (
-                      <rect x="60" y="55" width="480" height="250" fill="#064e3b" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
+                      <rect x="60" y="55" width="480" height="250" rx="4" fill="#064e3b" stroke="#10b981" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.6" />
                     )}
 
                     {/* Grass Turf Layer */}
                     {activeLayers.turf && turfIndex !== 3 && (
-                      <rect x="70" y="65" width="460" height="230" fill="#2d6a4f" fillOpacity="0.75" stroke="#52b788" strokeWidth="1.5" />
+                      <rect x="70" y="65" width="460" height="230" rx="4" fill="#2d6a4f" fillOpacity="0.75" stroke="#52b788" strokeWidth="1.5" />
                     )}
 
                     {/* Timber Pergola Zone */}
@@ -424,29 +410,29 @@ I would like to book an on-site structural audit and consultation.`
               )}
 
               {/* Engineering Metrics Summary Footer */}
-              <div className="border-t border-forest/15 bg-cream/70 p-5">
+              <div className="border-t border-forest/10 bg-white/60 p-5 backdrop-blur-md">
                 <div className="grid grid-cols-3 gap-3 text-center border-b border-forest/10 pb-4 mb-4">
-                  <div>
+                  <div className="rounded-2xl glass-card p-2.5">
                     <span className="block font-mono text-[0.68rem] text-charcoal/60 uppercase">
                       BNBC STRUCTURAL LOAD
                     </span>
-                    <strong className="block font-mono text-sm font-bold text-emerald">
+                    <strong className="block font-mono text-xs sm:text-sm font-bold text-emerald">
                       {boq.deadLoadKg} kg/sq.ft (100% SAFE)
                     </strong>
                   </div>
-                  <div>
+                  <div className="rounded-2xl glass-card p-2.5">
                     <span className="block font-mono text-[0.68rem] text-charcoal/60 uppercase">
                       HEAT DELTA
                     </span>
-                    <strong className="block font-mono text-sm font-bold text-forest">
+                    <strong className="block font-mono text-xs sm:text-sm font-bold text-forest">
                       -{boq.coolingDelta}°C ROOF COOLING
                     </strong>
                   </div>
-                  <div>
+                  <div className="rounded-2xl glass-card p-2.5">
                     <span className="block font-mono text-[0.68rem] text-charcoal/60 uppercase">
                       ESTIMATED INVESTMENT
                     </span>
-                    <strong className="block font-mono text-sm font-bold text-forest">
+                    <strong className="block font-mono text-xs sm:text-sm font-bold text-forest">
                       ৳{boq.minEstimate.toLocaleString()} - ৳{boq.maxEstimate.toLocaleString()}
                     </strong>
                   </div>
@@ -458,7 +444,7 @@ I would like to book an on-site structural audit and consultation.`
                   size="lg"
                   variant="primary"
                   icon={MessageCircle}
-                  className="w-full text-xs font-bold uppercase tracking-wider"
+                  className="w-full text-xs font-bold uppercase tracking-wider shadow-lift"
                 >
                   {copy.bookPlan}
                 </Button>

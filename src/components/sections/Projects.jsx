@@ -25,51 +25,59 @@ export default function Projects() {
   const [main, second] = typePhotos[tab]
 
   return (
-    <Section id="projects" className="bg-linear-to-b from-transparent via-white/60 to-transparent">
-      <div aria-hidden="true" className="absolute -right-32 top-32 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
+    <Section id="projects" className="relative isolate overflow-hidden">
+      {/* Diffuse glass glows */}
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-32 -z-10 size-96 rounded-full bg-bright/25 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 bottom-32 -z-10 size-96 rounded-full bg-emerald/20 blur-3xl" />
+
       <Container>
         <SectionHeading eyebrow={copy.eyebrow} icon={Ruler} title={copy.title} sub={copy.sub} />
 
-        <Tabs tabs={copy.types} value={tab} onChange={setTab} label={copy.eyebrow} idPrefix="projects" scroll />
+        <div className="rounded-3xl glass-surface p-2 sm:p-3 inline-block w-full">
+          <Tabs tabs={copy.types} value={tab} onChange={setTab} label={copy.eyebrow} idPrefix="projects" scroll />
+        </div>
 
         <div
           id="projects-panel"
           role="tabpanel"
           aria-labelledby={`projects-tab-${tab}`}
           key={tab}
-          className="mt-8 grid animate-rise items-center gap-10 [animation-duration:0.55s] lg:grid-cols-12 lg:gap-14"
+          className="mt-8 rounded-3xl glass-panel p-6 sm:p-10 shadow-lift border border-white/80 grid animate-rise items-center gap-10 [animation-duration:0.55s] lg:grid-cols-12 lg:gap-14"
         >
           <div className="relative mx-auto w-full max-w-xl lg:col-span-6 lg:max-w-none">
-            <div className="aspect-[5/4] overflow-hidden bg-mint shadow-lift ring-8 ring-white/70 leaf-a">
+            <div className="aspect-[5/4] overflow-hidden rounded-3xl bg-mint shadow-lift ring-8 ring-white/60">
               <Img photo={photos[main]} width={1200} sizes="(min-width: 1024px) 50vw, 92vw" />
             </div>
-            <div className="absolute -bottom-6 -right-2 aspect-square w-[34%] overflow-hidden bg-mint shadow-lift ring-8 ring-cream leaf-b sm:-right-6">
+            <div className="absolute -bottom-6 -right-2 aspect-square w-[36%] overflow-hidden rounded-2xl bg-mint shadow-lift ring-6 ring-white sm:-right-6">
               <Img photo={photos[second]} width={600} sizes="(min-width: 1024px) 16vw, 32vw" />
             </div>
           </div>
 
           <div className="lg:col-span-6">
-            <h3 className="text-2xl sm:text-[1.9rem]">{current.title}</h3>
-            <p className="mt-3 text-base leading-body text-charcoal/80 sm:text-[1.05rem]">{current.desc}</p>
+            <span className="inline-block rounded-full glass-pill px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-emerald mb-2">
+              CASE STUDY SPOTLIGHT
+            </span>
+            <h3 className="text-2xl sm:text-[2rem] font-bold text-forest">{current.title}</h3>
+            <p className="mt-3 text-base leading-body text-charcoal/85 sm:text-[1.05rem]">{current.desc}</p>
 
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
-              <div>
-                <p className="font-display text-base font-semibold text-forest">{copy.scopeLabel}</p>
-                <ul className="mt-3 flex flex-wrap gap-2">
+              <div className="rounded-2xl glass-card p-4">
+                <p className="font-display text-sm font-bold text-forest">{copy.scopeLabel}</p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
                   {current.scope.map((item) => (
-                    <li key={item} className="rounded-full glass-green px-3.5 py-1.5 text-sm font-medium text-forest">
+                    <li key={item} className="rounded-full glass-pill px-3 py-1 text-xs font-medium text-forest">
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              <div>
-                <p className="font-display text-base font-semibold text-forest">{copy.handledLabel}</p>
-                <ul className="mt-3 grid gap-2.5">
+              <div className="rounded-2xl glass-card p-4">
+                <p className="font-display text-sm font-bold text-forest">{copy.handledLabel}</p>
+                <ul className="mt-3 grid gap-2">
                   {current.handled.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-[0.95rem] leading-snug text-charcoal/85">
-                      <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-bright/30 text-emerald">
-                        <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
+                    <li key={item} className="flex items-start gap-2.5 text-xs font-medium leading-snug text-charcoal/90">
+                      <span className="mt-0.5 grid size-4 shrink-0 place-items-center rounded-full glass-emerald text-white">
+                        <Check className="size-2.5" strokeWidth={3} aria-hidden="true" />
                       </span>
                       {item}
                     </li>
@@ -79,12 +87,12 @@ export default function Projects() {
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Button href={getWhatsAppLink(current.title, null, lang)} icon={MessageCircle}>
+              <Button href={getWhatsAppLink(current.title, null, lang)} icon={MessageCircle} variant="primary">
                 {copy.cta}
               </Button>
               {site.illustrativePhotos && (
-                <p className="inline-flex max-w-xs items-start gap-2 text-[0.82rem] leading-snug text-charcoal/60">
-                  <ImageIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                <p className="inline-flex max-w-xs items-start gap-2 text-[0.82rem] leading-snug text-charcoal/65">
+                  <ImageIcon className="mt-0.5 size-4 shrink-0 text-emerald" aria-hidden="true" />
                   {copy.illustrative}
                 </p>
               )}

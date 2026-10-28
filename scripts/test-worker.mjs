@@ -34,9 +34,9 @@ const claudeReturns =
     return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
   }
 
-const call = (body, { origin = ORIGIN, method = 'POST', raw, fetchImpl = claudeReturns('{}'), config = env } = {}) =>
+const call = (body, { origin = ORIGIN, method = 'POST', raw, fetchImpl = claudeReturns('{}'), config = env, url = 'https://worker.test/' } = {}) =>
   handleRequest(
-    new Request('https://worker.test/', {
+    new Request(url, {
       method,
       headers: { 'content-type': 'application/json', ...(origin ? { origin } : {}) },
       body: method === 'POST' ? (raw ?? JSON.stringify(body)) : undefined,
@@ -161,6 +161,77 @@ test('helpers recover JSON from prose and clamp bad values', () => {
   assert.deepEqual(report.causes, [])
   assert.deepEqual(report.schedule, [])
   assert.equal(normalizeReport({ status: 'severe' }).needsExpert, true)
+})
+
+test('serves health check telemetry', async () => {
+  const res = await call(null, { method: 'GET', url: 'https://worker.test/api/health' })
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.status, 'ok')
+  assert.equal(data.version, '2.0.0')
+  assert.ok(data.services.includes('consultation'))
+  assert.ok(data.services.includes('quote'))
+})
+
+test('validates and accepts consultation booking inquiries', async () => {
+  // Missing name / invalid phone
+  const bad1 = await call({ name: '', phone: '123' }, { url: 'https://worker.test/api/consultation' })
+  assert.equal(bad1.status, 400)
+  assert.equal((await bad1.json()).error, 'invalid_name')
+
+  const bad2 = await call({ name: 'Tanvir Ahmed', phone: '123' }, { url: 'https://worker.test/api/consultation' })
+  assert.equal(bad2.status, 400)
+  assert.equal((await bad2.json()).error, 'invalid_phone')
+
+  // Valid lead
+  const validLead = {
+    name: 'Tanvir Ahmed',
+    phone: '01712000000',
+    email: 'tanvir@example.com',
+    spaceType: 'rooftop',
+    areaSqft: 750,
+    location: 'Gulshan 2, Dhaka',
+    service: 'Rooftop Garden',
+    message: 'Need 6-layer waterproofing and Bermuda carpet lawn on 5th floor roof.',
+    lang: 'bn',
+  }
+
+  const res = await call(validLead, { url: 'https://worker.test/api/consultation' })
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.ok, true)
+  assert.match(data.referenceId, /^DG-202\d-\d+$/)
+  assert.match(data.confirmationMessage, /Tanvir Ahmed/)
+  assert.ok(data.preliminaryAdvice.length > 10)
+  assert.equal(data.nextSteps.length, 3)
+})
+
+test('computes verified BOQ and structural load in quote API', async () => {
+  const quoteReq = {
+    spaceType: 'rooftop',
+    areaSqft: 600,
+    turfType: 'korean',
+    layers: { waterproofing: true, drainage: true, soilMix: true, irrigation: true },
+  }
+  const res = await call(quoteReq, { url: 'https://worker.test/api/quote' })
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.ok, true)
+  assert.match(data.quoteId, /^DG-BOQ-\d+$/)
+  assert.equal(data.areaSqft, 600)
+  assert.ok(data.estimatedBudget.min > 0)
+  assert.ok(data.estimatedBudget.max > data.estimatedBudget.min)
+  assert.equal(data.structuralEngineering.isBnbcCompliant, true)
+  assert.ok(data.structuralEngineering.deadLoadKgPerSqft <= 45)
+})
+
+test('generates seasonal Bangladeshi microclimate agro advisory', async () => {
+  const res = await call(null, { method: 'GET', url: 'https://worker.test/api/weather-advisory?month=7&lang=bn' })
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.season.key, 'monsoon')
+  assert.match(data.advisory, /জলাবদ্ধতা/)
+  assert.ok(data.priorityTasks.length > 0)
 })
 
 let failed = 0
