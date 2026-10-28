@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
-  BookOpen,
   Building2,
   Calendar,
   Compass,
@@ -23,10 +22,55 @@ import { MowerDoodle } from '../ui/Doodles'
 import LangToggle from '../ui/LangToggle'
 import Logo from '../ui/Logo'
 
+const BULLETINS = [
+  {
+    tag: { bn: 'কৃষি তথ্য সার্ভিস (AIS) ‘কৃষিকথা’', en: 'AIS Agri-Bulletin' },
+    text: {
+      bn: 'হেমন্তকালীন ছাদবাগান বুলেটিন: কার্তিক মাসে ফলদ গাছে (মাল্টা, আম, পেয়ারা) সুষম জৈব সার প্রয়োগ ও শীতকালীন সবজির চারা লাগানোর মোক্ষম সময়।',
+      en: 'Hemanto Rooftop Advisory: Apply organic compost to fruit trees (Malta, Mango, Guava); ideal window for winter vegetable seedlings.',
+    },
+    meta: { bn: '২৮° সে. | ঢাকা ও নওগাঁ', en: '28°C | Dhaka & Naogaon' },
+  },
+  {
+    tag: { bn: 'হৃদয়ে মাটি ও মানুষ (শাইখ সিরাজ)', en: 'Hridoye Mati O Manush' },
+    text: {
+      bn: 'শাইখ সিরাজ বার্তা: ছাদবাগানে অতিরিক্ত লোড কমাতে সাধারণ মাটির বদলে কোকোপিট ও ভার্মিকম্পোস্টের হালকা গ্রোয়িং মিডিয়া ব্যবহার করুন; ছাদ থাকবে নিরাপদ।',
+      en: 'Shykh Seraj Advice: Use lightweight engineered media (cocopeat & vermicompost) to avoid dead load on roof slabs while maximizing yield.',
+    },
+    meta: { bn: 'বাতাস মৃদু | আর্দ্রতা ৬৮%', en: 'Mild breeze | 68% Hum.' },
+  },
+  {
+    tag: { bn: 'বিটিভি মাটি ও মানুষ ও আবহাওয়া', en: 'BTV Mati O Manush' },
+    text: {
+      bn: 'আবহাওয়া ও সেচ নির্দেশিকা: সকাল ৮টার পূর্বে গাছে পানি দিন। পাতার উপরিভাগে পানি না দিয়ে গোড়ায় সেচ দিন এবং ড্রেনেজ লাইন পরিচ্ছন্ন রাখুন।',
+      en: 'Irrigation & Weather Note: Water plants before 8 AM at the root base; avoid spraying foliage in strong sun to prevent fungal scorch.',
+    },
+    meta: { bn: 'সূর্যালোক ৭.৫ ঘণ্টা', en: '7.5 hrs sunshine' },
+  },
+  {
+    tag: { bn: 'ডিএই বরেন্দ্র ও মেট্রো বুলেটিন', en: 'DAE Barind & Metro' },
+    text: {
+      bn: 'লনের ঘাস ও কার্পেট টার্ফ পরিচর্যা: শীতের আগমনে বারমুডা ও কোরিয়ান ঘাসে হালকা কাটাই দিন এবং পরিমিত পটাশ সার প্রয়োগ করুন।',
+      en: 'Turf Care: Trim Bermuda and Korean carpet turf before winter chill; apply light potassium fertilizer for root strength.',
+    },
+    meta: { bn: 'মাটির আর্দ্রতা পরীক্ষা করুন', en: 'Check soil moisture' },
+  },
+]
+
 export default function Navbar() {
   const { t, lang } = useLocale()
   const { route, navigate } = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [bulletinIndex, setBulletinIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setBulletinIndex((prev) => (prev + 1) % BULLETINS.length)
+    }, 5500)
+    return () => clearInterval(timer)
+  }, [])
+
+  const currentBulletin = BULLETINS[bulletinIndex]
 
   const closeMobile = useCallback(() => setMobileOpen(false), [])
   useEscape(closeMobile, mobileOpen)
@@ -36,12 +80,11 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/', label: t.nav.home, icon: Trees },
-    { path: '/plant-doctor', label: t.nav.plantDoctor, badge: 'AI USP', icon: ScanSearch },
+    { path: '/plant-doctor', label: t.nav.plantDoctor, badge: 'AI', icon: ScanSearch },
     { path: '/plant-wiki', label: lang === 'bn' ? 'উদ্ভিদকোষ' : 'Plant Wiki', badge: 'NEW', icon: Leaf },
     { path: '/services', label: t.nav.services, icon: Layers },
     { path: '/studio', label: t.nav.studio, icon: Compass },
     { path: '/projects', label: t.nav.projects, icon: LayoutGrid },
-    { path: '/blog', label: t.nav.blog, icon: BookOpen },
     { path: '/about', label: t.nav.about, icon: Info },
     { path: '/contact', label: t.nav.contact, icon: Phone },
   ]
@@ -55,21 +98,23 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
-        {/* Top Micro-Bar: Frosted Glass Utility Strip */}
-        <div className="hidden border-b border-white/40 bg-white/40 backdrop-blur-md py-1.5 lg:block">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 text-[0.72rem] tracking-wider text-forest/80 font-medium">
-            <div className="flex items-center gap-3">
-              <span className="font-bold text-forest flex items-center gap-1.5">
-                <span className="size-2 rounded-full bg-emerald animate-pulse" />
-                DHANSHIRI GARDEN ARCHITECTURE & AGRONOMY
+        {/* Top Micro-Bar: Desktop Weather & Plantation Bulletin (AIS, BTV, Hridoye Mati O Manush, DAE) */}
+        <div className="hidden border-b border-white/50 bg-white/75 backdrop-blur-md py-1.5 lg:block transition-all">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 text-[0.72rem] tracking-wider text-forest/90 font-medium">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-4">
+              <span className="inline-flex items-center gap-1.5 rounded-full glass-pill bg-emerald/10 px-2.5 py-0.5 text-[0.65rem] font-bold text-emerald shrink-0">
+                <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
+                <span>{currentBulletin.tag[lang]}</span>
               </span>
-              <span className="text-forest/25">|</span>
-              <span>DHAKA 1212 · NAOGAON 6500</span>
-              <span className="text-forest/25">|</span>
-              <span className="text-emerald font-bold">DAE CERTIFIED SCIENCE-FIRST LANDSCAPING</span>
+              <p className="truncate font-medium text-forest/90 text-[0.73rem] transition-all duration-300">
+                {currentBulletin.text[lang]}
+              </p>
+              <span className="shrink-0 rounded-full glass-pill px-2 py-0.5 text-[0.62rem] font-bold text-amber-700 bg-amber-500/10">
+                {currentBulletin.meta[lang]}
+              </span>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 shrink-0">
               <a
                 href={`tel:${phone.tel}`}
                 className="flex items-center gap-1.5 font-semibold text-forest hover:text-emerald transition"
@@ -279,6 +324,24 @@ export default function Navbar() {
           </div>
         </div>
       )}
+
+      {/* Mobile Bottom Weather & Plantation Bulletin (Fixed at bottom on mobile) */}
+      <div className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-forest/15 bg-white/95 backdrop-blur-md px-3 py-1.5 text-[0.68rem] text-forest shadow-lift">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 min-w-0 flex-1">
+            <span className="size-2 rounded-full bg-emerald animate-pulse shrink-0" />
+            <span className="font-extrabold uppercase tracking-wider text-emerald shrink-0 text-[0.62rem]">
+              {currentBulletin.tag[lang].split(' ')[0]}:
+            </span>
+            <p className="truncate font-medium text-forest/90 text-[0.68rem]">
+              {currentBulletin.text[lang]}
+            </p>
+          </div>
+          <span className="shrink-0 rounded-full bg-amber-500/15 px-2 py-0.5 text-[0.6rem] font-bold text-amber-700">
+            {currentBulletin.meta[lang].split('|')[0].trim()}
+          </span>
+        </div>
+      </div>
     </>
   )
 }

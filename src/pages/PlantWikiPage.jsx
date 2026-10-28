@@ -2,18 +2,24 @@ import { useMemo, useRef, useState } from 'react'
 import {
   AlertCircle,
   ArrowLeft,
+  BookOpen,
+  Bug,
+  Calendar,
   Camera,
   ChevronRight,
   Droplets,
+  Globe,
   HelpCircle,
   Info,
   Layers,
   Leaf,
   Scan,
   ScanSearch,
+  Scissors,
   Search,
   ShieldCheck,
   Sparkles,
+  Sprout,
   Sun,
   Thermometer,
   Upload,
@@ -124,6 +130,11 @@ export default function PlantWikiPage() {
         watering: lang === 'bn' ? found.wateringText.bn : found.wateringText.en,
         difficulty: found.difficulty,
         petSafe: found.petSafe,
+        origin: found.origin ? (lang === 'bn' ? found.origin.bn : found.origin.en) : null,
+        plantation: found.plantation ? (lang === 'bn' ? found.plantation.bn : found.plantation.en) : null,
+        bloomingSeason: found.bloomingSeason ? (lang === 'bn' ? found.bloomingSeason.bn : found.bloomingSeason.en) : null,
+        harvestSeason: found.harvestSeason ? (lang === 'bn' ? found.harvestSeason.bn : found.harvestSeason.en) : null,
+        caringTechniques: found.caringTechniques ? (lang === 'bn' ? found.caringTechniques.bn : found.caringTechniques.en) : null,
         funFact:
           lang === 'bn'
             ? `${found.banglaName} বাংলাদেশের আবহাওয়া ও শহুরে ছাদবাগান বা ইনডোরের জন্য অত্যন্ত উপযোগী ও সহজে পরিচর্যাযোগ্য।`
@@ -195,8 +206,8 @@ export default function PlantWikiPage() {
                 </div>
 
                 {/* Instant Sample Test Buttons */}
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="text-charcoal/60 hidden sm:inline">{lang === 'bn' ? 'নমুনা পরীক্ষা:' : 'Try samples:'}</span>
+                <div className="flex flex-wrap items-center gap-1.5 text-xs">
+                  <span className="text-charcoal/60 hidden sm:inline">{lang === 'bn' ? 'নমুনা দেখুন:' : 'Try samples:'}</span>
                   <button
                     type="button"
                     onClick={() => handleSampleTest('bari-malta-1')}
@@ -206,10 +217,17 @@ export default function PlantWikiPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleSampleTest('monstera-deliciosa')}
+                    onClick={() => handleSampleTest('katimon-mango')}
                     className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
                   >
-                    {lang === 'bn' ? 'মনস্টেরা' : 'Monstera'}
+                    {lang === 'bn' ? 'কাটিমন আম' : 'Mango'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSampleTest('dragon-fruit')}
+                    className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
+                  >
+                    {lang === 'bn' ? 'ড্রাগন ফল' : 'Dragon'}
                   </button>
                   <button
                     type="button"
@@ -217,6 +235,20 @@ export default function PlantWikiPage() {
                     className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
                   >
                     {lang === 'bn' ? 'বাগানবিলাস' : 'Bougainvillea'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSampleTest('beli-flower')}
+                    className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
+                  >
+                    {lang === 'bn' ? 'বেলি ফুল' : 'Beli'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSampleTest('tulsi-plant')}
+                    className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
+                  >
+                    {lang === 'bn' ? 'তুলসী' : 'Tulsi'}
                   </button>
                 </div>
               </div>
@@ -293,21 +325,102 @@ export default function PlantWikiPage() {
                       <p className="text-sm italic font-serif text-emerald">{scanResult.scientificName}</p>
                     </div>
 
-                    {/* AI Plant Doctor Link (Key USP integration!) */}
-                    <button
-                      type="button"
-                      onClick={() => navigate('/plant-doctor')}
-                      className="inline-flex items-center gap-2 rounded-full glass-amber px-4 py-2 text-xs font-bold text-charcoal hover:brightness-105 transition shadow-soft"
-                    >
-                      <ScanSearch className="size-4 text-forest" />
-                      <span>{lang === 'bn' ? 'রোগ নির্ণয় করতে চান? (Plant Doctor)' : 'Health Triage (Plant Doctor)'}</span>
-                    </button>
+                    <div className="flex flex-wrap items-center gap-2">
+                      {scanResult.plantId && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const found = PLANT_DATABASE.find((p) => p.id === scanResult.plantId)
+                            if (found) setSelectedPlant(found)
+                          }}
+                          className="inline-flex items-center gap-2 rounded-full glass-card border border-emerald/30 px-4 py-2 text-xs font-bold text-forest hover:bg-white transition shadow-soft"
+                        >
+                          <BookOpen className="size-4 text-emerald" />
+                          <span>{lang === 'bn' ? 'সম্পূর্ণ বোটানিক্যাল গাইড' : 'Full Botanical Guide'}</span>
+                        </button>
+                      )}
+
+                      {/* AI Plant Doctor Diagnostic Link */}
+                      <button
+                        type="button"
+                        onClick={() => navigate('/plant-doctor')}
+                        className="inline-flex items-center gap-2 rounded-full glass-amber px-4 py-2 text-xs font-bold text-charcoal hover:brightness-105 transition shadow-soft"
+                      >
+                        <ScanSearch className="size-4 text-forest" />
+                        <span>{lang === 'bn' ? 'রোগ নির্ণয় (Plant Doctor)' : 'Health Triage (Plant Doctor)'}</span>
+                      </button>
+                    </div>
                   </div>
+
+                  {/* Native Origin / Provenance */}
+                  {scanResult.origin && (
+                    <div className="mt-3 inline-flex items-center gap-1.5 rounded-full glass-pill px-3.5 py-1 text-xs text-forest">
+                      <Globe className="size-3.5 text-emerald shrink-0" />
+                      <span>
+                        <strong className="text-emerald">{lang === 'bn' ? 'উৎপত্তি ও আদি নিবাস:' : 'Origin & Provenance:'}</strong>{' '}
+                        {scanResult.origin}
+                      </span>
+                    </div>
+                  )}
 
                   <p className="mt-4 text-sm leading-relaxed text-charcoal/85">{scanResult.description}</p>
 
+                  {/* Seasonal Blooming & Harvest Callout */}
+                  {(scanResult.bloomingSeason || scanResult.harvestSeason) && (
+                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                      {scanResult.bloomingSeason && (
+                        <div className="rounded-xl bg-white/70 p-3 border border-emerald-100 flex items-center gap-2.5">
+                          <span className="size-7 rounded-lg bg-amber-500/10 text-amber-600 grid place-items-center shrink-0">
+                            <Calendar className="size-3.5" />
+                          </span>
+                          <div>
+                            <span className="text-charcoal/60 text-[0.65rem] font-bold uppercase tracking-wider block">
+                              {lang === 'bn' ? 'ফুল ফোটার মৌসুম' : 'Blooming Period'}
+                            </span>
+                            <strong className="text-forest text-xs">{scanResult.bloomingSeason}</strong>
+                          </div>
+                        </div>
+                      )}
+                      {scanResult.harvestSeason && (
+                        <div className="rounded-xl bg-white/70 p-3 border border-emerald-100 flex items-center gap-2.5">
+                          <span className="size-7 rounded-lg bg-emerald-500/10 text-emerald-600 grid place-items-center shrink-0">
+                            <Sprout className="size-3.5" />
+                          </span>
+                          <div>
+                            <span className="text-charcoal/60 text-[0.65rem] font-bold uppercase tracking-wider block">
+                              {lang === 'bn' ? 'ফলন সংগ্রহের মৌসুম' : 'Harvest Window'}
+                            </span>
+                            <strong className="text-forest text-xs">{scanResult.harvestSeason}</strong>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Plantation & Container Potting Guide */}
+                  {scanResult.plantation && (
+                    <div className="mt-4 rounded-2xl glass-surface p-4 border border-white/70 text-xs text-charcoal/85 leading-relaxed">
+                      <strong className="text-forest block font-bold mb-1 flex items-center gap-1.5">
+                        <Sprout className="size-3.5 text-emerald" />
+                        <span>{lang === 'bn' ? 'চারা রোপণ ও টব প্রস্তুতি:' : 'Plantation & Soil Mix:'}</span>
+                      </strong>
+                      <p>{scanResult.plantation}</p>
+                    </div>
+                  )}
+
+                  {/* Caring Techniques & Pruning Protocol */}
+                  {scanResult.caringTechniques && (
+                    <div className="mt-3 rounded-2xl glass-surface p-4 border border-white/70 text-xs text-charcoal/85 leading-relaxed">
+                      <strong className="text-forest block font-bold mb-1 flex items-center gap-1.5">
+                        <Scissors className="size-3.5 text-emerald" />
+                        <span>{lang === 'bn' ? 'পরিচর্যা ও ছাঁটাই (Pruning):' : 'Caring & Pruning Protocol:'}</span>
+                      </strong>
+                      <p>{scanResult.caringTechniques}</p>
+                    </div>
+                  )}
+
                   {/* Core Care Specifications */}
-                  <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                  <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                     <div className="rounded-2xl glass-surface p-3.5 border border-white/70">
                       <Sun className="size-4 text-amber-500 mb-1" />
                       <span className="text-charcoal/60 block text-[0.7rem] uppercase font-bold">{lang === 'bn' ? 'সূর্যালোক' : 'Sunlight'}</span>
@@ -432,12 +545,25 @@ export default function PlantWikiPage() {
 
                   {/* Body Content */}
                   <div className="p-5 flex flex-col flex-1">
-                    <span className="text-[0.68rem] text-emerald font-semibold italic block">
-                      {plant.scientificName}
-                    </span>
-                    <h3 className="font-display text-lg font-bold text-forest mt-0.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[0.68rem] text-emerald font-semibold italic truncate">
+                        {plant.scientificName}
+                      </span>
+                      {plant.bloomingSeason && (
+                        <span className="text-[0.62rem] font-bold text-amber-700 bg-amber-500/10 px-2 py-0.5 rounded-full shrink-0 border border-amber-300/40">
+                          {lang === 'bn' ? plant.bloomingSeason.bn.split('(')[0].trim() : plant.bloomingSeason.en.split(':')[0].trim()}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="font-display text-lg font-bold text-forest mt-1">
                       {lang === 'bn' ? plant.banglaName : plant.name}
                     </h3>
+                    {plant.origin && (
+                      <p className="text-[0.68rem] text-forest/60 flex items-center gap-1 mt-0.5">
+                        <Globe className="size-3 text-emerald shrink-0" />
+                        <span className="truncate">{lang === 'bn' ? plant.origin.bn : plant.origin.en}</span>
+                      </p>
+                    )}
                     <p className="mt-2 text-xs text-charcoal/70 line-clamp-2 leading-relaxed">
                       {lang === 'bn' ? plant.summary.bn : plant.summary.en}
                     </p>
@@ -445,10 +571,10 @@ export default function PlantWikiPage() {
                     <div className="mt-auto pt-4 border-t border-forest/10 flex items-center justify-between text-xs text-forest/80 font-medium">
                       <span className="inline-flex items-center gap-1">
                         <Sun className="size-3.5 text-amber-500" />
-                        <span>{plant.difficulty}</span>
+                        <span className="capitalize">{plant.difficulty}</span>
                       </span>
                       <span className="text-emerald font-bold group-hover:translate-x-1 transition-transform">
-                        {lang === 'bn' ? 'বিস্তারিত দেখুন →' : 'Care Guide →'}
+                        {lang === 'bn' ? 'বিস্তারিত গাইড →' : 'Care Guide →'}
                       </span>
                     </div>
                   </div>
@@ -489,22 +615,36 @@ export default function PlantWikiPage() {
                 <X className="size-5" />
               </button>
 
-              <div className="flex flex-wrap items-start gap-4">
+              <div className="flex flex-wrap items-center gap-3">
                 <span className="rounded-full glass-emerald px-3.5 py-1 text-xs font-bold text-white shadow-xs">
                   {selectedPlant.family}
                 </span>
                 <span className="text-xs font-semibold text-emerald uppercase tracking-wider">
                   {selectedPlant.category}
                 </span>
+                <span className="rounded-full bg-forest/5 px-3 py-0.5 text-xs font-medium text-forest/70 capitalize">
+                  {selectedPlant.difficulty}
+                </span>
               </div>
 
-              <h2 className="mt-2 font-display text-3xl sm:text-4xl font-extrabold text-forest">
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold text-forest">
                 {lang === 'bn' ? selectedPlant.banglaName : selectedPlant.name}
               </h2>
-              <p className="text-sm font-serif italic text-emerald">{selectedPlant.scientificName}</p>
+              <p className="text-sm font-serif italic text-emerald mt-0.5">{selectedPlant.scientificName}</p>
+
+              {/* Native Origin / Provenance */}
+              {selectedPlant.origin && (
+                <div className="mt-3 inline-flex items-center gap-2 rounded-full glass-pill px-3.5 py-1 text-xs text-forest font-medium">
+                  <Globe className="size-3.5 text-emerald shrink-0" />
+                  <span>
+                    <strong className="text-emerald">{lang === 'bn' ? 'উৎপত্তি ও আদি নিবাস:' : 'Origin & Provenance:'}</strong>{' '}
+                    {lang === 'bn' ? selectedPlant.origin.bn : selectedPlant.origin.en}
+                  </span>
+                </div>
+              )}
 
               {/* Photo hero inside modal */}
-              <div className="my-6 aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-lift">
+              <div className="my-6 aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-lift bg-mint">
                 <img src={selectedPlant.image} alt={selectedPlant.name} className="h-full w-full object-cover" />
               </div>
 
@@ -513,8 +653,66 @@ export default function PlantWikiPage() {
                 {lang === 'bn' ? selectedPlant.summary.bn : selectedPlant.summary.en}
               </p>
 
+              {/* Seasonal Calendar: Flowering & Harvesting Window */}
+              {(selectedPlant.bloomingSeason || selectedPlant.harvestSeason) && (
+                <div className="mt-6 rounded-2xl glass-surface p-5 border border-white/85">
+                  <h3 className="font-display text-sm font-bold text-forest flex items-center gap-2 mb-3">
+                    <Calendar className="size-4 text-emerald" />
+                    <span>{lang === 'bn' ? 'মৌসুমী ক্যালেন্ডার (ফুল ও ফলন সময়সূচি)' : 'Seasonal Calendar: Flowering & Harvest'}</span>
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-3 text-xs">
+                    {selectedPlant.bloomingSeason && (
+                      <div className="rounded-xl bg-white/80 p-3.5 border border-emerald-100 shadow-xs">
+                        <span className="text-charcoal/60 font-bold uppercase tracking-wider text-[0.68rem] block mb-1">
+                          🌸 {lang === 'bn' ? 'ফুল ফোটার সময়' : 'Blooming Period'}
+                        </span>
+                        <strong className="text-forest text-sm block">
+                          {lang === 'bn' ? selectedPlant.bloomingSeason.bn : selectedPlant.bloomingSeason.en}
+                        </strong>
+                      </div>
+                    )}
+                    {selectedPlant.harvestSeason && (
+                      <div className="rounded-xl bg-white/80 p-3.5 border border-emerald-100 shadow-xs">
+                        <span className="text-charcoal/60 font-bold uppercase tracking-wider text-[0.68rem] block mb-1">
+                          🧺 {lang === 'bn' ? 'ফলন ও সংগ্রহের সময়' : 'Harvest / Maturation'}
+                        </span>
+                        <strong className="text-forest text-sm block">
+                          {lang === 'bn' ? selectedPlant.harvestSeason.bn : selectedPlant.harvestSeason.en}
+                        </strong>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Plantation & Container Potting Guide */}
+              {selectedPlant.plantation && (
+                <div className="mt-4 rounded-2xl glass-panel p-5 border border-white/85 text-xs sm:text-sm">
+                  <strong className="block text-forest font-bold mb-1.5 flex items-center gap-2 text-sm">
+                    <Sprout className="size-4 text-emerald" />
+                    <span>{lang === 'bn' ? 'চারা রোপণ ও টব/ড্রাম প্রস্তুতি:' : 'Plantation & Container Potting Guide:'}</span>
+                  </strong>
+                  <p className="text-charcoal/80 leading-relaxed">
+                    {lang === 'bn' ? selectedPlant.plantation.bn : selectedPlant.plantation.en}
+                  </p>
+                </div>
+              )}
+
+              {/* Caring Techniques & Pruning */}
+              {selectedPlant.caringTechniques && (
+                <div className="mt-4 rounded-2xl glass-surface p-5 border border-white/85 text-xs sm:text-sm">
+                  <strong className="block text-forest font-bold mb-1.5 flex items-center gap-2 text-sm">
+                    <Scissors className="size-4 text-emerald" />
+                    <span>{lang === 'bn' ? 'বিশেষ পরিচর্যা ও ছাঁটাই/প্রুনিং বিধি:' : 'Caring Techniques & Pruning Protocol:'}</span>
+                  </strong>
+                  <p className="text-charcoal/80 leading-relaxed">
+                    {lang === 'bn' ? selectedPlant.caringTechniques.bn : selectedPlant.caringTechniques.en}
+                  </p>
+                </div>
+              )}
+
               {/* Technical Specifications Grid */}
-              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div className="rounded-2xl glass-surface p-4 border border-white/70">
                   <Sun className="size-4 text-amber-500 mb-1" />
                   <span className="text-charcoal/60 block text-[0.7rem] uppercase font-bold">{lang === 'bn' ? 'সূর্যালোক' : 'Sunlight'}</span>
@@ -541,13 +739,35 @@ export default function PlantWikiPage() {
               </div>
 
               {/* Soil & Nutrition Formula */}
-              <div className="mt-6 rounded-2xl glass-panel p-5 border border-white/85 text-xs sm:text-sm">
-                <strong className="block text-forest font-bold mb-1">
-                  🌱 {lang === 'bn' ? 'মাটি ও পুষ্টি ফর্মুলেশন:' : 'Soil & Nutrition Formula:'}
+              <div className="mt-4 rounded-2xl glass-panel p-5 border border-white/85 text-xs sm:text-sm">
+                <strong className="block text-forest font-bold mb-1.5 flex items-center gap-2">
+                  <Layers className="size-4 text-emerald" />
+                  <span>{lang === 'bn' ? 'মাটি ও পুষ্টি ফর্মুলেশন:' : 'Soil & Nutrition Formula:'}</span>
                 </strong>
-                <p className="text-charcoal/80 mb-2">{lang === 'bn' ? selectedPlant.soil.bn : selectedPlant.soil.en}</p>
-                <p className="text-charcoal/80">{lang === 'bn' ? selectedPlant.nutrition.bn : selectedPlant.nutrition.en}</p>
+                <p className="text-charcoal/80 mb-2 leading-relaxed">
+                  <strong>{lang === 'bn' ? 'মাটির মিশ্রণ:' : 'Soil Blend:'}</strong> {lang === 'bn' ? selectedPlant.soil.bn : selectedPlant.soil.en}
+                </p>
+                <p className="text-charcoal/80 leading-relaxed">
+                  <strong>{lang === 'bn' ? 'পুষ্টি প্রয়োগ:' : 'Fertilizer:'}</strong> {lang === 'bn' ? selectedPlant.nutrition.bn : selectedPlant.nutrition.en}
+                </p>
               </div>
+
+              {/* Common Pests & Vectors */}
+              {selectedPlant.pests && selectedPlant.pests.length > 0 && (
+                <div className="mt-4 rounded-2xl glass-surface p-4 border border-white/85 text-xs">
+                  <strong className="block text-forest font-bold mb-2 flex items-center gap-1.5">
+                    <Bug className="size-3.5 text-rose-500" />
+                    <span>{lang === 'bn' ? 'সাধারণ রোগবালাই ও ক্ষতিকর পোকা:' : 'Common Pests & Disease Vectors:'}</span>
+                  </strong>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedPlant.pests.map((pest, i) => (
+                      <span key={i} className="rounded-full bg-rose-50 text-rose-700 px-3 py-1 font-medium border border-rose-200/60">
+                        {pest}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Amir Ali Agronomist Protocol */}
               <div className="mt-4 rounded-2xl glass-emerald p-5 text-white text-xs sm:text-sm shadow-soft">

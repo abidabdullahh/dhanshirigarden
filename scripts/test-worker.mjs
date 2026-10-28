@@ -241,9 +241,14 @@ test('identifies plant species in picture-this style endpoint', async () => {
     banglaName: 'বারি মাল্টা-১',
     scientificName: 'Citrus sinensis',
     family: 'Rutaceae',
+    origin: 'BARI Gazipur',
     confidence: 'high',
     category: 'rooftop-fruit',
     description: 'Juicy sweet rooftop citrus cultivar.',
+    plantation: '18-20 inch container with brick drainage',
+    bloomingSeason: 'February - March',
+    harvestSeason: 'September - October',
+    caringTechniques: 'Prune dead twigs post-harvest and spray copper fungicide',
     sunlight: 'Full Sun',
     watering: 'Moderate',
     difficulty: 'beginner',
@@ -260,6 +265,8 @@ test('identifies plant species in picture-this style endpoint', async () => {
   assert.equal(data.isPlant, true)
   assert.equal(data.name, 'BARI Malta-1')
   assert.equal(data.scientificName, 'Citrus sinensis')
+  assert.equal(data.origin, 'BARI Gazipur')
+  assert.equal(data.bloomingSeason, 'February - March')
   assert.equal(data.confidence, 'high')
 })
 

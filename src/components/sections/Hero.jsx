@@ -99,7 +99,7 @@ export default function Hero() {
               </Button>
             </div>
 
-            {/* Apple-Grade Key USP Spotlight: AI Plant Doctor & PictureThis Plant Wiki */}
+            {/* AI Plant Doctor & PictureThis Botanical Wiki Spotlight */}
             <div className="mt-8 rounded-3xl glass-panel p-4 sm:p-5 shadow-soft border border-emerald/25 bg-gradient-to-br from-white/95 via-mint/35 to-white/80 transition-all duration-300 hover:shadow-lift">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
@@ -108,7 +108,7 @@ export default function Hero() {
                   </span>
                   <div>
                     <span className="text-[0.68rem] font-extrabold uppercase tracking-widest text-emerald block">
-                      {lang === 'bn' ? 'প্রধান ইউএসপি · KEY USP' : 'CORE USP · AI AGRONOMY'}
+                      {lang === 'bn' ? 'ডিএই প্রযুক্তি ও বোটানিক্যাল এআই' : 'DAE PROTOCOL · AI BOTANY'}
                     </span>
                     <strong className="text-forest text-sm font-display font-bold">
                       {lang === 'bn' ? 'এআই প্ল্যান্ট ডক্টর ও উদ্ভিদ বিশ্বকোষ' : 'AI Plant Doctor & Botanical Wiki'}

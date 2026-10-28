@@ -64,7 +64,7 @@ function HomePage() {
         {/* Core Credentials & Authority Stats */}
         <Stats />
 
-        {/* Key USP: AI Plant Doctor Interactive Diagnostics Suite */}
+        {/* AI Plant Doctor Interactive Diagnostics Suite */}
         <PlantDoctor />
 
         {/* CAD Studio & Itemized BOQ Estimator */}

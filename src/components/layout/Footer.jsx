@@ -128,7 +128,7 @@ export default function Footer() {
                   className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
                 >
                   <span className="size-2 rounded-full bg-bloom animate-ping" />
-                  <span>{t.nav.plantDoctor} (AI Diagnosis USP)</span>
+                  <span>{t.nav.plantDoctor} (AI Diagnosis)</span>
                 </button>
               </li>
               <li>
