@@ -5,8 +5,6 @@ import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import FloatingActions from '../components/layout/FloatingActions'
 import Projects from '../components/sections/Projects'
-import BeforeAfterShowcase from '../components/dynamic/BeforeAfterShowcase'
-import GrowthSimulator from '../components/dynamic/GrowthSimulator'
 import Button from '../components/ui/Button'
 import { Container } from '../components/ui/Section'
 import { getWhatsAppLink } from '../lib/whatsapp'
@@ -59,12 +57,6 @@ export default function ProjectsPage() {
 
         {/* 1. Projects Gallery */}
         <Projects />
-
-        {/* 2. Before / After Interactive Split Comparison */}
-        <BeforeAfterShowcase />
-
-        {/* 3. 90-Day Living Growth Simulator */}
-        <GrowthSimulator />
 
         {/* CTA */}
         <section className="relative isolate overflow-hidden py-16">

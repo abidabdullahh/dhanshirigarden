@@ -101,27 +101,27 @@ const defs = {
 
   // Lawn & field
   mowerClose: {
-    id: 4162016,
-    by: 'Magda Ehlers',
+    id: 1407305,
+    by: 'Aleksandar Pasaric',
     title: {
-      bn: 'ধানসিঁড়ি গার্ডেন - প্রিমিয়াম বারমুডা কার্পেট ঘাসের লন পরিচর্যা',
-      en: 'Dhanshiri Garden - Bermuda Carpet Grass Lawn Mowing & Maintenance',
+      bn: 'ধানসিঁড়ি গার্ডেন - প্রিমিয়াম বারমুডা কার্পেট ঘাসের লন এস্টেট',
+      en: 'Dhanshiri Garden - Premium Bermuda Carpet Grass Estate Lawn',
     },
     alt: {
-      bn: 'প্রিমিয়াম বারমুডা কার্পেট ঘাসের লনে আধুনিক লন মাওয়ার দিয়ে ঘাস কাটার দৃশ্য - ধানসিঁড়ি গার্ডেন ঢাকা ও নওগাঁ',
-      en: 'Precision push mower trimming dense green Bermuda carpet grass lawn - Dhanshiri Garden Dhaka & Naogaon',
+      bn: 'আধুনিক ল্যান্ডস্কেপ আর্কিটেকচারে নিখুঁত ড্রেনেজ সমৃদ্ধ বারমুডা ও কোরিয়ান কার্পেট ঘাসের লন - ধানসিঁড়ি গার্ডেন ঢাকা',
+      en: 'Lush precision-graded Bermuda and Korean carpet grass lawn in contemporary landscape estate - Dhanshiri Garden Dhaka',
     },
   },
   mowing: {
-    id: 4162011,
-    by: 'Magda Ehlers',
+    id: 1300510,
+    by: 'Quang Nguyen Vinh',
     title: {
-      bn: 'ধানসিঁড়ি গার্ডেন - পেশাদার লন কাটিং ও মালি সার্ভিস',
-      en: 'Dhanshiri Garden - Professional Turf Mowing & Lawn Care Service',
+      bn: 'ধানসিঁড়ি গার্ডেন - বিলাসবহুল ট্রপিক্যাল গার্ডেন ও কার্পেট ঘাসের পরিচর্যা',
+      en: 'Dhanshiri Garden - Luxury Tropical Garden & Velvet Turf Maintenance',
     },
     alt: {
-      bn: 'পেশাদার পদ্ধতিতে কার্পেট ঘাসের লন কাটা, লেভেলিং ও বাগান পরিচর্যা সেবা - ধানসিঁড়ি গার্ডেন',
-      en: 'Gardener actively mowing and grooming a lush green carpet grass lawn - Dhanshiri Garden',
+      bn: 'সবুজ গালিচা ঘাসের লন, পাম গাছ ও সুবিন্যস্ত আঙিনা সজ্জা - ধানসিঁড়ি গার্ডেন',
+      en: 'Manicured green carpet turf lawn bordered by lush tropical palms and architectural garden - Dhanshiri Garden',
     },
   },
 
@@ -213,29 +213,29 @@ const defs = {
     },
   },
   horticulturists: {
-    id: 6509142,
-    by: 'Tima Miroshnichenko',
+    id: 2886937,
+    by: 'Mark Stebnicki',
     title: {
-      bn: 'ধানসিঁড়ি গার্ডেন - অভিজ্ঞ কৃষিবিদ ও উদ্যানতত্ত্ববিদদের পরামর্শ',
-      en: 'Dhanshiri Garden - Agronomy Consultants & Horticultural Specialists',
+      bn: 'ধানসিঁড়ি গার্ডেন - পলিনেট হাউজ ও আধুনিক নার্সারি গবেষণা কেন্দ্র',
+      en: 'Dhanshiri Garden - High-Tech Polyhouse & Agricultural Nursery Research Facility',
     },
     alt: {
-      bn: 'গ্রিনহাউসে গাছের বৃদ্ধি ও রোগবালাই পর্যবেক্ষণরত কৃষিবিদ দল - ধানসিঁড়ি গার্ডেন',
-      en: 'Professional agronomists and horticulturists examining plant health in a nursery - Dhanshiri Garden',
+      bn: 'নিয়ন্ত্রিত তাপমাত্রায় উন্নত জাতের চারা উৎপাদন ও বাণিজ্যিক নার্সারি ব্যবস্থাপনা - ধানসিঁড়ি গার্ডেন নওগাঁ',
+      en: 'Commercial nursery facility cultivating certified horticultural saplings under controlled microclimates - Dhanshiri Garden',
     },
   },
 
   // Planting & care
   eggBoxSeedlings: {
-    id: 22610719,
-    by: 'Kenneth Surillo',
+    id: 1005058,
+    by: 'Huy Phan',
     title: {
-      bn: 'ধানসিঁড়ি গার্ডেন - অর্গানিক সিডলিং জার্মিনেশন ও চারার যত্ন',
-      en: 'Dhanshiri Garden - Organic Seedling Germination & Home Gardening',
+      bn: 'ধানসিঁড়ি গার্ডেন - নান্দনিক টবের গাছ ও অর্নামেন্টাল প্ল্যান্ট কালেকশন',
+      en: 'Dhanshiri Garden - Designer Potted Plants & Ornamental Foliage',
     },
     alt: {
-      bn: 'সহজ ও পরিবেশবান্ধব পদ্ধতিতে বীজ থেকে চারা অঙ্কুরোদগম ও বাগান তৈরি - ধানসিঁড়ি গার্ডেন',
-      en: 'Young tender seedlings sprouting in biodegradable starter cells for home gardening - Dhanshiri Garden',
+      bn: 'ব্যালকনি ও ইনডোর বাগানের জন্য সুস্থ সতেজ জাতের টবের গাছ ও পরিচর্যা - ধানসিঁড়ি গার্ডেন',
+      en: 'Healthy thriving indoor and balcony potted ornamental plants with organic media - Dhanshiri Garden',
     },
   },
   soilPouring: {
@@ -263,15 +263,15 @@ const defs = {
     },
   },
   seedPackets: {
-    id: 7782153,
-    by: 'RDNE Stock project',
+    id: 1084199,
+    by: 'Min An',
     title: {
-      bn: 'ধানসিঁড়ি গার্ডেন - বিশ্বস্ত দেশি ও বিদেশি বীজ সংগ্রহ ও সরবরাহ',
-      en: 'Dhanshiri Garden - Certified High-Germination Seeds Collection & Supply',
+      bn: 'ধানসিঁড়ি গার্ডেন - উন্নত জাতের ফলদ ও শোভাময় গাছের চারা সরবরাহ',
+      en: 'Dhanshiri Garden - Certified Fruit & Ornamental Saplings Nursery',
     },
     alt: {
-      bn: 'উচ্চ অঙ্কুরোদগম ক্ষমতাসম্পন্ন দেশি ও বিদেশি শাকসবজি ও ফুলের বীজের প্যাকেট - ধানসিঁড়ি গার্ডেন',
-      en: 'Packets of certified high-germination flower and vegetable garden seeds - Dhanshiri Garden',
+      bn: 'ঢাকা ও নওগাঁর নার্সারিতে প্রস্তুতকৃত সুস্থ সবল ফলদ ও শোভাময় গাছের চারা কালেকশন - ধানসিঁড়ি গার্ডেন',
+      en: 'Vigorous tropical fruit and ornamental landscape saplings cultivated in Dhanshiri Garden nursery',
     },
   },
   hoseSprout: {

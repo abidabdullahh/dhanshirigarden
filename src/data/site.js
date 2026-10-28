@@ -15,6 +15,21 @@ export const site = {
 
   email: 'dhanshirigarden@gmail.com',
 
+  offices: [
+    {
+      city: 'ঢাকা (Dhaka)',
+      name: 'কর্পোরেট অফিস (Corporate Office)',
+      address: 'ক-২৬/১, মহাখালী, ঢাকা-১২১২',
+      note: 'হেডকোয়ার্টার্স ও ল্যান্ডস্কেপ আর্কিটেকচার স্টুডিও',
+    },
+    {
+      city: 'নওগাঁ (Naogaon)',
+      name: 'নার্সারি ও উৎপাদন কেন্দ্র (Nursery & Research)',
+      address: 'সুলতানপুর, পণ্ডিত পাড়া, নওগাঁ সদর, নওগাঁ-৬৫০০',
+      note: 'ফলদ, ঔষধি ও বরেন্দ্র অঞ্চলের ঘাস গবেষণা কেন্দ্র',
+    },
+  ],
+
   stats: { years: 3, projects: 45, plants: 30000 },
 
   /**

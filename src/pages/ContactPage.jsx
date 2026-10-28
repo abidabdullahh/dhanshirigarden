@@ -313,16 +313,18 @@ export default function ContactPage() {
                     </span>
                     <div>
                       <h3 className="text-lg font-bold text-forest">
-                        {site.offices[0].city} · {site.offices[0].name}
+                        {lang === 'bn' ? 'ঢাকা' : 'Dhaka'} · {t.contact.corporate}
                       </h3>
-                      <p className="text-xs text-emerald font-semibold">{site.offices[0].note}</p>
+                      <p className="text-xs text-emerald font-semibold">
+                        {lang === 'bn' ? 'হেডকোয়ার্টার্স ও আর্কিটেকচার স্টুডিও' : 'Headquarters & Studio'}
+                      </p>
                     </div>
                   </div>
                   <address className="mt-4 text-xs sm:text-sm not-italic leading-relaxed text-charcoal/85">
-                    {site.offices[0].address}
+                    {t.contact.dhakaAddress}
                   </address>
                   <div className="mt-4">
-                    <CopyButton text={site.offices[0].address} />
+                    <CopyButton text={t.contact.dhakaAddress} />
                   </div>
                 </div>
 
@@ -334,16 +336,16 @@ export default function ContactPage() {
                     </span>
                     <div>
                       <h3 className="text-lg font-bold text-forest">
-                        {site.offices[1].city} · {site.offices[1].name}
+                        {lang === 'bn' ? 'নওগাঁ' : 'Naogaon'} · {t.contact.nursery}
                       </h3>
-                      <p className="text-xs text-emerald font-semibold">{site.offices[1].note}</p>
+                      <p className="text-xs text-emerald font-semibold">{t.contact.nurseryNote}</p>
                     </div>
                   </div>
                   <address className="mt-4 text-xs sm:text-sm not-italic leading-relaxed text-charcoal/85">
-                    {site.offices[1].address}
+                    {t.contact.naogaonAddress}
                   </address>
                   <div className="mt-4">
-                    <CopyButton text={site.offices[1].address} />
+                    <CopyButton text={t.contact.naogaonAddress} />
                   </div>
                 </div>
 

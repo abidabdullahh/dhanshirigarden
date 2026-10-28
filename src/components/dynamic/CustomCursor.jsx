@@ -22,17 +22,19 @@ export default function CustomCursor() {
       pos.current.targetY = e.clientY
 
       const target = e.target
-      const isInteractive = target && (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.closest('input') ||
-        target.closest('select') ||
-        target.closest('textarea') ||
-        target.closest('[role="button"]') ||
-        target.closest('[role="tab"]') ||
-        target.closest('.interactive-target')
+      const isInteractive = Boolean(
+        target && (
+          target.closest('a') ||
+          target.closest('button') ||
+          target.closest('input') ||
+          target.closest('select') ||
+          target.closest('textarea') ||
+          target.closest('[role="button"]') ||
+          target.closest('[role="tab"]') ||
+          target.closest('.interactive-target')
+        )
       )
-      setHovered(Boolean(isInteractive))
+      setHovered((prev) => (prev !== isInteractive ? isInteractive : prev))
     }
 
     const onMouseDown = () => setClicked(true)

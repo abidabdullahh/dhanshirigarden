@@ -21,8 +21,6 @@ import PlantDoctor from './components/plant-doctor/PlantDoctor'
 
 // Dynamic high-utility client features
 import GardenStudio from './components/dynamic/GardenStudio'
-import GrowthSimulator from './components/dynamic/GrowthSimulator'
-import BeforeAfterShowcase from './components/dynamic/BeforeAfterShowcase'
 
 // Code-split Dedicated Standalone Pages
 const PlantDoctorPage = lazy(() => import('./pages/PlantDoctorPage'))
@@ -79,9 +77,7 @@ function HomePage() {
         <Rooftop />
         <Lawn />
 
-        {/* Visual Proof: Transformations & Growth */}
-        <BeforeAfterShowcase />
-        <GrowthSimulator />
+        {/* Real Signature Projects */}
         <Projects />
 
         {/* Commercial Care & Trust */}
