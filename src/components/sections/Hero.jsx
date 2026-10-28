@@ -1,4 +1,4 @@
-import { Clock, MapPin, MessageCircle, ScanSearch, Sprout } from 'lucide-react'
+import { Clock, MapPin, MessageCircle, PencilRuler, ScanSearch, Sprout } from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
@@ -6,6 +6,7 @@ import Button from '../ui/Button'
 import { LeafDoodle, PlanTree, ScissorsDoodle, SproutDoodle, SunDoodle } from '../ui/Doodles'
 import Img from '../ui/Img'
 import { Container } from '../ui/Section'
+import InteractiveCard3D from '../dynamic/InteractiveCard3D'
 
 /** A vine that grows up the left edge of the headline, then pops its leaves in. Runs once. */
 function HeadlineVine() {
@@ -45,7 +46,12 @@ function HeadlineVine() {
 function HeroCollage() {
   const { t } = useLocale()
   return (
-    <div className="enter relative mx-auto aspect-[4/5] w-full max-w-[26rem] sm:max-w-[30rem] lg:max-w-none" style={{ '--d': '0.2s' }}>
+    <InteractiveCard3D
+      maxTilt={5}
+      glare={false}
+      className="enter relative mx-auto aspect-[4/5] w-full max-w-[26rem] sm:max-w-[30rem] lg:max-w-none rounded-[3rem] p-2"
+      style={{ '--d': '0.2s' }}
+    >
       <div className="absolute inset-y-0 right-0 w-[80%] overflow-hidden bg-mint shadow-lift ring-8 ring-white/70 leaf-a">
         <Img photo={photos.sunnyPath} width={1000} sizes="(min-width: 1024px) 34vw, 80vw" priority />
       </div>
@@ -77,7 +83,7 @@ function HeroCollage() {
       <ScissorsDoodle className="absolute -top-3 right-[14%] size-14 -rotate-12 animate-float text-forest sm:size-16" style={{ '--r': '-12deg' }} />
       <SunDoodle className="absolute -left-2 top-[38%] hidden size-12 animate-spin-slow text-bloom sm:block" />
       <SproutDoodle className="absolute -bottom-3 right-[30%] size-12 animate-sway text-emerald" />
-    </div>
+    </InteractiveCard3D>
   )
 }
 
@@ -98,12 +104,21 @@ export default function Hero() {
 
       <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-7">
-          <p className="enter inline-flex items-center gap-2 rounded-full glass-green px-4 py-2 text-sm font-semibold text-forest">
-            <MapPin className="size-4 text-emerald" aria-hidden="true" />
-            {copy.eyebrow}
-          </p>
+          {/* Live Status Ticker */}
+          <div className="enter mb-4 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full glass-green px-4 py-1.5 text-xs font-semibold text-forest">
+              <MapPin className="size-3.5 text-emerald" aria-hidden="true" />
+              {copy.eyebrow}
+            </span>
+            {copy.liveStatus && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/8 px-3.5 py-1.5 text-xs font-medium text-forest ring-1 ring-forest/15">
+                <span className="size-2 rounded-full bg-emerald animate-ping" />
+                {copy.liveStatus}
+              </span>
+            )}
+          </div>
 
-          <h1 className={`enter relative mt-6 pl-10 sm:pl-14 ${titleSize}`} style={{ '--d': '0.08s' }}>
+          <h1 className={`enter relative mt-4 pl-10 sm:pl-14 ${titleSize}`} style={{ '--d': '0.08s' }}>
             <HeadlineVine />
             {copy.titleBefore}
             <span className="whitespace-nowrap">
@@ -123,10 +138,15 @@ export default function Hero() {
             {copy.sub}
           </p>
 
-          <div className="enter mt-8 flex flex-wrap gap-3 pl-10 sm:pl-14" style={{ '--d': '0.3s' }}>
+          <div className="enter mt-8 flex flex-wrap items-center gap-3 pl-10 sm:pl-14" style={{ '--d': '0.3s' }}>
             <Button href={getWhatsAppLink(null, null, lang)} size="lg" icon={MessageCircle}>
               {copy.ctaPrimary}
             </Button>
+            {copy.exploreStudio && (
+              <Button href="#studio" variant="bright" size="lg" icon={PencilRuler}>
+                {copy.exploreStudio}
+              </Button>
+            )}
             <Button href="#care-plans" variant="glass" size="lg">
               {copy.ctaSecondary}
             </Button>

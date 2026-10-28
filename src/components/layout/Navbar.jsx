@@ -11,10 +11,14 @@ import Logo from '../ui/Logo'
 
 const SECTION_IDS = [
   'services',
+  'studio',
   'rooftop',
   'lawn',
+  'plant-explorer',
   'projects',
+  'transformations',
   'process',
+  'growth-simulator',
   'gallery',
   'plant-doctor',
   'blog',
@@ -98,59 +102,52 @@ function ServicesMenu({ active }) {
       className="relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
-      onBlur={(event) => {
-        if (rootRef.current && !rootRef.current.contains(event.relatedTarget)) close()
-      }}
     >
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-haspopup="true"
+      <a
+        href="#services"
         onClick={handleClick}
+        aria-haspopup="true"
+        aria-expanded={open}
         className={linkClass(active)}
       >
-        {t.nav.services}
-        <ChevronDown className={`size-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
-      </button>
+        <span>{t.nav.services}</span>
+        <ChevronDown
+          className={`size-4 transition-transform duration-200 ${open ? 'rotate-180 text-emerald' : 'text-forest/60'}`}
+          aria-hidden="true"
+        />
+      </a>
 
       {open && (
-        <div className="absolute left-0 top-full z-10 pt-3">
-          <div className="animate-rise w-[min(34rem,90vw)] rounded-[1.75rem] glass-white p-2.5 shadow-lift [animation-duration:0.28s]">
-            <ul className="grid gap-1 sm:grid-cols-2">
-              {serviceShortcuts.map((item) => {
-                const Icon = item.icon
-                const copy = t.servicesMenu[item.key]
-                return (
-                  <li key={item.key}>
-                    <a
-                      href={item.href}
-                      onClick={() => {
-                        selectService(item.service)
-                        close()
-                      }}
-                      className="group flex items-center gap-3 rounded-2xl p-3 transition-colors hover:bg-bright/15"
-                    >
-                      <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-mint text-emerald transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
-                        <Icon className="size-6" aria-hidden="true" />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block font-display text-[1.02rem] font-semibold text-forest">{copy.title}</span>
-                        <span className="block text-sm leading-snug text-charcoal/65">{copy.desc}</span>
-                      </span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-            <a
-              href="#services"
-              onClick={close}
-              className="mt-1 flex items-center justify-between rounded-2xl bg-forest px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-emerald"
-            >
-              {t.servicesMenu.all}
-              <ChevronDown className="size-4 -rotate-90" aria-hidden="true" />
-            </a>
-          </div>
+        <div
+          role="menu"
+          className="absolute left-0 top-full mt-2 w-80 rounded-3xl glass-card p-2 shadow-lift ring-1 ring-bright/35 backdrop-blur-2xl animate-pop"
+        >
+          <ul className="grid gap-1">
+            {serviceShortcuts.map((item) => {
+              const Icon = item.icon
+              return (
+                <li key={item.key}>
+                  <a
+                    href={item.href}
+                    onClick={() => {
+                      selectService(item.service)
+                      close()
+                    }}
+                    role="menuitem"
+                    className="flex items-center gap-3 rounded-2xl p-2.5 transition hover:bg-forest/10"
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-forest/8 text-emerald">
+                      <Icon className="size-4" aria-hidden="true" />
+                    </span>
+                    <span className="flex flex-col">
+                      <strong className="text-sm font-bold text-forest">{t.servicesMenu[item.key].title}</strong>
+                      <span className="text-xs text-charcoal/70">{t.servicesMenu[item.key].desc}</span>
+                    </span>
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
         </div>
       )}
     </div>
@@ -159,7 +156,7 @@ function ServicesMenu({ active }) {
 
 export default function Navbar() {
   const { t, lang } = useLocale()
-  const { progress, scrolled } = useScrollProgress()
+  const { scrolled } = useScrollProgress()
   const activeId = useActiveSection(SECTION_IDS)
   const [mobileOpen, setMobileOpen] = useState(false)
   const openerRef = useRef(null)
@@ -184,8 +181,10 @@ export default function Navbar() {
   }, [])
 
   const links = [
-    { id: 'projects', label: t.nav.projects, match: ['projects', 'process'] },
-    { id: 'gallery', label: t.nav.gallery, match: ['gallery'] },
+    { id: 'studio', label: t.nav.studio, match: ['studio'] },
+    { id: 'projects', label: t.nav.projects, match: ['projects', 'process', 'transformations'] },
+    { id: 'plant-explorer', label: t.nav.plants, match: ['plant-explorer'] },
+    { id: 'gallery', label: t.nav.gallery, match: ['gallery', 'growth-simulator'] },
     { id: 'plant-doctor', label: t.nav.plantDoctor, match: ['plant-doctor'], ai: true },
     { id: 'blog', label: t.nav.blog, match: ['blog'] },
     { id: 'care-plans', label: t.nav.carePlans, match: ['care-plans'] },
@@ -228,45 +227,35 @@ export default function Navbar() {
 
           <div className="flex items-center gap-1.5 sm:gap-2">
             <LangToggle />
-            <Button
-              href={`tel:${phone.tel}`}
-              size="sm"
-              icon={Phone}
-              className="max-md:hidden"
-              aria-label={`${t.actions.callNow} ${phone.number}`}
-            >
-              {t.actions.callNow}
-            </Button>
+
+            <div className="hidden sm:block">
+              <Button href={getWhatsAppLink(null, null, lang)} size="sm" icon={MessageCircle}>
+                {t.actions.whatsapp}
+              </Button>
+            </div>
+
             <button
               ref={openerRef}
               type="button"
               aria-label={t.nav.menu}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
-              className="grid size-10 place-items-center rounded-full bg-forest text-white transition-colors hover:bg-emerald sm:size-11 xl:hidden"
+              className="grid size-11 place-items-center rounded-full glass-green text-forest xl:hidden"
             >
               <Menu className="size-5" aria-hidden="true" />
             </button>
           </div>
-
-          <span aria-hidden="true" className="pointer-events-none absolute inset-x-10 bottom-0 h-[3px] overflow-hidden rounded-full">
-            <span
-              className="block h-full origin-left bg-linear-to-r from-emerald via-bright to-bloom"
-              style={{ transform: `scaleX(${progress})` }}
-            />
-          </span>
         </nav>
       </header>
 
+      {/* Mobile Drawer */}
       {mobileOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={t.nav.menu}
-          className="fixed inset-0 z-[60] overflow-y-auto bg-cream/95 backdrop-blur-xl xl:hidden"
+          className="fixed inset-0 z-50 flex justify-end bg-forest/40 backdrop-blur-sm xl:hidden"
         >
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 mesh-glow" />
-          <div className="relative mx-auto flex min-h-full max-w-lg flex-col px-5 pb-8 pt-4">
+          <div className="flex h-full w-full max-w-sm flex-col overflow-y-auto bg-cream p-6 shadow-lift">
             <div className="flex items-center justify-between gap-3">
               <Logo />
               <div className="flex items-center gap-2">
@@ -289,7 +278,7 @@ export default function Navbar() {
                   <a
                     href={`#${link.id}`}
                     onClick={closeMobile}
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-2xl font-bold transition-colors ${
+                    className={`flex items-center justify-between rounded-2xl px-4 py-3 font-display text-xl font-bold transition-colors ${
                       link.match.includes(activeId) ? 'bg-forest/[0.08] text-forest' : 'text-forest/85 hover:bg-forest/[0.06]'
                     }`}
                   >
@@ -314,9 +303,9 @@ export default function Navbar() {
                         selectService(item.service)
                         closeMobile()
                       }}
-                      className="flex h-full items-center gap-2.5 rounded-2xl glass-green p-3 text-sm font-semibold text-forest"
+                      className="flex h-full items-center gap-2.5 rounded-2xl glass-green p-3 text-xs font-semibold text-forest"
                     >
-                      <Icon className="size-5 shrink-0 text-emerald" aria-hidden="true" />
+                      <Icon className="size-4 shrink-0 text-emerald" aria-hidden="true" />
                       {t.servicesMenu[item.key].title}
                     </a>
                   </li>

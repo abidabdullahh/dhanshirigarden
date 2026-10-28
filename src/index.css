@@ -379,3 +379,44 @@ html[lang='bn'] .leading-snug {
     stroke-dashoffset: 0;
   }
 }
+
+/* ------------------------------------------------------------------
+   DYNAMIC LIVING ATMOSPHERES (Night, Sunset, Rain, Sun)
+------------------------------------------------------------------- */
+html {
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+html[data-atmosphere='night'] {
+  --color-cream: #141f1a;
+  --color-charcoal: #e2e8f0;
+}
+html[data-atmosphere='night'] body {
+  background-color: #121d18;
+  color: #e2e8f0;
+}
+html[data-atmosphere='night'] h1,
+html[data-atmosphere='night'] h2,
+html[data-atmosphere='night'] h3,
+html[data-atmosphere='night'] h4 {
+  color: #d1fae5;
+}
+
+html[data-atmosphere='sunset'] {
+  --color-cream: #fbf6ee;
+}
+html[data-atmosphere='sunset'] .mesh-glow {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgb(249 115 22 / 0.22), transparent 46%),
+    radial-gradient(circle at 82% 65%, rgb(217 154 43 / 0.2), transparent 44%),
+    radial-gradient(circle at 50% 8%, rgb(225 29 72 / 0.12), transparent 40%);
+}
+
+html[data-atmosphere='rain'] {
+  --color-cream: #f2f7f5;
+}
+html[data-atmosphere='rain'] .mesh-glow {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.18), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.2), transparent 45%);
+}
