@@ -270,6 +270,55 @@ test('identifies plant species in picture-this style endpoint', async () => {
   assert.equal(data.confidence, 'high')
 })
 
+test('identifies plant species using Kindwise Plant.id engine', async () => {
+  const kindwiseMockResponse = {
+    result: {
+      is_plant: { binary: true, probability: 0.96 },
+      classification: {
+        suggestions: [
+          {
+            name: 'Citrus sinensis',
+            probability: 0.96,
+            details: {
+              common_names: ['Sweet orange', 'Malta'],
+              taxonomy: { family: 'Rutaceae', genus: 'Citrus' },
+              description: { value: 'Citrus sinensis is a widely cultivated sweet citrus species.' },
+              best_light_condition: 'Full sun',
+              watering: { min: 1, max: 2 },
+            },
+          },
+        ],
+      },
+    },
+  }
+
+  const kindwiseEnv = {
+    ...env,
+    KINDWISE_API_KEY: 'test-kindwise-key',
+  }
+
+  const res = await call(good, {
+    url: 'https://worker.test/api/identify-plant',
+    config: kindwiseEnv,
+    fetchImpl: async (url, init) => {
+      assert.match(url, /api\.plant\.id/)
+      assert.equal(init.headers['Api-Key'], 'test-kindwise-key')
+      return new Response(JSON.stringify(kindwiseMockResponse), {
+        status: 200,
+        headers: { 'content-type': 'application/json' },
+      })
+    },
+  })
+
+  assert.equal(res.status, 200)
+  const data = await res.json()
+  assert.equal(data.isPlant, true)
+  assert.equal(data.name, 'Sweet orange')
+  assert.equal(data.scientificName, 'Citrus sinensis')
+  assert.equal(data.family, 'Rutaceae')
+  assert.equal(data.engine, 'Kindwise Plant.id v3')
+})
+
 let failed = 0
 const silence = console.error
 console.error = () => {} // the Worker logs upstream failures on purpose; keep the test output readable

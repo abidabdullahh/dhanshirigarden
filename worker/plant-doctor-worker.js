@@ -550,10 +550,11 @@ export async function handleRequest(request, env, fetchImpl = (...args) => fetch
     return reply(res.data, res.status, cors)
   }
 
-  // 5. Plant Identifier API (PictureThis app feature)
+  // 5. Plant Identifier API (Kindwise Plant.id & Claude Vision)
   if (pathname === '/api/identify-plant') {
-    if (!env.ANTHROPIC_API_KEY) {
-      console.error('Plant Identifier is not configured: set ANTHROPIC_API_KEY.')
+    const kindwiseKey = env.KINDWISE_API_KEY || env.PLANT_ID_API_KEY
+    if (!env.ANTHROPIC_API_KEY && !kindwiseKey) {
+      console.error('Plant Identifier is not configured: set KINDWISE_API_KEY or ANTHROPIC_API_KEY.')
       return reply({ error: 'not_configured' }, 500, cors)
     }
     if (request.method !== 'POST') return reply({ error: 'method_not_allowed' }, 405, cors)
@@ -576,6 +577,62 @@ export async function handleRequest(request, env, fetchImpl = (...args) => fetch
     if (image.length > MAX_IMAGE_CHARS) return reply({ error: 'too_large' }, 413, cors)
     if (!BASE64.test(image)) return reply({ error: 'bad_request' }, 400, cors)
 
+    // Option A: Kindwise Plant.id v3 API
+    if (kindwiseKey) {
+      try {
+        const upstream = await fetchImpl(
+          'https://api.plant.id/v3/identification?details=common_names,url,description,taxonomy,image,watering,best_light_condition,best_soil_type,common_uses,toxicity',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Api-Key': kindwiseKey,
+            },
+            body: JSON.stringify({
+              images: [`data:${mediaType};base64,${image}`],
+              latitude: 23.8103,
+              longitude: 90.4125,
+              similar_images: true,
+            }),
+            signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+          }
+        )
+        if (upstream.ok) {
+          const kindwiseJson = await upstream.json()
+          const suggestion = kindwiseJson?.result?.classification?.suggestions?.[0]
+          if (suggestion) {
+            const details = suggestion.details || {}
+            const taxonomy = details.taxonomy || {}
+            const commonNames = details.common_names || []
+            const bestName = commonNames[0] || suggestion.name
+            return reply(
+              {
+                isPlant: true,
+                name: bestName,
+                banglaName: bestName,
+                scientificName: suggestion.name,
+                family: taxonomy.family || 'Plantae',
+                confidence: suggestion.probability > 0.8 ? 'high' : 'medium',
+                category: 'flowering',
+                description: details.description?.value || `${bestName} (${suggestion.name})`,
+                sunlight: details.best_light_condition || 'Full Sun to Bright Indirect',
+                watering: details.watering ? `Scale ${details.watering.min || 1}-${details.watering.max || 2}` : 'Moderate',
+                difficulty: 'beginner',
+                petSafe: true,
+                funFact: commonNames.length > 1 ? `Also known as: ${commonNames.slice(0, 3).join(', ')}` : null,
+                engine: 'Kindwise Plant.id v3',
+              },
+              200,
+              cors
+            )
+          }
+        }
+      } catch (err) {
+        console.error('Kindwise upstream failed in worker, falling back to Claude:', err.message)
+      }
+    }
+
+    // Option B: Anthropic Claude Vision
     let upstream
     try {
       upstream = await fetchImpl(ANTHROPIC_URL, {
