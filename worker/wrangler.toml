@@ -9,9 +9,7 @@ workers_dev = true
 
 [vars]
 # Website origins allowed to call the Worker: scheme + host only, no path, comma-separated.
-# For a GitHub Pages project site the origin is just https://YOUR-USERNAME.github.io
-# (add http://localhost:5173 while developing locally).
-ALLOWED_ORIGINS = "https://YOUR-USERNAME.github.io"
+ALLOWED_ORIGINS = "https://www.dhanshirigarden.com,https://dhanshirigarden.com,https://abidabdullahh.github.io,http://localhost:5173"
 
 # Optional: any Claude model that accepts images.
 MODEL = "claude-sonnet-5-5"

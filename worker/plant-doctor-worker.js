@@ -474,7 +474,7 @@ export async function handleRequest(request, env, fetchImpl = (...args) => fetch
         version: '2.0.0',
         environment: env.ENVIRONMENT || 'production',
         timestamp: new Date().toISOString(),
-        services: ['plant-doctor', 'consultation', 'quote', 'weather-advisory'],
+        services: ['plant-doctor', 'identify-plant', 'consultation', 'quote', 'weather-advisory'],
       },
       200,
       cors,
