@@ -1,176 +1,149 @@
-import { Clock, MapPin, MessageCircle, PencilRuler, ScanSearch, Sprout } from 'lucide-react'
+import { Compass, Droplets, MapPin, ShieldCheck, Sun, Thermometer } from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
-import { LeafDoodle, PlanTree, ScissorsDoodle, SproutDoodle, SunDoodle } from '../ui/Doodles'
 import Img from '../ui/Img'
 import { Container } from '../ui/Section'
 import InteractiveCard3D from '../dynamic/InteractiveCard3D'
 
-/** A vine that grows up the left edge of the headline, then pops its leaves in. Runs once. */
-function HeadlineVine() {
-  const leaves = [
-    { bottom: 8, rotate: 18, delay: 0.9 },
-    { bottom: 30, rotate: -10, delay: 1.25 },
-    { bottom: 52, rotate: 24, delay: 1.6 },
-    { bottom: 74, rotate: -6, delay: 1.95 },
-  ]
-  return (
-    <span aria-hidden="true" className="pointer-events-none absolute inset-y-1 left-0 w-9 sm:w-11">
-      <svg
-        className="absolute inset-0 h-full w-full animate-[vine-grow_1.7s_ease-out_0.4s_both] overflow-visible"
-        viewBox="0 0 40 100"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M8 100C0 88 18 78 8 66S0 42 8 30S18 10 8 0"
-          fill="none"
-          stroke="#2d6a4f"
-          strokeWidth="3"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-        />
-      </svg>
-      {leaves.map((leaf, index) => (
-        <LeafDoodle
-          key={index}
-          className="absolute left-2.5 size-6 animate-grow text-emerald sm:size-7"
-          style={{ bottom: `${leaf.bottom}%`, rotate: `${leaf.rotate}deg`, animationDelay: `${leaf.delay}s`, transformOrigin: '0% 100%' }}
-        />
-      ))}
-    </span>
-  )
-}
-
-function HeroCollage() {
-  const { t } = useLocale()
-  return (
-    <InteractiveCard3D
-      maxTilt={5}
-      glare={false}
-      className="enter relative mx-auto aspect-[4/5] w-full max-w-[26rem] sm:max-w-[30rem] lg:max-w-none rounded-[3rem] p-2"
-      style={{ '--d': '0.2s' }}
-    >
-      <div className="absolute inset-y-0 right-0 w-[80%] overflow-hidden bg-mint shadow-lift ring-8 ring-white/70 leaf-a">
-        <Img photo={photos.sunnyPath} width={1000} sizes="(min-width: 1024px) 34vw, 80vw" priority />
-      </div>
-
-      <div className="absolute bottom-[5%] left-0 aspect-square w-[46%] animate-float-slow overflow-hidden bg-mint shadow-lift ring-8 ring-white/80 leaf-b">
-        <Img photo={photos.greenWall} width={600} sizes="(min-width: 1024px) 16vw, 40vw" priority />
-      </div>
-
-      <div
-        className="absolute left-[4%] top-[6%] size-[27%] animate-float overflow-hidden rounded-full bg-mint shadow-soft ring-4 ring-white"
-        style={{ '--r': '0deg' }}
-      >
-        <Img photo={photos.mowerClose} width={400} sizes="(min-width: 1024px) 10vw, 25vw" priority />
-      </div>
-
-      <a
-        href="#plant-doctor"
-        className="group absolute -right-1 bottom-[17%] flex rotate-3 items-center gap-3 rounded-3xl glass-card p-3 pr-5 shadow-lift transition duration-300 hover:-translate-y-1 hover:rotate-0 sm:-right-4"
-      >
-        <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-forest text-white">
-          <ScanSearch className="size-6 transition-transform duration-300 group-hover:scale-110" aria-hidden="true" />
-        </span>
-        <span className="flex flex-col leading-tight">
-          <strong className="font-display text-[1.02rem] text-forest">{t.hero.badgeTitle}</strong>
-          <span className="text-[0.8rem] text-forest/75">{t.hero.badgeSub}</span>
-        </span>
-      </a>
-
-      <ScissorsDoodle className="absolute -top-3 right-[14%] size-14 -rotate-12 animate-float text-forest sm:size-16" style={{ '--r': '-12deg' }} />
-      <SunDoodle className="absolute -left-2 top-[38%] hidden size-12 animate-spin-slow text-bloom sm:block" />
-      <SproutDoodle className="absolute -bottom-3 right-[30%] size-12 animate-sway text-emerald" />
-    </InteractiveCard3D>
-  )
-}
-
 export default function Hero() {
   const { t, lang } = useLocale()
   const copy = t.hero
-  const titleSize = lang === 'bn' ? 'text-[clamp(2.15rem,5vw,3.8rem)]' : 'text-[clamp(2.05rem,4.5vw,3.5rem)]'
 
   return (
-    <section id="top" className="relative isolate overflow-hidden pb-28 pt-28 sm:pt-32 lg:pb-32 lg:pt-36">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 blueprint-grid [mask-image:linear-gradient(to_bottom,black_30%,transparent_92%)]"
-      />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 mesh-glow" />
-      <PlanTree className="absolute -left-16 top-44 -z-10 size-72 text-forest/[0.09]" />
-      <PlanTree className="absolute -right-24 bottom-6 -z-10 size-[26rem] text-forest/[0.08]" lobes={11} />
+    <section id="top" className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28">
+      {/* Background Relative Video with 20% subtle blur (~4px) & Architectural Overlay */}
+      <div className="absolute inset-0 -z-20 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover filter blur-[4px] opacity-30 scale-105 pointer-events-none transition-opacity duration-1000"
+        >
+          <source src="/hero-garden.webm" type="video/webm" />
+        </video>
+        {/* Architectural Vignette Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/90 via-cream/80 to-cream" />
+        <div className="absolute inset-0 blueprint-grid opacity-20" />
+      </div>
 
-      <Container className="grid items-center gap-14 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-7">
-          {/* Live Status Ticker */}
-          <div className="enter mb-4 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full glass-green px-4 py-1.5 text-xs font-semibold text-forest">
-              <MapPin className="size-3.5 text-emerald" aria-hidden="true" />
-              {copy.eyebrow}
-            </span>
-            {copy.liveStatus && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/8 px-3.5 py-1.5 text-xs font-medium text-forest ring-1 ring-forest/15">
-                <span className="size-2 rounded-full bg-emerald animate-ping" />
-                {copy.liveStatus}
+      <Container>
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+          {/* LEFT: Swiss Architectural Copy Column */}
+          <div className="lg:col-span-7">
+            {/* Architectural Discipline Badge */}
+            <div className="inline-flex items-center gap-2 rounded-md border border-forest/20 bg-forest/5 px-3 py-1 font-mono text-[0.72rem] font-bold tracking-widest text-forest uppercase">
+              <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
+              <span>DAE AGRONOMY · LANDSCAPE ARCHITECTURE · DHAKA & NAOGAON</span>
+            </div>
+
+            {/* Clean, Commanding Swiss Headline without kitschy doodles */}
+            <h1 className="mt-5 font-display text-[clamp(2.1rem,4.6vw,3.6rem)] font-extrabold tracking-tight text-forest leading-[1.12]">
+              {copy.titleBefore}
+              <span className="text-emerald underline decoration-bright/60 decoration-4 underline-offset-6">
+                {copy.titleHighlight}
               </span>
-            )}
-          </div>
+              {copy.titleAfter}
+            </h1>
 
-          <h1 className={`enter relative mt-4 pl-10 sm:pl-14 ${titleSize}`} style={{ '--d': '0.08s' }}>
-            <HeadlineVine />
-            {copy.titleBefore}
-            <span className="whitespace-nowrap">
-              {copy.titleHighlight}
-              <SproutDoodle
-                className="ml-1.5 inline-block size-[0.78em] animate-grow align-[-0.08em] text-emerald"
-                style={{ animationDelay: '1.5s', transformOrigin: '50% 100%' }}
-              />
-            </span>
-            {copy.titleAfter}
-          </h1>
+            {/* Authoritative Subtitle */}
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
+              {copy.sub}
+            </p>
 
-          <p
-            className="enter mt-6 max-w-xl pl-10 text-base leading-body text-charcoal/80 sm:pl-14 sm:text-lg"
-            style={{ '--d': '0.2s' }}
-          >
-            {copy.sub}
-          </p>
+            {/* Structured Credentials Row */}
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-mono text-forest/75 border-y border-forest/10 py-3">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="size-4 text-emerald" />
+                <span className="font-bold">{copy.founderLine}</span>
+              </div>
+              <span className="hidden sm:inline text-forest/30">|</span>
+              <div className="flex items-center gap-1.5">
+                <MapPin className="size-3.5 text-emerald" />
+                <span>{copy.chipReply}</span>
+              </div>
+            </div>
 
-          <div className="enter mt-8 flex flex-wrap items-center gap-3 pl-10 sm:pl-14" style={{ '--d': '0.3s' }}>
-            <Button href={getWhatsAppLink(null, null, lang)} size="lg" icon={MessageCircle}>
-              {copy.ctaPrimary}
-            </Button>
-            {copy.exploreStudio && (
-              <Button href="#studio" variant="bright" size="lg" icon={PencilRuler}>
-                {copy.exploreStudio}
+            {/* Sophisticated Action Buttons */}
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Button href={getWhatsAppLink(null, null, lang)} size="lg" variant="primary" className="text-sm font-bold uppercase tracking-wider">
+                {copy.ctaPrimary}
               </Button>
-            )}
-            <Button href="#care-plans" variant="glass" size="lg">
-              {copy.ctaSecondary}
-            </Button>
+
+              <Button href="#studio" size="lg" variant="glass" className="text-sm font-bold uppercase tracking-wider">
+                <Compass className="size-4 text-emerald" />
+                <span>{copy.exploreStudio}</span>
+              </Button>
+            </div>
           </div>
 
-          <div
-            className="enter mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 pl-10 text-sm text-forest/80 sm:pl-14"
-            style={{ '--d': '0.4s' }}
-          >
-            <span className="inline-flex items-center gap-2.5">
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-mint text-emerald">
-                <Sprout className="size-4" aria-hidden="true" />
-              </span>
-              <span className="max-w-sm leading-snug">{copy.founderLine}</span>
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3.5 py-2 ring-1 ring-forest/10">
-              <Clock className="size-4 text-emerald" aria-hidden="true" />
-              {copy.chipReply}
-            </span>
+          {/* RIGHT: Clean Architectural Imagery Preview */}
+          <div className="lg:col-span-5">
+            <InteractiveCard3D
+              maxTilt={4}
+              glare={false}
+              className="relative mx-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-2xl border border-forest/15 bg-white p-3 shadow-lift"
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-xl bg-mint">
+                <Img photo={photos.rooftopTerrace} width={1000} sizes="(min-width: 1024px) 38vw, 90vw" priority />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <span className="font-mono text-[0.68rem] tracking-widest uppercase opacity-80">
+                    MASTER-PLANNED ROOFTOP
+                  </span>
+                  <strong className="block font-display text-lg font-bold">
+                    {lang === 'bn' ? 'শতভাগ ওয়াটারপ্রুফ আরবান ছাদবাগান' : '100% Leakproof Urban Rooftop Sanctuary'}
+                  </strong>
+                </div>
+              </div>
+            </InteractiveCard3D>
           </div>
         </div>
 
-        <div className="lg:col-span-5">
-          <HeroCollage />
+        {/* INTEGRATED COMPACT BANGLADESH CLIMATE & AGRONOMY BAROMETER */}
+        <div className="mt-12 rounded-xl border border-forest/15 bg-white/80 p-3 sm:p-4 shadow-sm backdrop-blur-md">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+            {/* Location & Season */}
+            <div className="flex items-center gap-2">
+              <span className="grid size-7 place-items-center rounded-lg bg-forest/8 text-forest font-bold">
+                🌾
+              </span>
+              <div>
+                <span className="font-mono text-[0.68rem] uppercase tracking-wider text-forest/60">
+                  {lang === 'bn' ? 'বাংলাদেশ কৃষি আবহাওয়া বুলেটিন' : 'Bangladesh Agronomy Barometer'}
+                </span>
+                <strong className="block text-forest">
+                  {lang === 'bn' ? 'বর্তমান ঋতু: হেমন্ত কাল (কার্তিক-অগ্রহায়ণ)' : 'Season: Late Autumn (Hemanto)'}
+                </strong>
+              </div>
+            </div>
+
+            {/* Live Metrics */}
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-charcoal/85">
+              <div className="flex items-center gap-1.5 font-mono">
+                <Thermometer className="size-3.5 text-amber-600" />
+                <span>২৮° সে. (মাঝারি রোদ)</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-mono">
+                <Droplets className="size-3.5 text-sky-600" />
+                <span>{lang === 'bn' ? 'সেচ: সকাল ৮টার আগে' : 'Irrigation: Before 8 AM'}</span>
+              </div>
+              <div className="flex items-center gap-1.5 font-mono">
+                <Sun className="size-3.5 text-yellow-600" />
+                <span>৭.৫ ঘণ্টা সূর্যালোক</span>
+              </div>
+            </div>
+
+            {/* Agronomist Brief Advisory */}
+            <div className="w-full lg:w-auto border-t lg:border-t-0 border-forest/10 pt-2 lg:pt-0">
+              <span className="inline-flex items-center gap-1.5 text-emerald font-semibold text-[0.78rem]">
+                <ShieldCheck className="size-3.5" />
+                <span>{lang === 'bn' ? 'পরামর্শ: ছাদবাগানে ফলদ গাছে ভার্মিকম্পোস্ট প্রয়োগের আদর্শ সময়।' : 'Advisory: Ideal window for organic fruit tree fertilization.'}</span>
+              </span>
+            </div>
+          </div>
         </div>
       </Container>
     </section>

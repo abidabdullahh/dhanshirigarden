@@ -1,43 +1,51 @@
 import { useLocale } from './lib/locale'
+import { RouterProvider, useRouter } from './lib/router'
 import { AtmosphereProvider } from './lib/AtmosphereProvider'
 import CustomCursor from './components/dynamic/CustomCursor'
 import NatureCanvas from './components/dynamic/NatureCanvas'
-import FloatingDock from './components/layout/FloatingDock'
+import FloatingActions from './components/layout/FloatingActions'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import About from './components/sections/About'
 import CarePlans from './components/sections/CarePlans'
 import Contact from './components/sections/Contact'
 import Faq from './components/sections/Faq'
-import Gallery from './components/sections/Gallery'
 import Hero from './components/sections/Hero'
 import Lawn from './components/sections/Lawn'
-import Process from './components/sections/Process'
 import Projects from './components/sections/Projects'
 import Rooftop from './components/sections/Rooftop'
 import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
-import PlantDoctor from './components/plant-doctor/PlantDoctor'
-import Blog from './components/sections/Blog'
 
-// New high-performance dynamic features
-import WeatherAdvisory from './components/dynamic/WeatherAdvisory'
+// High-utility client features
 import GardenStudio from './components/dynamic/GardenStudio'
 import GrowthSimulator from './components/dynamic/GrowthSimulator'
 import BeforeAfterShowcase from './components/dynamic/BeforeAfterShowcase'
-import PlantExplorer from './components/dynamic/PlantExplorer'
 
-export default function App() {
+// Dedicated Pages (Separated with permalinks)
+import PlantDoctorPage from './pages/PlantDoctorPage'
+import BlogPage from './pages/BlogPage'
+
+function MainContent() {
   const { t } = useLocale()
+  const { route } = useRouter()
 
+  // Route 1: Standalone Plant Doctor AI Diagnostic Suite
+  if (route === '/plant-doctor') {
+    return <PlantDoctorPage />
+  }
+
+  // Route 2: Standalone Agronomy Blog & Guides Collection
+  if (route === '/blog') {
+    return <BlogPage />
+  }
+
+  // Route 3: Main Landing Page (Clean, Swiss Architectural Layout)
   return (
-    <AtmosphereProvider>
-      <NatureCanvas />
-      <CustomCursor />
-
+    <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-full focus:bg-forest focus:px-5 focus:py-3 focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[80] focus:rounded-md focus:bg-forest focus:px-5 focus:py-3 focus:font-semibold focus:text-white"
       >
         {t.nav.skip}
       </a>
@@ -45,21 +53,28 @@ export default function App() {
       <Navbar />
 
       <main id="main">
+        {/* Hero with blurred video background + integrated compact climate bulletin */}
         <Hero />
-        <WeatherAdvisory />
+
+        {/* Core Credentials & Authority Stats */}
         <Stats />
+
+        {/* Swiss Architectural CAD Studio & Itemized BOQ Estimator */}
         <GardenStudio />
+
+        {/* Focused Core Services (No respecialties clutter) */}
         <Services />
+
+        {/* Engineering Sections */}
         <Rooftop />
         <Lawn />
-        <GrowthSimulator />
+
+        {/* Visual Proof: Transformations & Growth */}
         <BeforeAfterShowcase />
-        <PlantExplorer />
+        <GrowthSimulator />
         <Projects />
-        <Gallery />
-        <Process />
-        <PlantDoctor />
-        <Blog />
+
+        {/* Commercial Care & Trust */}
         <CarePlans />
         <About />
         <Faq />
@@ -67,7 +82,19 @@ export default function App() {
       </main>
 
       <Footer />
-      <FloatingDock />
-    </AtmosphereProvider>
+      <FloatingActions />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <RouterProvider>
+      <AtmosphereProvider>
+        <NatureCanvas />
+        <CustomCursor />
+        <MainContent />
+      </AtmosphereProvider>
+    </RouterProvider>
   )
 }
