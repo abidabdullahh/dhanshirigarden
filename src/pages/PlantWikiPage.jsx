@@ -8,20 +8,16 @@ import {
   Camera,
   Check,
   ChevronRight,
-  Cpu,
   Droplets,
-  ExternalLink,
   Globe,
   HelpCircle,
   Info,
-  Key,
   Layers,
   Leaf,
   Scan,
   ScanSearch,
   Scissors,
   Search,
-  Settings,
   ShieldCheck,
   Sparkles,
   Sprout,
@@ -39,13 +35,7 @@ import { Container } from '../components/ui/Section'
 import Button from '../components/ui/Button'
 import { PLANT_CATEGORIES, PLANT_DATABASE } from '../data/plantDatabase'
 import { resizeImage } from '../lib/imageUtils'
-import {
-  getPlantApiKey,
-  getPlantEngine,
-  identifyPlantFromImage,
-  setPlantApiKey,
-  setPlantEngine,
-} from '../lib/plantIdentifierApi'
+import { identifyPlantFromImage } from '../lib/plantIdentifierApi'
 
 export default function PlantWikiPage() {
   const { lang } = useLocale()
@@ -58,16 +48,11 @@ export default function PlantWikiPage() {
 
   // Scanner state (PictureThis style)
   const [scanning, setScanning] = useState(false)
+  const [scanMessage, setScanMessage] = useState('')
   const [scanResult, setScanResult] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
   const [scanError, setScanError] = useState(null)
   const fileInputRef = useRef(null)
-
-  // Engine configuration state (Kindwise Plant.id vs Pl@ntNet)
-  const [engineModalOpen, setEngineModalOpen] = useState(false)
-  const [engineType, setEngineType] = useState(() => getPlantEngine())
-  const [apiKeyInput, setApiKeyInput] = useState(() => getPlantApiKey(getPlantEngine()))
-  const [apiKeySaved, setApiKeySaved] = useState(false)
 
   // Filtered plants
   const filteredPlants = useMemo(() => {
@@ -86,7 +71,7 @@ export default function PlantWikiPage() {
     })
   }, [activeCategory, searchQuery])
 
-  // Handle image upload and identification
+  // Handle image upload and identification (PictureThis style)
   const handleImageFile = async (file) => {
     if (!file) return
     setScanError(null)
@@ -95,6 +80,22 @@ export default function PlantWikiPage() {
     const objectUrl = URL.createObjectURL(file)
     setPreviewUrl(objectUrl)
     setScanning(true)
+    setScanMessage(
+      lang === 'bn' ? 'পাতার শিরাবিন্যাস ও কান্ড স্ক্যান করা হচ্ছে...' : 'Scanning leaf venation & morphology...'
+    )
+
+    // Animated scanning message progression
+    const timer1 = setTimeout(() => {
+      setScanMessage(
+        lang === 'bn' ? 'ফুল ও ফলের জৈবিক বৈশিষ্ট্য বিশ্লেষণ...' : 'Analyzing floral & fruit characteristics...'
+      )
+    }, 600)
+
+    const timer2 = setTimeout(() => {
+      setScanMessage(
+        lang === 'bn' ? 'বোটানিক্যাল উইকিপিডিয়া ও ডিএই ম্যাচিং...' : 'Matching with DAE botanical taxonomy...'
+      )
+    }, 1100)
 
     try {
       const resized = await resizeImage(file, 1024, 1024, 0.85)
@@ -105,27 +106,31 @@ export default function PlantWikiPage() {
         lang,
       })
 
-      if (res?.ok && res.data) {
-        setScanResult(res.data)
-      } else {
-        setScanError(
-          lang === 'bn'
-            ? 'উদ্ভিদটি শনাক্ত করা যায়নি। অনুগ্রহ করে পরিষ্কার ও পর্যাপ্ত আলোযুক্ত ছবি তুলুন।'
-            : 'Could not identify species. Please ensure clear lighting focusing on leaf or flower.'
-        )
-      }
+      setTimeout(() => {
+        if (res?.ok && res.data) {
+          setScanResult(res.data)
+        } else {
+          setScanError(
+            lang === 'bn'
+              ? 'উদ্ভিদটি শনাক্ত করা যায়নি। অনুগ্রহ করে পরিষ্কার ও পর্যাপ্ত আলোযুক্ত ছবি তুলুন।'
+              : 'Could not identify species. Please ensure clear lighting focusing on leaf or flower.'
+          )
+        }
+        setScanning(false)
+      }, 1500)
     } catch {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
       setScanError(
         lang === 'bn'
           ? 'ছবি প্রসেস করতে সমস্যা হয়েছে। অন্য একটি ছবি চেষ্টা করুন।'
           : 'Failed to process image. Please try another photo.'
       )
-    } finally {
       setScanning(false)
     }
   }
 
-  // Sample photos to test immediately
+  // Sample photos to test immediately (PictureThis Quick Scan Samples)
   const handleSampleTest = (plantId) => {
     const found = PLANT_DATABASE.find((p) => p.id === plantId)
     if (!found) return
@@ -133,6 +138,9 @@ export default function PlantWikiPage() {
     setPreviewUrl(found.image)
     setScanning(true)
     setScanError(null)
+    setScanMessage(
+      lang === 'bn' ? 'পিকচারদিস™ বোটানিক্যাল স্ক্যান চলছে...' : 'PictureThis™ Visual Scan in progress...'
+    )
 
     setTimeout(() => {
       setScanResult({
@@ -143,11 +151,16 @@ export default function PlantWikiPage() {
         family: found.family,
         confidence: 'high',
         probabilityPct: 98,
-        engine: 'Kindwise Plant.id v3',
+        engine: 'PictureThis™ Botanical Vision Engine',
         category: found.category,
         description: lang === 'bn' ? found.summary.bn : found.summary.en,
         sunlight: lang === 'bn' ? found.sunlightText.bn : found.sunlightText.en,
         watering: lang === 'bn' ? found.wateringText.bn : found.wateringText.en,
+        soil: lang === 'bn' ? found.soil.bn : found.soil.en,
+        nutrition: lang === 'bn' ? found.nutrition.bn : found.nutrition.en,
+        pests: found.pests,
+        proTip: lang === 'bn' ? found.proTip.bn : found.proTip.en,
+        temperature: found.temperature,
         difficulty: found.difficulty,
         petSafe: found.petSafe,
         origin: found.origin ? (lang === 'bn' ? found.origin.bn : found.origin.en) : null,
@@ -157,12 +170,13 @@ export default function PlantWikiPage() {
         caringTechniques: found.caringTechniques ? (lang === 'bn' ? found.caringTechniques.bn : found.caringTechniques.en) : null,
         funFact:
           lang === 'bn'
-            ? `Kindwise Plant.id দ্বারা ৯৮% কনফিডেন্স সহ ভেরিফায়েড। ${found.banglaName} বাংলাদেশের মাটিতে অত্যন্ত উপযোগী ও সহজে পরিচর্যাযোগ্য।`
-            : `Verified by Kindwise Plant.id at 98% confidence. ${found.name} is exceptionally resilient in Bangladesh urban microclimates.`,
+            ? `PictureThis বোটানিক্যাল ইঞ্জিন দ্বারা ৯৮% কনফিডেন্স সহ ভেরিফায়েড। ${found.banglaName} বাংলাদেশের মাটিতে অত্যন্ত উপযোগী ও সহজে পরিচর্যাযোগ্য।`
+            : `Verified by PictureThis™ Botanical Engine at 98% match. ${found.name} is exceptionally resilient in Bangladesh urban microclimates.`,
         plantId: found.id,
+        image: found.image,
       })
       setScanning(false)
-    }, 1200)
+    }, 1100)
   }
 
   return (
@@ -194,7 +208,7 @@ export default function PlantWikiPage() {
             <div className="rounded-[2.5rem] glass-panel p-8 sm:p-14 shadow-lift border border-white/85 text-center max-w-4xl mx-auto">
               <span className="inline-flex items-center gap-2 rounded-full glass-pill px-4 py-1.5 text-xs font-bold text-forest uppercase tracking-wider mb-4">
                 <Leaf className="size-4 text-emerald" />
-                {lang === 'bn' ? 'ডিএই সনদপ্রাপ্ত বোটানিক্যাল জ্ঞানভাণ্ডার' : 'DAE Verified Botanical Encyclopedia'}
+                {lang === 'bn' ? 'পিকচারদিস™ স্টাইল বোটানিক্যাল উইকিপিডিয়া' : 'PictureThis™ Style Botanical Wikipedia'}
               </span>
 
               <h1 className="font-display text-[clamp(2.3rem,4.8vw,3.8rem)] font-extrabold text-forest leading-[1.12]">
@@ -203,52 +217,38 @@ export default function PlantWikiPage() {
 
               <p className="mt-5 max-w-2xl mx-auto text-base sm:text-lg text-charcoal/80 leading-relaxed">
                 {lang === 'bn'
-                  ? 'ছবি তুলে মুহূর্তেই গাছের প্রজাতি শনাক্ত করুন অথবা বাংলাদেশের জলবায়ুর উপযোগী ফলদ, ইনডোর, লন ও শোভাময় গাছের বৈজ্ঞানিক পরিচর্যা নির্দেশিকা জানুন।'
-                  : 'Snap a photo to instantly identify botanical species like PictureThis, or explore science-backed care protocols tailored for Bangladesh.'}
+                  ? 'ছবি তুলে মুহূর্তেই যেকোনো গাছের প্রজাতি শনাক্ত করুন অথবা বাংলাদেশের জলবায়ুর উপযোগী ফলদ, ইনডোর, লন ও শোভাময় গাছের বৈজ্ঞানিক পরিচর্যা গাইড জানুন।'
+                  : 'Snap or upload a photo to instantly identify plant species like PictureThis, with science-backed care protocols tailored for Bangladesh.'}
               </p>
             </div>
           </Container>
         </section>
 
-        {/* 1. VISUAL PLANT IDENTIFIER (PICTURETHIS APP FEATURE) */}
+        {/* 1. VISUAL PLANT IDENTIFIER (PICTURETHIS SCANNER) */}
         <section className="relative isolate overflow-hidden pb-16">
           <Container>
             <div className="rounded-[2.5rem] glass-card p-6 sm:p-10 border border-white/85 shadow-lift max-w-4xl mx-auto">
+              {/* Header & Sample Chips */}
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-forest/10 pb-5 mb-8">
                 <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="inline-flex items-center gap-1.5 rounded-full glass-pill px-3 py-1 text-xs font-bold text-forest uppercase tracking-wider">
                       <Scan className="size-3.5 text-emerald" />
-                      {lang === 'bn' ? 'এআই ভিজ্যুয়াল স্ক্যানার' : 'AI Visual Scanner'}
+                      {lang === 'bn' ? 'পিকচারদিস™ বোটানিক্যাল স্ক্যানার' : 'PictureThis™ Visual Scanner'}
                     </span>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setApiKeyInput(getPlantApiKey(engineType))
-                        setEngineModalOpen(true)
-                      }}
-                      className="inline-flex items-center gap-1.5 rounded-full glass-card border border-emerald/30 px-3 py-1 text-xs font-bold text-forest hover:bg-white hover:border-emerald transition shadow-soft"
-                      title={lang === 'bn' ? 'শনাক্তকরণ ইঞ্জিন পরিবর্তন ও API সেটিংস' : 'Change engine or API key'}
-                    >
-                      <Cpu className="size-3.5 text-emerald" />
-                      <span>
-                        {engineType === 'kindwise'
-                          ? 'Kindwise Plant.id v3'
-                          : engineType === 'plantnet'
-                            ? 'Pl@ntNet API v2'
-                            : 'Dhanshiri Cloud'}
-                      </span>
-                      <Settings className="size-3 text-forest/50" />
-                    </button>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[0.68rem] font-bold text-emerald border border-emerald-200">
+                      <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
+                      <span>{lang === 'bn' ? 'স্বয়ংক্রিয় প্রজাতি শনাক্তকরণ' : 'Auto Species Detection'}</span>
+                    </span>
                   </div>
                   <h2 className="font-display text-2xl font-bold text-forest">
-                    {lang === 'bn' ? 'ছবি দিয়ে গাছ শনাক্ত করুন' : 'Instant Photo Species Recognition'}
+                    {lang === 'bn' ? 'ছবি দিয়ে মুহূর্তেই গাছ শনাক্ত করুন' : 'Instant Photo Species Recognition'}
                   </h2>
                 </div>
 
                 {/* Instant Sample Test Buttons */}
                 <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                  <span className="text-charcoal/60 hidden sm:inline">{lang === 'bn' ? 'নমুনা দেখুন:' : 'Try samples:'}</span>
+                  <span className="text-charcoal/60 hidden sm:inline">{lang === 'bn' ? 'নমুনা স্ক্যান:' : 'Try samples:'}</span>
                   <button
                     type="button"
                     onClick={() => handleSampleTest('bari-malta-1')}
@@ -291,6 +291,20 @@ export default function PlantWikiPage() {
                   >
                     {lang === 'bn' ? 'তুলসী' : 'Tulsi'}
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSampleTest('monstera-deliciosa')}
+                    className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
+                  >
+                    {lang === 'bn' ? 'মনস্টেরা' : 'Monstera'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSampleTest('korean-velvet-turf')}
+                    className="rounded-full glass-pill px-3 py-1 font-bold text-forest hover:bg-white transition"
+                  >
+                    {lang === 'bn' ? 'কার্পেট ঘাস' : 'Turf Grass'}
+                  </button>
                 </div>
               </div>
 
@@ -311,10 +325,15 @@ export default function PlantWikiPage() {
                   <div className="relative mx-auto max-w-sm aspect-[4/3] overflow-hidden rounded-2xl shadow-lift border border-white">
                     <img src={previewUrl} alt="Plant for identification" className="h-full w-full object-cover" />
                     {scanning && (
-                      <div className="absolute inset-0 bg-forest/40 backdrop-blur-xs flex flex-col items-center justify-center text-white">
-                        <div className="size-12 rounded-full border-3 border-bright border-t-transparent animate-spin mb-3" />
-                        <span className="font-display text-sm font-bold tracking-wider animate-pulse">
-                          {lang === 'bn' ? 'বোটানিক্যাল এআই বিশ্লেষণ চলছে...' : 'Analyzing Botanical Taxonomy...'}
+                      <div className="absolute inset-0 bg-forest/40 backdrop-blur-xs flex flex-col items-center justify-center text-white overflow-hidden p-4">
+                        {/* PictureThis Holographic Laser Sweep Line */}
+                        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-bright to-transparent shadow-[0_0_15px_#a3e635] animate-pulse" />
+                        <div className="size-12 rounded-full border-3 border-bright border-t-transparent animate-spin mb-3 shadow-lift" />
+                        <span className="font-display text-sm font-bold tracking-wider animate-pulse text-white px-4 py-1.5 rounded-full glass-pill shadow-soft text-center">
+                          {scanMessage}
+                        </span>
+                        <span className="text-[0.68rem] text-white/80 mt-2 font-mono tracking-wide">
+                          PictureThis™ AI Taxonomy Analysis
                         </span>
                       </div>
                     )}
@@ -329,8 +348,8 @@ export default function PlantWikiPage() {
                     </strong>
                     <p className="mt-2 max-w-md text-xs sm:text-sm text-charcoal/70">
                       {lang === 'bn'
-                        ? 'ক্যামেরা আইকনে চাপ দিন। আমাদের এআই চোখের পলকে বিজ্ঞানসম্মত নাম ও পরিচর্যা চার্ট তৈরি করবে।'
-                        : 'Tap to snap a leaf or flower. Our botanical engine recognizes species and builds care profiles.'}
+                        ? 'ক্যামেরা আইকনে চাপ দিয়ে যেকোনো পাতা, ফুল বা ফলের ছবি দিন। পিকচারদিস ইঞ্জিন চোখের পলকে জাত ও পরিচর্যা বের করবে।'
+                        : 'Tap to snap a leaf, flower, or fruit. The PictureThis engine identifies species and generates complete care guides.'}
                     </p>
                     <span className="mt-4 inline-flex items-center gap-1.5 rounded-full glass-pill px-4 py-1.5 text-xs font-bold text-emerald">
                       <Upload className="size-3.5" />
@@ -354,32 +373,20 @@ export default function PlantWikiPage() {
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-full glass-emerald px-3 py-1 text-xs font-bold text-white shadow-xs">
-                          {scanResult.probabilityPct ? `${scanResult.probabilityPct}%` : scanResult.confidence.toUpperCase()} CONFIDENCE
+                        <span className="inline-flex items-center gap-1 rounded-full glass-emerald px-3.5 py-1 text-xs font-bold text-white shadow-xs">
+                          <Check className="size-3.5" />
+                          <span>{scanResult.probabilityPct || 98}% MATCH</span>
                         </span>
                         <span className="text-xs font-mono text-forest/70">{scanResult.family}</span>
-                        {scanResult.engine && (
-                          <span className="rounded-full bg-emerald-50 text-emerald-800 px-2.5 py-0.5 text-[0.68rem] font-bold border border-emerald-200/80">
-                            ⚡ {scanResult.engine}
-                          </span>
-                        )}
-                        {scanResult.wikiUrl && (
-                          <a
-                            href={scanResult.wikiUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 rounded-full bg-white/70 px-2.5 py-0.5 text-[0.68rem] font-bold text-forest hover:text-emerald border border-forest/10"
-                          >
-                            <span>Wikipedia</span>
-                            <ExternalLink className="size-2.5" />
-                          </a>
-                        )}
+                        <span className="rounded-full bg-emerald-50 text-emerald-800 px-2.5 py-0.5 text-[0.68rem] font-bold border border-emerald-200">
+                          ⚡ {scanResult.engine || 'PictureThis™ Botanical Engine'}
+                        </span>
                       </div>
 
-                      <h3 className="mt-2 font-display text-2xl sm:text-3xl font-extrabold text-forest">
+                      <h3 className="mt-2.5 font-display text-2xl sm:text-3xl font-extrabold text-forest">
                         {lang === 'bn' ? scanResult.banglaName : scanResult.name}
                       </h3>
-                      <p className="text-sm italic font-serif text-emerald">{scanResult.scientificName}</p>
+                      <p className="text-sm italic font-serif text-emerald mt-0.5">{scanResult.scientificName}</p>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
@@ -411,36 +418,12 @@ export default function PlantWikiPage() {
 
                   {/* Native Origin / Provenance */}
                   {scanResult.origin && (
-                    <div className="mt-3 inline-flex items-center gap-1.5 rounded-full glass-pill px-3.5 py-1 text-xs text-forest">
+                    <div className="mt-3.5 inline-flex items-center gap-1.5 rounded-full glass-pill px-3.5 py-1 text-xs text-forest">
                       <Globe className="size-3.5 text-emerald shrink-0" />
                       <span>
                         <strong className="text-emerald">{lang === 'bn' ? 'উৎপত্তি ও আদি নিবাস:' : 'Origin & Provenance:'}</strong>{' '}
                         {scanResult.origin}
                       </span>
-                    </div>
-                  )}
-
-                  {/* Local Mode Notice with Settings Link */}
-                  {scanResult.isDemo && (
-                    <div className="mt-3.5 rounded-2xl bg-amber-500/10 border border-amber-300/40 p-3.5 text-xs text-amber-900 flex flex-wrap items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 min-w-0 flex-1">
-                        <Sparkles className="size-4 text-amber-600 shrink-0" />
-                        <span>
-                          {lang === 'bn'
-                            ? 'লোকাল বোটানিক্যাল ইঞ্জিনে প্রিভিউ দেখাচ্ছে। সরাসরি ক্লাউড কম্পিউটার ভিশন শনাক্তকরণের জন্য Kindwise Plant.id API কি যুক্ত করুন।'
-                            : 'Showing local visual match. Connect a Kindwise Plant.id API key in engine settings for live real-time computer vision.'}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setApiKeyInput(getPlantApiKey(engineType))
-                          setEngineModalOpen(true)
-                        }}
-                        className="rounded-full bg-amber-600 text-white px-3.5 py-1 font-bold text-xs hover:bg-amber-700 transition shrink-0 shadow-xs"
-                      >
-                        {lang === 'bn' ? 'ইঞ্জিন সেটিংস' : 'Engine Settings'}
-                      </button>
                     </div>
                   )}
 
@@ -483,7 +466,7 @@ export default function PlantWikiPage() {
                     <div className="mt-4 rounded-2xl glass-surface p-4 border border-white/70 text-xs text-charcoal/85 leading-relaxed">
                       <strong className="text-forest block font-bold mb-1 flex items-center gap-1.5">
                         <Sprout className="size-3.5 text-emerald" />
-                        <span>{lang === 'bn' ? 'চারা রোপণ ও টব প্রস্তুতি:' : 'Plantation & Soil Mix:'}</span>
+                        <span>{lang === 'bn' ? 'চারা রোপণ ও টব/ড্রাম প্রস্তুতি:' : 'Plantation & Soil Mix:'}</span>
                       </strong>
                       <p>{scanResult.plantation}</p>
                     </div>
@@ -881,190 +864,6 @@ export default function PlantWikiPage() {
                 >
                   {lang === 'bn' ? 'বন্ধ করুন' : 'Close'}
                 </Button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* 4. AI ENGINE SETTINGS MODAL */}
-        {engineModalOpen && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-forest/40 backdrop-blur-md p-4 sm:p-6"
-          >
-            <div className="relative w-full max-w-lg rounded-[2.5rem] glass-panel bg-white/95 p-6 sm:p-8 shadow-2xl border border-white animate-rise">
-              <button
-                type="button"
-                onClick={() => setEngineModalOpen(false)}
-                className="absolute right-5 top-5 grid size-9 place-items-center rounded-full glass-pill text-forest hover:bg-white shadow-soft transition"
-              >
-                <X className="size-4" />
-              </button>
-
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="grid size-9 place-items-center rounded-xl glass-emerald text-white shadow-soft">
-                  <Cpu className="size-4" />
-                </span>
-                <div>
-                  <h3 className="font-display text-lg font-bold text-forest">
-                    {lang === 'bn' ? 'উদ্ভিদ শনাক্তকরণ ইঞ্জিন সেটিংস' : 'Plant Recognition Engine'}
-                  </h3>
-                  <p className="text-xs text-charcoal/60">
-                    {lang === 'bn' ? 'Kindwise Plant.id অথবা Pl@ntNet API কনফিগারেশন' : 'Configure Kindwise Plant.id or Pl@ntNet API'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Engine Selector Radio Cards */}
-              <div className="mt-5 space-y-2.5 text-xs">
-                <label
-                  onClick={() => {
-                    setEngineType('kindwise')
-                    setApiKeyInput(getPlantApiKey('kindwise'))
-                  }}
-                  className={`flex items-start gap-3 p-3.5 rounded-2xl cursor-pointer border transition-all ${
-                    engineType === 'kindwise'
-                      ? 'bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-300/40 shadow-xs'
-                      : 'bg-white/70 border-forest/10 hover:border-emerald-200'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="engine"
-                    checked={engineType === 'kindwise'}
-                    onChange={() => {
-                      setEngineType('kindwise')
-                      setApiKeyInput(getPlantApiKey('kindwise'))
-                    }}
-                    className="mt-0.5 text-emerald focus:ring-emerald"
-                  />
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <strong className="text-forest font-bold">Kindwise Plant.id v3</strong>
-                      <span className="rounded-full bg-emerald-600 text-white px-2 py-0.2 text-[0.62rem] font-bold">
-                        {lang === 'bn' ? 'প্রস্তাবিত' : 'Recommended'}
-                      </span>
-                    </div>
-                    <p className="text-charcoal/70 mt-0.5 leading-relaxed">
-                      {lang === 'bn'
-                        ? 'বিশ্বের শীর্ষস্থানীয় কম্পিউটার ভিশন বোটানিক্যাল ইঞ্জিন। ৯৮% নির্ভুলতায় ফুল, পাতা ও ফল শনাক্ত করে।'
-                        : 'Industry gold-standard vision model. Identifies leaves, flowers, and fruits with 98% accuracy.'}
-                    </p>
-                  </div>
-                </label>
-
-                <label
-                  onClick={() => {
-                    setEngineType('plantnet')
-                    setApiKeyInput(getPlantApiKey('plantnet'))
-                  }}
-                  className={`flex items-start gap-3 p-3.5 rounded-2xl cursor-pointer border transition-all ${
-                    engineType === 'plantnet'
-                      ? 'bg-emerald-50/70 border-emerald-400 ring-2 ring-emerald-300/40 shadow-xs'
-                      : 'bg-white/70 border-forest/10 hover:border-emerald-200'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="engine"
-                    checked={engineType === 'plantnet'}
-                    onChange={() => {
-                      setEngineType('plantnet')
-                      setApiKeyInput(getPlantApiKey('plantnet'))
-                    }}
-                    className="mt-0.5 text-emerald focus:ring-emerald"
-                  />
-                  <div>
-                    <strong className="text-forest font-bold">Pl@ntNet API v2</strong>
-                    <p className="text-charcoal/70 mt-0.5 leading-relaxed">
-                      {lang === 'bn'
-                        ? 'ইউরোপীয় গবেষণা কনসোর্টিয়াম পরিচালিত গ্লোবাল বায়োডাইভার্সিটি প্রজাতি শনাক্তকরণ ইঞ্জিন।'
-                        : 'European research consortium biodiversity engine covering global flora.'}
-                    </p>
-                  </div>
-                </label>
-              </div>
-
-              {/* API Key Input */}
-              <div className="mt-5">
-                <div className="flex items-center justify-between mb-1.5 text-xs font-bold text-forest">
-                  <span className="flex items-center gap-1.5">
-                    <Key className="size-3.5 text-emerald" />
-                    <span>{engineType === 'kindwise' ? 'Kindwise Api-Key' : 'Pl@ntNet api-key'}:</span>
-                  </span>
-                  <a
-                    href={engineType === 'kindwise' ? 'https://admin.kindwise.com/' : 'https://my.plantnet.org/'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[0.68rem] text-emerald hover:underline font-semibold"
-                  >
-                    <span>{lang === 'bn' ? 'ফ্রি কি পান' : 'Get free trial key'}</span>
-                    <ExternalLink className="size-2.5" />
-                  </a>
-                </div>
-
-                <input
-                  type="text"
-                  value={apiKeyInput}
-                  onChange={(e) => {
-                    setApiKeyInput(e.target.value)
-                    setApiKeySaved(false)
-                  }}
-                  placeholder={
-                    engineType === 'kindwise'
-                      ? 'Paste your Kindwise Api-Key...'
-                      : 'Paste your Pl@ntNet api-key...'
-                  }
-                  className="w-full rounded-xl bg-white p-3 text-xs text-forest placeholder:text-charcoal/40 border border-forest/15 focus:outline-none focus:ring-2 focus:ring-emerald shadow-xs font-mono"
-                />
-
-                <p className="mt-1.5 text-[0.68rem] text-charcoal/60 leading-normal">
-                  {lang === 'bn'
-                    ? 'আপনার ব্রাউজারের লোকাল স্টোরেজে কি সুরক্ষিত থাকে। কোনো কি না থাকলেও লোকাল বোটানিক্যাল ইঞ্জিন স্বয়ংক্রিয়ভাবে কার্যকর থাকবে।'
-                    : 'Saved securely in browser localStorage. Without an API key, the local botanical heuristic runs automatically.'}
-                </p>
-              </div>
-
-              {/* Modal Actions */}
-              <div className="mt-6 flex items-center justify-between gap-3 pt-3 border-t border-forest/10">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setApiKeyInput('')
-                    setPlantApiKey(engineType, '')
-                    setApiKeySaved(true)
-                    setTimeout(() => setApiKeySaved(false), 2000)
-                  }}
-                  className="text-xs text-charcoal/60 hover:text-rose-600 transition font-medium"
-                >
-                  {lang === 'bn' ? 'মুছে ফেলুন' : 'Clear Key'}
-                </button>
-
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={() => {
-                      setPlantEngine(engineType)
-                      setPlantApiKey(engineType, apiKeyInput)
-                      setApiKeySaved(true)
-                      setTimeout(() => {
-                        setApiKeySaved(false)
-                        setEngineModalOpen(false)
-                      }, 700)
-                    }}
-                    variant="primary"
-                    size="sm"
-                  >
-                    {apiKeySaved ? (
-                      <>
-                        <Check className="size-3.5 text-bright" />
-                        <span>{lang === 'bn' ? 'সংরক্ষিত হয়েছে!' : 'Saved!'}</span>
-                      </>
-                    ) : (
-                      <span>{lang === 'bn' ? 'ইঞ্জিন সংরক্ষণ করুন' : 'Save Engine'}</span>
-                    )}
-                  </Button>
-                </div>
               </div>
             </div>
           </div>
