@@ -20,6 +20,105 @@ export const blogCategories = [
 
 export const blogPosts = [
   {
+    slug: "bougainvillea-kagoji-ful-pruning-blooming-bangladesh",
+    date: "2026-11-02",
+    category: "plantCare",
+    readTime: 5,
+    featuredImage: "hangingPlanter",
+    meta: {
+      "keywords": [
+            "কাগজ ফুল চাষ ছাদবাগান",
+            "বোগেনভিলিয়া ফুল ফোটার উপায়",
+            "বাগান ডাল ছাঁটাই সময়",
+            "bougainvillea blooming tips Bangladesh",
+            "rooftop flowering creepers Dhaka"
+      ]
+},
+    bn: {
+      "title": "শীত ও বসন্তে ছাদবাগানে বোগেনভিলিয়া বা কাগজ ফুলের উপচে পড়া পুষ্পমঞ্জরি পাওয়ার গোপনীয়তা",
+      "categoryLabel": "রোগবালাই ও উদ্ভিদ পুষ্টি",
+      "summary": "অতিরিক্ত পাতার বদলে পুরো গাছে বর্ণিল ফুলের ঢল নামাতে পানি নিয়ন্ত্রণ, কাটিং প্রুনিং ও পটাশ সার প্রয়োগের বিশেষজ্ঞ কৌশল।",
+      "tags": [
+            "বোগেনভিলিয়া",
+            "কাগজ ফুল",
+            "ছাদবাগান",
+            "ফুল ফোটার সার",
+            "আমির আলী"
+      ],
+      "author": "জনাব আমির আলী",
+      "authorRole": "প্রতিষ্ঠাতা ও প্রধান কৃষি পরামর্শক, ধানসিঁড়ি গার্ডেন",
+      "sections": [
+            {
+                  "heading": "১. কেন আপনার বোগেনভিলিয়ায় শুধু সবুজ পাতা হয়, ফুল হয় না?",
+                  "content": "অধিকাংশ মানুষ মনে করেন গাছে যত বেশি পানি ও সার দেবেন, তত ফুল ফুটবে। বোগেনভিলিয়ার ক্ষেত্রে নিয়মটি সম্পূর্ণ উল্টো! বোগেনভিলিয়া হলো রুক্ষ, রোদপ্রিয় ও খরা সহনশীল মরুভূমির গাছ। টবের মাটিতে অতিরিক্ত পানি ও নাইট্রোজেন সার (যেমন ইউরিয়া) দিলে গাছ শুধু সবুজ পাতার জঙ্গল তৈরি করে, কিন্তু ফুলের কুঁড়ি আনে না।",
+                  "bulletPoints": [
+                        "গাছকে পর্যাপ্ত সরাসরি রোদ (দৈনিক কমপক্ষে ৬ ঘণ্টা) না দিলে কখনোই ফুল আসবে না।",
+                        "নিয়মিত পানি দেওয়ার কারণে গাছ \"ভেজিটেটিভ গ্রোথ\" বা পাতা বৃদ্ধিতে ব্যস্ত থাকে।",
+                        "ফুল আনার জন্য গাছকে নিয়ন্ত্রিত পানির অভাব বা \"ওয়াটার স্ট্রেস\" (Water Stress) দিতে হবে।"
+                  ]
+            },
+            {
+                  "heading": "২. ফুল আনার ৩-ধাপের বৈজ্ঞানিক প্রক্রিয়া",
+                  "content": "কার্তিক মাসে বর্ষার শেষেই এই প্রক্রিয়া শুরু করতে হয়, যাতে অগ্রহায়ণ-পৌষ থেকে শুরু করে চৈত্র পর্যন্ত গাছ ফুলে ফুলে ভরে থাকে।",
+                  "bulletPoints": [
+                        "ধাপ ১ (হার্ড প্রুনিং): চিকন ও দুর্বল ডালপালা কেটে গাছকে গোলাকার বা সুদৃশ্য ছাঁটাই করুন। নতুন বের হওয়া শাখাগুলোতেই কেবল ফুল ধরে।",
+                        "ধাপ ২ (খরা তৈরি): পানি দেওয়া সম্পূর্ণ বন্ধ রাখুন যতক্ষণ না দুপুরের কড়া রোদে গাছের পাতা সামান্য নেতিয়ে পড়ে। এরপর সামান্য পানি দিন যাতে গাছ বাঁচে। এই খরায় গাছ আতঙ্কিত হয়ে দ্রুত বংশবৃদ্ধির তাগিদে অজস্র ফুলের কুঁড়ি জন্ম দেয়।",
+                        "ধাপ ৩ (পটাশ ও ফসফরাস টনিক): কুঁড়ি দেখা দেওয়া মাত্রই টবের চারপাশের মাটি আলগা করে ১ চামচ পটাশ (MOP/SOP) ও ২ চামচ হাড়ের গুঁড়া প্রয়োগ করুন।"
+                  ],
+                  "expertTip": "বোগেনভিলিয়ার টবের ড্রেইনেজ সবচেয়ে পরিষ্কার থাকতে হবে। টবে পানি জমে থাকা এই গাছের জন্য নিশ্চিত মৃত্যু। ধানসিঁড়ি গার্ডেন সব সময় ২০% মোটা লাল বালু ও ইটের খোয়া দিয়ে এর মাটি তৈরি করে।"
+            }
+      ],
+      "faq": [
+            {
+                  "q": "বোগেনভিলিয়া গাছ কি সিমেন্টের টবে ভালো হয় নাকি প্লাস্টিকের টবে?",
+                  "a": "মাটির বা সিমেন্টের টবে সবচেয়ে ভালো হয়, কারণ এদের গায়ে সূক্ষ্ম ছিদ্র থাকায় অতিরিক্ত আর্দ্রতা দ্রুত বাষ্পীভূত হতে পারে। প্লাস্টিকের টবে পানি জমে শিকড় পচে যাওয়ার ঝুঁকি বেশি।"
+            }
+      ]
+},
+    en: {
+      "title": "Unlocking Cascading Bougainvillea Blooms on Dhaka Rooftops: Pruning & Water Stress Guide",
+      "categoryLabel": "Pests & Plant Nutrition",
+      "summary": "Mastering the art of water starvation, terminal tip pinching, and potassium loading to transform green foliage into dense floral blankets in Bangladesh.",
+      "tags": [
+            "Bougainvillea",
+            "Flowering Climber",
+            "Pruning Guide",
+            "Water Stress",
+            "Amir Ali"
+      ],
+      "author": "Mr. Amir Ali",
+      "authorRole": "Founder & Chief Agronomy Consultant, Dhanshiri Garden",
+      "sections": [
+            {
+                  "heading": "1. Why Your Bougainvillea Yields Leaves Instead of Flowers",
+                  "content": "The most counter-intuitive principle in horticulture: lush coddling prevents Bougainvillea blooming. Originating from semi-arid native zones, heavy watering and high-nitrogen fertilizers stimulate vegetative leaf shoots while suppressing flower bract formation.",
+                  "bulletPoints": [
+                        "Minimum 6 hours of unfiltered direct solar radiation is non-negotiable.",
+                        "Over-irrigation suppresses reproductive floral signaling.",
+                        "Deliberate mild water deficit triggers prolific flowering as a survival mechanism."
+                  ]
+            },
+            {
+                  "heading": "2. The 3-Stage Flowering Protocol",
+                  "content": "Implement this regimen in late Autumn to secure cascading floral bracts throughout dry Bangladeshi winter months.",
+                  "bulletPoints": [
+                        "Stage 1 (Pruning): Cut back thin, leggy shoots by 30-40%. Blooms only form on new apical growth flushes.",
+                        "Stage 2 (Water Deficit): Restrict watering until daytime foliage wilts moderately. Give minimal water just to sustain life. Within 12-14 days, numerous flower buds will erupt.",
+                        "Stage 3 (Potassium Top-Dress): Backfill with organic bone meal and soluble potassium sulfate to deepen flower bract coloration."
+                  ],
+                  "expertTip": "Potted Bougainvilleas demand razor-sharp drainage. Incorporate 20% coarse brick chips into the potting mix to prevent crown wetness."
+            }
+      ],
+      "faq": [
+            {
+                  "q": "Is terracotta or plastic preferred for container Bougainvilleas?",
+                  "a": "Porous terracotta or unglazed cement pots are vastly superior because sidewall evaporation keeps substrate dry and well-aerated."
+            }
+      ]
+},
+  },
+
+  {
     slug: "dhaka-winter-rooftop-vegetables-guide",
     date: "2026-10-27",
     category: "rooftop",
