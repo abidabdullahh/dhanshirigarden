@@ -16,12 +16,14 @@ import { photos } from '../../data/images'
 import { site } from '../../data/site'
 import { useEscape, useLockBodyScroll } from '../../lib/hooks'
 import { useLocale } from '../../lib/locale'
+import { useRouter } from '../../lib/router'
 import { getWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
 import Img from '../ui/Img'
 
 export default function BlogReaderModal({ post, onClose }) {
   const { t, lang, n } = useLocale()
+  const { navigate } = useRouter()
   const copy = t.blog
   const closeRef = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -264,20 +266,27 @@ export default function BlogReaderModal({ post, onClose }) {
             </div>
 
             <div className="border-t border-forest/10 pt-4 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0">
-              <p className="font-display text-lg font-bold text-forest">{copy.askDoctor}</p>
+              <p className="font-display text-lg font-bold text-forest">
+                {lang === 'bn' ? 'বাগান বা ছাদের জন্য গাছ খুঁজছেন?' : 'Looking for Verified Plants?'}
+              </p>
               <p className="mt-1 text-sm text-charcoal/70">
-                ফোনের ক্যামেরায় ছবি তুলুন, এআই সঙ্গে সঙ্গে রোগ শনাক্ত করে পরামর্শ দেবে।
+                {lang === 'bn'
+                  ? 'ধানসিঁড়ি স্টোরে ৮", ১০" ও ১/২ ব্যাগ সাইজের অ্যাক্লিমেটাইজড চারা অর্ডার করুন।'
+                  : 'Browse our certified nursery catalog in standard 8", 10", and 1/2 Bag specifications.'}
               </p>
               <div className="mt-4">
                 <Button
-                  href="#plant-doctor"
-                  onClick={onClose}
+                  href="/store"
+                  onClick={() => {
+                    onClose()
+                    navigate('/store')
+                  }}
                   variant="glass"
                   size="sm"
                   icon={ArrowRight}
                   className="w-full sm:w-auto"
                 >
-                  উদ্ভিদ ডাক্তার খুলুন
+                  {lang === 'bn' ? 'প্ল্যান্ট স্টোর দেখুন' : 'Explore Plant Store'}
                 </Button>
               </div>
             </div>

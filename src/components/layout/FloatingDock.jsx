@@ -3,11 +3,11 @@ import {
   ArrowUp,
   CloudRain,
   Languages,
+  LayoutGrid,
   MessageCircle,
   Moon,
-  PencilRuler,
   Phone,
-  ScanSearch,
+  ShoppingBag,
   Sparkles,
   Sun,
   Sunset,
@@ -18,10 +18,13 @@ import { site } from '../../data/site'
 import { useAtmosphere } from '../../lib/atmosphere'
 import { useScrollProgress } from '../../lib/hooks'
 import { useLocale } from '../../lib/locale'
+import { useRouter } from '../../lib/router'
 import { getWhatsAppLink } from '../../lib/whatsapp'
 
 export default function FloatingDock() {
   const { t, lang, toggle } = useLocale()
+  const { navigate } = useRouter()
+  const isBn = lang === 'bn'
   const { progress } = useScrollProgress()
   const { atmosphere, effectiveAtmosphere, setAtmosphere, soundEnabled, toggleSound, playClick } = useAtmosphere()
   const [atmosphereMenuOpen, setAtmosphereMenuOpen] = useState(false)
@@ -145,22 +148,30 @@ export default function FloatingDock() {
 
         <span className="h-4 w-px bg-forest/20" />
 
-        {/* 3. Garden Studio Quick Action */}
+        {/* 3. Plant Store Quick Action */}
         <a
-          href="#studio"
+          href="/store"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/store')
+          }}
           className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold text-forest transition hover:bg-bright/25"
         >
-          <PencilRuler className="size-4 text-emerald" />
-          <span>{t.nav.studio}</span>
+          <ShoppingBag className="size-4 text-emerald" />
+          <span>{isBn ? 'প্ল্যান্ট স্টোর' : 'Store'}</span>
         </a>
 
-        {/* 4. Plant Doctor AI Quick Action */}
+        {/* 4. Projects Showcase Quick Action */}
         <a
-          href="#plant-doctor"
+          href="/projects"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/projects')
+          }}
           className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-bold text-forest transition hover:bg-bright/25"
         >
-          <ScanSearch className="size-4 text-bloom" />
-          <span>{t.nav.plantDoctor}</span>
+          <LayoutGrid className="size-4 text-emerald" />
+          <span>{isBn ? 'প্রজেক্টস' : 'Projects'}</span>
         </a>
 
         <span className="h-4 w-px bg-forest/20" />
@@ -243,13 +254,17 @@ export default function FloatingDock() {
           {soundEnabled ? <Volume2 className="size-5 text-emerald" /> : <VolumeX className="size-5" />}
         </button>
 
-        {/* Garden Studio Shortcut */}
+        {/* Plant Store Shortcut */}
         <a
-          href="#studio"
-          aria-label={t.nav.studio}
+          href="/store"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/store')
+          }}
+          aria-label={isBn ? 'প্ল্যান্ট স্টোর' : 'Plant Store'}
           className="grid size-11 place-items-center rounded-full bg-bright/25 text-forest font-bold"
         >
-          <PencilRuler className="size-5 text-forest" />
+          <ShoppingBag className="size-5 text-forest" />
         </a>
 
         {/* Call Now Button */}

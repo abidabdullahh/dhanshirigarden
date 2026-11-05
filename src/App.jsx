@@ -2,9 +2,12 @@ import { Suspense, lazy } from 'react'
 import { useLocale } from './lib/locale'
 import { RouterProvider, useRouter } from './lib/router'
 import { AtmosphereProvider } from './lib/AtmosphereProvider'
+import { AuthProvider } from './lib/AuthContext'
+import { CartProvider } from './lib/CartContext'
 import CustomCursor from './components/dynamic/CustomCursor'
 import NatureCanvas from './components/dynamic/NatureCanvas'
 import FloatingActions from './components/layout/FloatingActions'
+import CartDrawer from './components/layout/CartDrawer'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import About from './components/sections/About'
@@ -17,20 +20,17 @@ import Projects from './components/sections/Projects'
 import Rooftop from './components/sections/Rooftop'
 import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
-import PlantDoctor from './components/plant-doctor/PlantDoctor'
-
-// Dynamic high-utility client features
-import GardenStudio from './components/dynamic/GardenStudio'
+import IrrigationSimulator from './components/sections/IrrigationSimulator'
+import { Container } from './components/ui/Section'
 
 // Code-split Dedicated Standalone Pages
-const PlantDoctorPage = lazy(() => import('./pages/PlantDoctorPage'))
-const PlantWikiPage = lazy(() => import('./pages/PlantWikiPage'))
-const BlogPage = lazy(() => import('./pages/BlogPage'))
-const ServicesPage = lazy(() => import('./pages/ServicesPage'))
-const StudioPage = lazy(() => import('./pages/StudioPage'))
+const StorePage = lazy(() => import('./pages/StorePage'))
 const ProjectsPage = lazy(() => import('./pages/ProjectsPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
+const AdminPage = lazy(() => import('./pages/AdminPage'))
+const BlogPage = lazy(() => import('./pages/BlogPage'))
 
 function PageFallback() {
   return (
@@ -58,17 +58,11 @@ function HomePage() {
       <Navbar />
 
       <main id="main">
-        {/* Hero with blurred video background + climate bulletin */}
+        {/* Hero with blurred background & climate bulletin */}
         <Hero />
 
         {/* Core Credentials & Authority Stats */}
         <Stats />
-
-        {/* AI Plant Doctor Interactive Diagnostics Suite */}
-        <PlantDoctor />
-
-        {/* CAD Studio & Itemized BOQ Estimator */}
-        <GardenStudio />
 
         {/* Focused Core Services */}
         <Services />
@@ -77,7 +71,16 @@ function HomePage() {
         <Rooftop />
         <Lawn />
 
-        {/* Real Signature Projects */}
+        {/* Interactive Smart Irrigation Simulation with expanded whitespace */}
+        <section className="relative isolate overflow-hidden py-20 sm:py-28">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
+          <div aria-hidden="true" className="pointer-events-none absolute -left-32 bottom-10 -z-10 size-96 rounded-full bg-emerald/15 blur-3xl" />
+          <Container>
+            <IrrigationSimulator />
+          </Container>
+        </section>
+
+        {/* Real Signature Projects Showcase (All 9 types) */}
         <Projects />
 
         {/* Commercial Care & Trust */}
@@ -97,17 +100,17 @@ function MainContent() {
   const { route } = useRouter()
 
   // Multi-Page Routes with Suspense
+  if (route === '/store') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <StorePage />
+      </Suspense>
+    )
+  }
   if (route === '/services') {
     return (
       <Suspense fallback={<PageFallback />}>
         <ServicesPage />
-      </Suspense>
-    )
-  }
-  if (route === '/studio') {
-    return (
-      <Suspense fallback={<PageFallback />}>
-        <StudioPage />
       </Suspense>
     )
   }
@@ -132,17 +135,10 @@ function MainContent() {
       </Suspense>
     )
   }
-  if (route === '/plant-doctor') {
+  if (route === '/admin') {
     return (
       <Suspense fallback={<PageFallback />}>
-        <PlantDoctorPage />
-      </Suspense>
-    )
-  }
-  if (route === '/plant-wiki') {
-    return (
-      <Suspense fallback={<PageFallback />}>
-        <PlantWikiPage />
+        <AdminPage />
       </Suspense>
     )
   }
@@ -162,9 +158,14 @@ export default function App() {
   return (
     <RouterProvider>
       <AtmosphereProvider>
-        <NatureCanvas />
-        <CustomCursor />
-        <MainContent />
+        <AuthProvider>
+          <CartProvider>
+            <NatureCanvas />
+            <CustomCursor />
+            <CartDrawer />
+            <MainContent />
+          </CartProvider>
+        </AuthProvider>
       </AtmosphereProvider>
     </RouterProvider>
   )

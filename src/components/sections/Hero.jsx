@@ -1,4 +1,4 @@
-import { Compass, Droplets, Leaf, MapPin, ScanSearch, ShieldCheck, Sparkles, Sun, Thermometer } from 'lucide-react'
+import { Droplets, Leaf, MapPin, ShieldCheck, ShoppingBag, Sparkles, Sun, Thermometer, Waves } from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
@@ -10,6 +10,7 @@ import InteractiveCard3D from '../dynamic/InteractiveCard3D'
 
 export default function Hero() {
   const { t, lang } = useLocale()
+  const isBn = lang === 'bn'
   const { navigate } = useRouter()
   const copy = t.hero
 
@@ -85,66 +86,73 @@ export default function Hero() {
               </Button>
 
               <Button
-                href="#/studio"
+                href="/store"
                 onClick={(e) => {
                   e.preventDefault()
-                  navigate('/studio')
+                  navigate('/store')
                 }}
                 size="lg"
                 variant="glass"
                 className="text-sm font-bold uppercase tracking-wider"
               >
-                <Compass className="size-4 text-emerald" />
-                <span>{copy.exploreStudio}</span>
+                <ShoppingBag className="size-4 text-emerald" />
+                <span>{isBn ? 'প্ল্যান্ট স্টোরে চারা দেখুন' : 'Browse Plant Store'}</span>
               </Button>
             </div>
 
-            {/* AI Plant Doctor & PictureThis Botanical Wiki Spotlight */}
+            {/* Certified Plant Nursery & Automated Irrigation Spotlight */}
             <div className="mt-8 rounded-3xl glass-panel p-4 sm:p-5 shadow-soft border border-emerald/25 bg-gradient-to-br from-white/95 via-mint/35 to-white/80 transition-all duration-300 hover:shadow-lift">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   <span className="flex size-8 items-center justify-center rounded-xl bg-emerald text-white shadow-xs">
-                    <ScanSearch className="size-4" />
+                    <ShoppingBag className="size-4" />
                   </span>
                   <div>
                     <span className="text-[0.68rem] font-extrabold uppercase tracking-widest text-emerald block">
-                      {lang === 'bn' ? 'ডিএই প্রযুক্তি ও বোটানিক্যাল এআই' : 'DAE PROTOCOL · AI BOTANY'}
+                      {isBn ? 'সার্টিফাইড নার্সারি ও সেচ প্রযুক্তি' : 'CERTIFIED NURSERY · SMART IRRIGATION'}
                     </span>
                     <strong className="text-forest text-sm font-display font-bold">
-                      {lang === 'bn' ? 'এআই প্ল্যান্ট ডক্টর ও উদ্ভিদ বিশ্বকোষ' : 'AI Plant Doctor & Botanical Wiki'}
+                      {isBn ? '৮", ১০", ১/২ ব্যাগ সাইজের চারা ও অটোমেটেড সেচ' : 'Standard Bag Plants & Smart Irrigation'}
                     </strong>
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-1 rounded-full bg-bright/25 px-2.5 py-1 text-[0.65rem] font-extrabold text-emerald shadow-xs">
                   <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
-                  {lang === 'bn' ? '১০০% ফ্রি' : '100% FREE'}
+                  {isBn ? 'নতুন ক্যাটালগ' : 'NEW STORE'}
                 </span>
               </div>
 
               <p className="mt-2.5 text-xs sm:text-[0.84rem] font-medium text-forest/85 leading-relaxed">
-                {lang === 'bn'
-                  ? 'গাছের পাতা হলুদ বা রোগাক্রান্ত? কিংবা অপরিচিত গাছ চিনতে চান? পাতার ছবি তুললেই ৫ সেকেন্ডে এআই রোগ নির্ণয় ও পিকচার-দিস স্টাইল প্রজাতি শনাক্তকরণ।'
-                  : 'Leaves yellowing or spotted? Want to identify an unknown garden plant? Upload a photo for 5-second AI pathology diagnosis & PictureThis-style botanical ID.'}
+                {isBn
+                  ? 'ইনডোর, ছাদবাগানের মিষ্টি ফলদ, সুগন্ধি ফুল ও ভেলভেট লন ঘাস সরাসরি সংগ্রহ করুন। প্রতিটি অর্ডারে সাথে সাথে পাবেন প্রফেশনাল PDF কোটেশন ও হোয়াটসঅ্যাপ ডেলিভারি সুবিধা।'
+                  : 'Acclimatized indoor foliage, rooftop sweet fruits, and turf in 8", 10", and 1/2 Bag sizes. Generate instant PDF quotation and order swiftly via WhatsApp.'}
               </p>
 
               <div className="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
                   type="button"
-                  onClick={() => navigate('/plant-doctor')}
+                  onClick={() => navigate('/store')}
                   className="flex items-center justify-center gap-2 rounded-xl bg-forest px-3.5 py-2.5 text-xs font-bold text-white shadow-soft transition-all duration-200 hover:bg-emerald hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <Sparkles className="size-3.5 text-bright" />
-                  <span>{lang === 'bn' ? 'রোগ নির্ণয় করুন (Plant Doctor)' : 'Diagnose Plant (Plant Doctor)'}</span>
+                  <ShoppingBag className="size-3.5 text-bright" />
+                  <span>{isBn ? 'গাছের ক্যাটালগ দেখুন' : 'Explore Plant Store'}</span>
                   <span className="text-[0.65rem] opacity-75">→</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => navigate('/plant-wiki')}
+                  onClick={() => {
+                    const el = document.getElementById('irrigation-demo')
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' })
+                    } else {
+                      navigate('/services#irrigation-demo')
+                    }
+                  }}
                   className="flex items-center justify-center gap-2 rounded-xl glass-pill border border-emerald/20 px-3.5 py-2.5 text-xs font-bold text-forest transition-all duration-200 hover:bg-white hover:text-emerald hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  <Leaf className="size-3.5 text-emerald" />
-                  <span>{lang === 'bn' ? 'গাছ চিনুন (PictureThis)' : 'Identify Plant (PictureThis)'}</span>
+                  <Waves className="size-3.5 text-emerald" />
+                  <span>{isBn ? 'অটোমেটেড সেচ সিমুলেশন' : 'Smart Irrigation Demo'}</span>
                   <span className="text-[0.65rem] opacity-75">→</span>
                 </button>
               </div>

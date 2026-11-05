@@ -2,14 +2,12 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   Building2,
   Calendar,
-  Compass,
   Info,
   Layers,
   LayoutGrid,
-  Leaf,
   Menu,
   Phone,
-  ScanSearch,
+  ShoppingBag,
   Trees,
   X,
 } from 'lucide-react'
@@ -17,10 +15,12 @@ import { site } from '../../data/site'
 import { useEscape, useLockBodyScroll } from '../../lib/hooks'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
+import { useCart } from '../../lib/CartContext'
 import Button from '../ui/Button'
 import { MowerDoodle } from '../ui/Doodles'
 import LangToggle from '../ui/LangToggle'
 import Logo from '../ui/Logo'
+import UserAuthMenu from '../ui/UserAuthMenu'
 
 const BULLETINS = [
   {
@@ -59,7 +59,9 @@ const BULLETINS = [
 
 export default function Navbar() {
   const { t, lang } = useLocale()
+  const isBn = lang === 'bn'
   const { route, navigate } = useRouter()
+  const { totalItems, setIsCartOpen } = useCart()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [bulletinIndex, setBulletinIndex] = useState(0)
 
@@ -80,10 +82,8 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/', label: t.nav.home, icon: Trees },
-    { path: '/plant-doctor', label: t.nav.plantDoctor, badge: 'AI', icon: ScanSearch },
-    { path: '/plant-wiki', label: lang === 'bn' ? 'উদ্ভিদকোষ' : 'Plant Wiki', badge: 'NEW', icon: Leaf },
+    { path: '/store', label: isBn ? 'প্ল্যান্ট স্টোর' : 'Plant Store', badge: 'NURSERY', icon: ShoppingBag },
     { path: '/services', label: t.nav.services, icon: Layers },
-    { path: '/studio', label: t.nav.studio, icon: Compass },
     { path: '/projects', label: t.nav.projects, icon: LayoutGrid },
     { path: '/about', label: t.nav.about, icon: Info },
     { path: '/contact', label: t.nav.contact, icon: Phone },
@@ -136,7 +136,7 @@ export default function Navbar() {
           >
             {/* Brand Logo */}
             <a
-              href="#/"
+              href="/"
               onClick={(e) => handleNavClick(e, '/')}
               aria-label={t.nav.home}
               className="shrink-0 transition-transform duration-200 hover:scale-[1.02]"
@@ -151,7 +151,7 @@ export default function Navbar() {
                 return (
                   <li key={link.path}>
                     <a
-                      href={`#${link.path}`}
+                      href={link.path}
                       onClick={(e) => handleNavClick(e, link.path)}
                       className={`relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
                         isActive
@@ -161,9 +161,11 @@ export default function Navbar() {
                     >
                       <span>{link.label}</span>
                       {link.badge && (
-                        <span className={`rounded-full px-1.5 py-0.2 text-[0.65rem] font-extrabold ${
-                          isActive ? 'bg-bloom text-charcoal' : 'bg-emerald/15 text-emerald'
-                        }`}>
+                        <span
+                          className={`rounded-full px-1.5 py-0.2 text-[0.65rem] font-extrabold ${
+                            isActive ? 'bg-bloom text-charcoal' : 'bg-emerald/15 text-emerald'
+                          }`}
+                        >
                           {link.badge}
                         </span>
                       )}
@@ -173,21 +175,39 @@ export default function Navbar() {
               })}
             </ul>
 
-            {/* Right Action: Language Switcher + Consultation CTA */}
-            <div className="flex items-center gap-2.5">
+            {/* Right Action Deck: Google Login + Cart + Consultation CTA */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Google Auth Trigger Menu */}
+              <UserAuthMenu />
+
+              {/* Shopping Cart Drawer Trigger Button */}
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(true)}
+                className="relative grid size-10 place-items-center rounded-xl glass-pill text-forest transition hover:bg-white hover:text-emerald"
+                aria-label="View shopping bag"
+              >
+                <ShoppingBag className="size-4.5" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-emerald text-[0.65rem] font-bold text-white shadow-xs animate-rise">
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+
               <div className="lg:hidden">
                 <LangToggle />
               </div>
 
               <Button
-                href="#/contact"
+                href="/contact"
                 onClick={(e) => handleNavClick(e, '/contact')}
                 size="sm"
                 variant="primary"
                 className="hidden text-xs font-bold uppercase tracking-wider sm:inline-flex shadow-soft"
               >
                 <Calendar className="size-3.5" />
-                <span>{lang === 'bn' ? 'পরামর্শ বুক করুন' : 'Book Consultation'}</span>
+                <span>{isBn ? 'পরামর্শ বুক করুন' : 'Book Consultation'}</span>
               </Button>
 
               {/* Mobile Hamburger Toggle */}
@@ -214,7 +234,7 @@ export default function Navbar() {
           <div className="flex h-full w-full max-w-sm flex-col glass-panel p-6 shadow-2xl">
             {/* Drawer Header */}
             <div className="flex items-center justify-between border-b border-forest/10 pb-4">
-              <a href="#/" onClick={(e) => handleNavClick(e, '/')} aria-label={t.nav.home}>
+              <a href="/" onClick={(e) => handleNavClick(e, '/')} aria-label={t.nav.home}>
                 <Logo />
               </a>
               <button
@@ -235,12 +255,10 @@ export default function Navbar() {
                 return (
                   <li key={link.path}>
                     <a
-                      href={`#${link.path}`}
+                      href={link.path}
                       onClick={(e) => handleNavClick(e, link.path)}
                       className={`flex items-center justify-between rounded-xl px-4 py-3 font-display text-base font-bold transition-all duration-200 ${
-                        isActive
-                          ? 'bg-forest text-white shadow-soft'
-                          : 'text-forest hover:bg-forest/8'
+                        isActive ? 'bg-forest text-white shadow-soft' : 'text-forest hover:bg-forest/8'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -248,9 +266,11 @@ export default function Navbar() {
                         <span>{link.label}</span>
                       </div>
                       {link.badge && (
-                        <span className={`rounded-full px-2 py-0.5 text-[0.68rem] font-extrabold ${
-                          isActive ? 'bg-bloom text-charcoal' : 'bg-forest/10 text-forest'
-                        }`}>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[0.68rem] font-extrabold ${
+                            isActive ? 'bg-bloom text-charcoal' : 'bg-forest/10 text-forest'
+                          }`}
+                        >
                           {link.badge}
                         </span>
                       )}
@@ -263,11 +283,11 @@ export default function Navbar() {
             {/* Fast Service Shortcuts */}
             <div className="mt-4 border-t border-forest/10 pt-4">
               <span className="block text-xs font-bold uppercase tracking-wider text-forest/60 mb-2.5">
-                {lang === 'bn' ? 'সরাসরি সেবা ও স্টুডিও' : 'Quick Access'}
+                {isBn ? 'সরাসরি সেবাসমূহ' : 'Direct Services'}
               </span>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <a
-                  href="#/services"
+                  href="/services"
                   onClick={(e) => handleNavClick(e, '/services')}
                   className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
                 >
@@ -275,7 +295,7 @@ export default function Navbar() {
                   <span>{t.servicesMenu.rooftop.title}</span>
                 </a>
                 <a
-                  href="#/services"
+                  href="/services"
                   onClick={(e) => handleNavClick(e, '/services')}
                   className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
                 >
@@ -283,65 +303,47 @@ export default function Navbar() {
                   <span>{t.servicesMenu.lawn.title}</span>
                 </a>
                 <a
-                  href="#/studio"
-                  onClick={(e) => handleNavClick(e, '/studio')}
+                  href="/store"
+                  onClick={(e) => handleNavClick(e, '/store')}
                   className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
                 >
-                  <Compass className="size-4 text-emerald" />
-                  <span>{t.nav.studio}</span>
+                  <ShoppingBag className="size-4 text-emerald" />
+                  <span>{isBn ? 'প্ল্যান্ট স্টোর' : 'Plant Store'}</span>
                 </a>
                 <a
-                  href="#/plant-wiki"
-                  onClick={(e) => handleNavClick(e, '/plant-wiki')}
+                  href="/projects"
+                  onClick={(e) => handleNavClick(e, '/projects')}
                   className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
                 >
-                  <Leaf className="size-4 text-emerald" />
-                  <span>{lang === 'bn' ? 'উদ্ভিদকোষ' : 'Plant Wiki'}</span>
-                </a>
-                <a
-                  href="#/plant-doctor"
-                  onClick={(e) => handleNavClick(e, '/plant-doctor')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <ScanSearch className="size-4 text-bloom" />
-                  <span>{t.nav.plantDoctor}</span>
+                  <LayoutGrid className="size-4 text-emerald" />
+                  <span>{isBn ? 'প্রজেক্ট গ্যালারি' : 'Projects'}</span>
                 </a>
               </div>
             </div>
 
-            {/* Drawer Footer CTA */}
-            <div className="mt-auto pt-6 border-t border-forest/10 space-y-2">
+            {/* Drawer Footer Actions */}
+            <div className="mt-auto border-t border-forest/10 pt-4 space-y-3">
               <Button
-                href={`tel:${phone.tel}`}
-                variant="glass"
+                href="/contact"
+                onClick={(e) => handleNavClick(e, '/contact')}
+                variant="primary"
                 size="md"
-                icon={Phone}
-                className="w-full text-xs font-bold uppercase tracking-wider"
+                className="w-full justify-center"
               >
-                {phone.number}
+                <Calendar className="size-4" />
+                <span>{isBn ? 'পরামর্শ বুক করুন' : 'Book Consultation'}</span>
               </Button>
+              <a
+                href={`tel:${phone.tel}`}
+                className="flex items-center justify-center gap-2 text-xs font-bold text-forest hover:text-emerald transition py-1"
+              >
+                <Phone className="size-3.5 text-emerald" />
+                <span>{phone.number} ({phone.label[lang]})</span>
+              </a>
             </div>
           </div>
         </div>
       )}
-
-      {/* Mobile Bottom Weather & Plantation Bulletin (Fixed at bottom on mobile) */}
-      <div className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-forest/15 bg-white/95 backdrop-blur-md px-3 py-1.5 text-[0.68rem] text-forest shadow-lift">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 min-w-0 flex-1">
-            <span className="size-2 rounded-full bg-emerald animate-pulse shrink-0" />
-            <span className="font-extrabold uppercase tracking-wider text-emerald shrink-0 text-[0.62rem]">
-              {currentBulletin.tag[lang].split(' ')[0]}:
-            </span>
-            <p className="truncate font-medium text-forest/90 text-[0.68rem]">
-              {currentBulletin.text[lang]}
-            </p>
-          </div>
-          <span className="shrink-0 rounded-full bg-amber-500/15 px-2 py-0.5 text-[0.6rem] font-bold text-amber-700">
-            {currentBulletin.meta[lang].split('|')[0].trim()}
-          </span>
-        </div>
-      </div>
     </>
   )
 }

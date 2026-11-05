@@ -39,6 +39,7 @@ export const content = {
     brand: { name: 'ধানসিঁড়ি গার্ডেন', tagline: 'প্রকৃতির সাথে বাসস্থান' },
 
     nav: {
+      store: 'প্ল্যান্ট স্টোর',
       services: 'সেবা',
       projects: 'প্রকল্প',
       studio: 'ডিজাইন স্টুডিও',
@@ -737,6 +738,7 @@ export const content = {
     brand: { name: 'Dhanshiri Garden', tagline: 'Living with Nature' },
 
     nav: {
+      store: 'Plant Store',
       services: 'Services',
       projects: 'Projects',
       studio: 'Design Studio',

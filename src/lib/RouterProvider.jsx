@@ -1,34 +1,39 @@
 import { useEffect, useState } from 'react'
 import { RouterContext } from './routerContext'
 
-const KNOWN_ROUTES = [
+export const KNOWN_ROUTES = [
+  '/',
+  '/store',
   '/services',
-  '/studio',
   '/projects',
-  '/plant-doctor',
-  '/plant-wiki',
-  '/blog',
   '/about',
   '/contact',
+  '/admin',
+  '/blog',
 ]
 
 function getRouteFromLocation() {
   if (typeof window === 'undefined') return '/'
 
-  // 1. Check hash first (e.g. #/services, #/projects)
-  const rawHash = window.location.hash || ''
-  const cleanHash = rawHash.replace(/^#\/?/, '/')
-
-  for (const r of KNOWN_ROUTES) {
-    if (cleanHash === r || cleanHash.startsWith(r + '/') || cleanHash.startsWith(r + '#') || cleanHash.startsWith(r + '?')) {
-      return r
+  // 1. Backwards-compatibility: If URL contains hash like `/#/store` or `#/projects`, normalize it to clean path
+  const hash = window.location.hash || ''
+  if (hash.startsWith('#/')) {
+    const cleanHash = hash.replace(/^#\/?/, '/')
+    const [matchedPath] = cleanHash.split('#')
+    for (const r of KNOWN_ROUTES) {
+      if (r !== '/' && (matchedPath === r || matchedPath.startsWith(r + '/'))) {
+        try {
+          window.history.replaceState(null, '', r)
+        } catch {}
+        return r
+      }
     }
   }
 
-  // 2. Check path (e.g. /services, /projects)
+  // 2. Canonical HTML5 pathname check
   const path = window.location.pathname || '/'
   for (const r of KNOWN_ROUTES) {
-    if (path === r || path.startsWith(r + '/')) {
+    if (r !== '/' && (path === r || path.startsWith(r + '/'))) {
       return r
     }
   }
@@ -43,35 +48,56 @@ export function RouterProvider({ children }) {
     const handleLocationChange = () => {
       const nextRoute = getRouteFromLocation()
       setRoute(nextRoute)
-      
-      // If there's a sub-anchor in hash (e.g. #/services#rooftop), scroll to that element
+
+      // Support sub-anchor scrolling (e.g. /services#irrigation)
       const hash = window.location.hash
       const subAnchorMatch = hash.match(/#([a-zA-Z0-9_-]+)$/)
-      if (subAnchorMatch && subAnchorMatch[1] && !KNOWN_ROUTES.includes(`/${subAnchorMatch[1]}`)) {
+      if (subAnchorMatch && subAnchorMatch[1]) {
         const el = document.getElementById(subAnchorMatch[1])
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' })
+          setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50)
           return
         }
       }
       window.scrollTo({ top: 0, behavior: 'instant' })
     }
 
-    window.addEventListener('hashchange', handleLocationChange)
     window.addEventListener('popstate', handleLocationChange)
-
     return () => {
-      window.removeEventListener('hashchange', handleLocationChange)
       window.removeEventListener('popstate', handleLocationChange)
     }
   }, [])
 
-  const navigate = (nextPath) => {
+  const navigate = (nextPath, options = {}) => {
+    if (typeof window === 'undefined') return
     const normalized = nextPath.startsWith('/') ? nextPath : `/${nextPath}`
-    window.location.hash = `#${normalized}`
-    const r = getRouteFromLocation()
-    setRoute(r)
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    const [pathPart, anchorPart] = normalized.split('#')
+
+    let targetRoute = '/'
+    for (const r of KNOWN_ROUTES) {
+      if (r !== '/' && (pathPart === r || pathPart.startsWith(r + '/'))) {
+        targetRoute = r
+        break
+      }
+    }
+
+    const targetUrl = anchorPart ? `${pathPart}#${anchorPart}` : pathPart
+    if (options.replace) {
+      window.history.replaceState(null, '', targetUrl)
+    } else {
+      window.history.pushState(null, '', targetUrl)
+    }
+
+    setRoute(targetRoute)
+
+    if (anchorPart) {
+      setTimeout(() => {
+        const el = document.getElementById(anchorPart)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
   }
 
   return (

@@ -9,6 +9,7 @@ const YEAR = new Date().getFullYear()
 
 export default function Footer() {
   const { t, lang, n } = useLocale()
+  const isBn = lang === 'bn'
   const { navigate } = useRouter()
 
   const handleLink = (e, path) => {
@@ -26,7 +27,7 @@ export default function Footer() {
           {/* Col 1: Brand & Credentials */}
           <div className="md:col-span-5">
             <a
-              href="#/"
+              href="/"
               onClick={(e) => handleLink(e, '/')}
               aria-label={t.nav.home}
               className="inline-block transition-transform hover:scale-[1.02]"
@@ -59,12 +60,22 @@ export default function Footer() {
           {/* Col 2: Multi-Page Navigation */}
           <div className="md:col-span-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-3 font-mono">
-              {lang === 'bn' ? 'প্রধান পেজসমূহ' : 'Main Pages'}
+              {isBn ? 'প্রধান পেজসমূহ' : 'Main Pages'}
             </h4>
             <ul className="space-y-2.5 text-sm text-charcoal/80 font-medium">
               <li>
                 <a
-                  href="#/services"
+                  href="/store"
+                  onClick={(e) => handleLink(e, '/store')}
+                  className="hover:text-emerald transition flex items-center gap-2"
+                >
+                  <span className="size-1.5 rounded-full bg-emerald" />
+                  <span>{isBn ? 'প্ল্যান্ট স্টোর ও নার্সারি' : 'Plant Store'}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/services"
                   onClick={(e) => handleLink(e, '/services')}
                   className="hover:text-emerald transition flex items-center gap-2"
                 >
@@ -74,17 +85,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#/studio"
-                  onClick={(e) => handleLink(e, '/studio')}
-                  className="hover:text-emerald transition flex items-center gap-2"
-                >
-                  <span className="size-1.5 rounded-full bg-bright" />
-                  <span>{t.nav.studio}</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#/projects"
+                  href="/projects"
                   onClick={(e) => handleLink(e, '/projects')}
                   className="hover:text-emerald transition flex items-center gap-2"
                 >
@@ -94,7 +95,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#/about"
+                  href="/about"
                   onClick={(e) => handleLink(e, '/about')}
                   className="hover:text-emerald transition flex items-center gap-2"
                 >
@@ -104,7 +105,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#/contact"
+                  href="/contact"
                   onClick={(e) => handleLink(e, '/contact')}
                   className="hover:text-emerald transition flex items-center gap-2"
                 >
@@ -115,62 +116,67 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 3: Special AI & Knowledge Center */}
+          {/* Col 3: Innovation & Landscape Highlights */}
           <div className="md:col-span-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-forest/70 mb-3 font-mono">
-              {lang === 'bn' ? 'বিশেষ এআই ও গবেষণা' : 'Innovation & Agronomy'}
+              {isBn ? 'উদ্ভাবন ও নার্সারি কেন্দ্র' : 'Nursery & Technology'}
             </h4>
             <ul className="space-y-2.5 text-sm text-charcoal/80">
               <li>
-                <button
-                  type="button"
-                  onClick={(e) => handleLink(e, '/plant-doctor')}
-                  className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
-                >
-                  <span className="size-2 rounded-full bg-bloom animate-ping" />
-                  <span>{t.nav.plantDoctor} (AI Diagnosis)</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={(e) => handleLink(e, '/plant-wiki')}
+                <a
+                  href="/store"
+                  onClick={(e) => handleLink(e, '/store')}
                   className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
                 >
                   <span className="size-2 rounded-full bg-emerald" />
-                  <span>{lang === 'bn' ? 'উদ্ভিদকোষ ও প্রজাতি শনাক্তকরণ' : 'Plant Wikipedia & Identifier'}</span>
-                </button>
+                  <span>{isBn ? '৮", ১০", ১/২ ব্যাগ সাইজের চারা' : 'Horticultural Plants & Bag Sizes'}</span>
+                </a>
+                <p className="text-xs text-charcoal/60 ml-4">
+                  {isBn ? 'ইনডোর, ফলদ, সুগন্ধি ফুল ও ভেলভেট লন ঘাস' : 'Acclimatized indoor, fruits, and velvet turf'}
+                </p>
               </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={(e) => handleLink(e, '/blog')}
+              <li className="pt-2">
+                <a
+                  href="/services#irrigation-demo"
+                  onClick={(e) => handleLink(e, '/services#irrigation-demo')}
                   className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
                 >
                   <span className="size-2 rounded-full bg-bright" />
-                  <span>{lang === 'bn' ? 'ব্লগ ও কৃষি প্রবন্ধ সংগ্রহশালা' : 'Agronomy Blog & Research Guides'}</span>
-                </button>
+                  <span>{isBn ? 'স্মার্ট অটোমেটেড সেচ ব্যবস্থাপনা' : 'Automated Irrigation Engineering'}</span>
+                </a>
+                <p className="text-xs text-charcoal/60 ml-4">
+                  {isBn ? 'পপ-আপ স্প্রিংকলার ও রুট-জোন ড্রিপ লাইন' : 'Pop-up rotary sprinklers and micro-drip'}
+                </p>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="/admin"
+                  onClick={(e) => handleLink(e, '/admin')}
+                  className="flex items-center gap-2 text-xs font-bold text-forest/75 hover:text-emerald transition"
+                >
+                  <span>{isBn ? 'অ্যাডমিন কাস্টমার ও অর্ডার পোর্টাল →' : 'Admin Order Portal →'}</span>
+                </a>
               </li>
             </ul>
-
-            <div className="mt-6 rounded-2xl glass-card p-3.5 text-xs text-charcoal/75 space-y-1.5">
-              <p>
-                <strong className="text-forest">{t.contact.corporate}:</strong> {t.contact.dhakaAddress}
-              </p>
-              <p>
-                <strong className="text-forest">{t.contact.nursery}:</strong> {t.contact.naogaonAddress}
-              </p>
-            </div>
           </div>
         </div>
 
-        {/* Bottom copyright line */}
-        <div className="mt-12 flex flex-col gap-2 border-t border-forest/10 pt-6 text-[0.75rem] text-charcoal/60 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {n(YEAR)} {t.brand.name}. {t.footer.rights}.
-          </p>
-          <p className="md:text-right">
-            {t.footer.designedBy} <span className="text-forest font-semibold">Dhanshiri Landscape Architecture</span>
+        {/* Nursery & Offices Bottom Row */}
+        <div className="mt-12 border-t border-forest/10 pt-8 grid gap-6 md:grid-cols-2 text-xs text-charcoal/75">
+          {site.offices.map((office, idx) => (
+            <div key={idx} className="rounded-2xl glass-card p-4">
+              <span className="font-bold text-forest text-sm block">{office.name}</span>
+              <p className="mt-1 text-charcoal/80">{office.address}</p>
+              <span className="text-emerald font-semibold mt-1 block">{office.note}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Copyright */}
+        <div className="mt-8 border-t border-forest/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-charcoal/60 gap-4">
+          <p>© {YEAR} ধানসিঁড়ি গার্ডেন (Dhanshiri Garden). সর্বস্বত্ব সংরক্ষিত।</p>
+          <p className="text-right">
+            {isBn ? 'ডিএই সনদপ্রাপ্ত প্রধান কৃষিবিদ আমির আলী' : 'DAE Certified Head Agronomist Amir Ali'}
           </p>
         </div>
       </Container>

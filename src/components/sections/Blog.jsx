@@ -249,11 +249,26 @@ export default function Blog() {
             আমাদের নিজস্ব নার্সারি ও ৩০ বছরের মাঠপর্যায়ের কৃষি পরামর্শক জনাব আমির আলীর সার্বিক তত্ত্বাবধানে আমরা ছাদবাগান, লন ও বাণিজ্যিক বাগান তৈরি ও পরিচর্যা করি।
           </p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
-            <Button href="#contact" size="sm">
-              আমাদের সাথে যোগাযোগ করুন
+            <Button
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault()
+                navigate('/contact')
+              }}
+              size="sm"
+            >
+              {lang === 'bn' ? 'আমাদের সাথে যোগাযোগ করুন' : 'Contact Us'}
             </Button>
-            <Button href="#plant-doctor" variant="glass" size="sm" icon={Sparkles}>
-              এআই উদ্ভিদ ডাক্তার
+            <Button
+              href="/store"
+              onClick={(e) => {
+                e.preventDefault()
+                navigate('/store')
+              }}
+              variant="glass"
+              size="sm"
+            >
+              {lang === 'bn' ? 'প্ল্যান্ট স্টোরে চারা দেখুন' : 'Browse Plant Store'}
             </Button>
           </div>
         </div>
