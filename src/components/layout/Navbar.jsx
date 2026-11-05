@@ -20,7 +20,6 @@ import Button from '../ui/Button'
 import { MowerDoodle } from '../ui/Doodles'
 import LangToggle from '../ui/LangToggle'
 import Logo from '../ui/Logo'
-import UserAuthMenu from '../ui/UserAuthMenu'
 
 const BULLETINS = [
   {
@@ -175,11 +174,8 @@ export default function Navbar() {
               })}
             </ul>
 
-            {/* Right Action Deck: Google Login + Cart + Consultation CTA */}
+            {/* Right Action Deck: Cart + Consultation CTA */}
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* Google Auth Trigger Menu */}
-              <UserAuthMenu />
-
               {/* Shopping Cart Drawer Trigger Button */}
               <button
                 type="button"

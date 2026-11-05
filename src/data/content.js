@@ -9,6 +9,7 @@
 
 export const serviceKeys = [
   'landscapeDesign',
+  'hardscapeDesign',
   'verticalGarden',
   'rooftopPlanter',
   'lawnCarpeting',
@@ -106,6 +107,11 @@ export const content = {
           title: 'ল্যান্ডস্কেপ ডিজাইন',
           desc: 'খালি জমি বা অগোছালো আঙিনাকে আমরা রূপ দিই একটি সুসংহত সবুজ পরিকল্পনায়। কোথায় বসার জায়গা, কোথায় পথ, কোথায় গাছের সারি—সবকিছু আগে নকশায় ঠিক করা হয়।',
           points: ['সরেজমিন মাপজোক ও নকশা', 'গাছ ও উপকরণের তালিকাসহ স্বচ্ছ প্রাক্কলন', 'নকশা অনুযায়ী বাস্তবায়ন'],
+        },
+        hardscapeDesign: {
+          title: 'হার্ডস্কেপ ও স্টোন পেভার্স',
+          desc: 'সিলেট স্যান্ডস্টোন, ন্যাচারাল গ্রানাইট ওয়াকওয়ে, গার্ডেন পেভার্স, পারগোলা ও রিটেইনিং ওয়ালের দীর্ঘস্থায়ী ল্যান্ডস্কেপ আর্কিটেকচার।',
+          points: ['সিলেট স্যান্ডস্টোন ও পেভার্স ওয়াকওয়ে', 'অ্যান্টি-স্লিপ সারফেস ও ঘাস ইন্টারলকিং', 'পারগোলা, সিটিং লাউঞ্জ ও রিটেইনিং ওয়াল'],
         },
         verticalGarden: {
           title: 'ভার্টিক্যাল গার্ডেন',
@@ -805,6 +811,11 @@ export const content = {
           title: 'Landscape Design',
           desc: 'We turn an empty plot or an untidy courtyard into one coherent green plan. Where to sit, where the paths run, where the trees line up: it is all settled on paper first.',
           points: ['On-site survey and measured drawings', 'Transparent quote with plants and materials listed', 'Delivery that follows the approved design'],
+        },
+        hardscapeDesign: {
+          title: 'Hardscape & Pavers',
+          desc: 'Sylhet sandstone pathways, natural flamed granite walkways, garden pavers, timber pergolas, and structural retaining walls.',
+          points: ['Sylhet sandstone and stepping pavers', 'Anti-slip textured walkways with turf joints', 'Timber pergolas, retaining walls and edging'],
         },
         verticalGarden: {
           title: 'Vertical Garden',

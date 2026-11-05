@@ -7,7 +7,6 @@ import {
   MessageCircle,
   Sparkles,
 } from 'lucide-react'
-import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
 import { PROJECT_TYPES, PROJECTS_DATA } from '../../data/projectsData'
@@ -15,7 +14,7 @@ import Button from '../ui/Button'
 import { Container, Section, SectionHeading } from '../ui/Section'
 
 export default function Projects() {
-  const { t, lang } = useLocale()
+  const { lang } = useLocale()
   const isBn = lang === 'bn'
   const [selectedType, setSelectedType] = useState('all')
 

@@ -36,7 +36,7 @@ export default function IrrigationSimulator() {
 
   // Animation loop for oscillating sprinkler and water particles
   useEffect(() => {
-    if (!active || reduced) return undefined
+    if (!active || reduced || !inView) return undefined
 
     const tick = (now) => {
       setAnimTime(now * 0.003)
@@ -55,7 +55,7 @@ export default function IrrigationSimulator() {
 
     frameRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frameRef.current)
-  }, [active, reduced])
+  }, [active, reduced, inView])
 
   // Generate deterministic droplets and plant geometry
   const grassBlades = useMemo(() => {

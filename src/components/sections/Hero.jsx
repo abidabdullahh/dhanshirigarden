@@ -1,4 +1,14 @@
-import { Droplets, Leaf, MapPin, ShieldCheck, ShoppingBag, Sparkles, Sun, Thermometer, Waves } from 'lucide-react'
+import {
+  ArrowRight,
+  Compass,
+  Droplets,
+  Layers,
+  ShieldCheck,
+  ShoppingBag,
+  Sun,
+  Thermometer,
+  Waves,
+} from 'lucide-react'
 import { photos } from '../../data/images'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
@@ -15,74 +25,85 @@ export default function Hero() {
   const copy = t.hero
 
   return (
-    <section id="top" className="relative isolate overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 lg:pt-40 lg:pb-28">
-      {/* Background Video with Glassmorphic Gradient Overlay & Diffuse Glowing Orbs */}
-      <div className="absolute inset-0 -z-20 overflow-hidden">
+    <section id="top" className="relative isolate overflow-hidden pt-28 pb-20 sm:pt-36 sm:pb-28 lg:pt-40 lg:pb-32">
+      {/* Subtle Luminous Background Video & Gradient Atmosphere */}
+      <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="h-full w-full object-cover filter blur-[6px] opacity-25 scale-105 pointer-events-none transition-opacity duration-1000"
+          className="h-full w-full object-cover filter blur-[4px] opacity-20 scale-105 transition-opacity duration-1000"
         >
           <source src="/hero-garden.webm" type="video/webm" />
         </video>
-        {/* Soft Vignette and Ambient Mesh Glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/80 via-cream/60 to-cream" />
-        <div className="absolute inset-0 mesh-glow opacity-60" />
+        {/* Crisp Botanical Ground Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/70 to-cream" />
+        <div className="absolute inset-0 mesh-glow opacity-40" />
+
+        {/* Delicate Architectural Grid Overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[linear-gradient(to_right,#1b43320a_1px,transparent_1px),linear-gradient(to_bottom,#1b43320a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)]"
+        />
       </div>
 
-      {/* Floating Background Glass Spheres / Orbs */}
-      <div aria-hidden="true" className="pointer-events-none absolute left-[-8rem] top-24 -z-10 size-96 rounded-full bg-emerald/20 blur-3xl animate-float" />
-      <div aria-hidden="true" className="pointer-events-none absolute right-[-8rem] top-48 -z-10 size-96 rounded-full bg-bloom/20 blur-3xl animate-float-slow" />
+      {/* Floating Ambient Glow Orbs */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-24 -z-10 size-[32rem] rounded-full bg-emerald/15 blur-3xl animate-float" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-48 -z-10 size-[32rem] rounded-full bg-bloom/15 blur-3xl animate-float-slow" />
 
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
-          {/* LEFT: Copy Column with Glassmorphic Card Accents */}
-          <div className="lg:col-span-7">
-            {/* Discipline Badge */}
-            <div className="inline-flex items-center gap-2.5 rounded-full glass-pill px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-forest">
-              <span className="size-2 rounded-full bg-emerald animate-pulse" />
-              <span>DAE AGRONOMY · LANDSCAPE ARCHITECTURE · DHAKA & NAOGAON</span>
+          {/* LEFT: Architectural Typography & Action Center */}
+          <div className="lg:col-span-7 xl:col-span-7">
+            {/* Atelier Heritage & Geolocation Eyebrow */}
+            <div className="inline-flex flex-wrap items-center gap-2.5 rounded-full glass-pill px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-forest border border-forest/10 shadow-xs">
+              <span className="flex size-2 rounded-full bg-emerald animate-pulse" />
+              <span>DHANSHIRI ATELIER · EST. 2018</span>
+              <span className="text-forest/30">|</span>
+              <span className="text-emerald">DHAKA [23°48&apos;N] &amp; NAOGAON [24°48&apos;N]</span>
             </div>
 
-            {/* Headline with Glass Tone */}
-            <h1 className="mt-5 font-display text-[clamp(2.2rem,4.8vw,3.8rem)] font-extrabold tracking-tight text-forest leading-[1.12]">
-              {copy.titleBefore}
-              <span className="relative inline-block text-emerald">
-                {copy.titleHighlight}
-                <span className="absolute inset-x-0 -bottom-1 h-3 -z-10 rounded-full bg-bright/35 blur-xs" />
-              </span>
-              {copy.titleAfter}
+            {/* Commanding Editorial Headline */}
+            <h1 className="mt-5 font-display text-[clamp(2.4rem,5.2vw,4.2rem)] font-extrabold tracking-tight text-forest leading-[1.08] text-balance">
+              {isBn ? (
+                <>
+                  প্রকৃতির সাথে বাসস্থান —{' '}
+                  <span className="relative inline-block text-emerald italic font-serif font-normal">
+                    জীবন্ত স্থাপত্য
+                    <span className="absolute inset-x-0 -bottom-1 h-3 -z-10 rounded-full bg-bright/25 blur-xs" />
+                  </span>
+                  {' '}ও নান্দনিক নিসর্গ।
+                </>
+              ) : (
+                <>
+                  Architectural Landscapes &amp;{' '}
+                  <span className="relative inline-block text-emerald italic font-serif font-normal">
+                    Living Sanctuaries
+                    <span className="absolute inset-x-0 -bottom-1 h-3 -z-10 rounded-full bg-bright/25 blur-xs" />
+                  </span>
+                  {' '}Engineered with Precision.
+                </>
+              )}
             </h1>
 
-            {/* Subtitle */}
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-charcoal/85 sm:text-lg">
-              {copy.sub}
+            {/* Refined Subtitle */}
+            <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-charcoal/80 font-normal">
+              {isBn
+                ? 'কৃষি সম্প্রসারণ অধিদপ্তরের (ডিএই) মাঠপর্যায়ের বৈজ্ঞানিক প্রটোকল এবং আধুনিক স্থাপত্যশিল্পের সমন্বয়। আবাসিক এস্টেট, শতভাগ ওয়াটারপ্রুফ ছাদবাগান, কার্পেট লন, সিলেট স্যান্ডস্টোন হার্ডস্কেপ ও ৭০০+ জাতের অ্যাক্লিমেটাইজড নার্সারি।'
+                : 'DAE-certified agronomy unified with contemporary landscape architecture. Engineering 100% leak-proof urban rooftops, velvet carpet lawns, natural Sylhet sandstone hardscapes, and a verified 700+ specimen botanical nursery.'}
             </p>
 
-            {/* Glass Credentials Banner */}
-            <div className="mt-6 flex flex-wrap items-center gap-4 rounded-2xl glass-card px-4 py-3 text-xs font-medium text-forest">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="size-4 text-emerald" />
-                <span className="font-semibold">{copy.founderLine}</span>
-              </div>
-              <span className="hidden sm:inline text-forest/30">|</span>
-              <div className="flex items-center gap-1.5">
-                <MapPin className="size-3.5 text-emerald" />
-                <span>{copy.chipReply}</span>
-              </div>
-            </div>
-
-            {/* Glassmorphic Action Buttons */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            {/* Primary Action Buttons */}
+            <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <Button
                 href={getWhatsAppLink(null, null, lang)}
                 size="lg"
                 variant="primary"
-                className="text-sm font-bold uppercase tracking-wider shadow-lift"
+                className="group text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lift hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
-                {copy.ctaPrimary}
+                <span>{copy.ctaPrimary}</span>
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Button>
 
               <Button
@@ -93,144 +114,171 @@ export default function Hero() {
                 }}
                 size="lg"
                 variant="glass"
-                className="text-sm font-bold uppercase tracking-wider"
+                className="text-xs sm:text-sm font-bold uppercase tracking-wider border border-forest/15 hover:border-emerald/40 transition-all"
               >
                 <ShoppingBag className="size-4 text-emerald" />
-                <span>{isBn ? 'প্ল্যান্ট স্টোরে চারা দেখুন' : 'Browse Plant Store'}</span>
+                <span>{isBn ? '৭০০+ জাতের প্ল্যান্ট স্টোর' : 'Explore 700+ Plant Nursery'}</span>
+                <span className="rounded-full bg-emerald/15 px-2 py-0.5 text-[0.65rem] font-mono text-emerald">
+                  715+
+                </span>
               </Button>
             </div>
 
-            {/* Certified Plant Nursery & Automated Irrigation Spotlight */}
-            <div className="mt-8 rounded-3xl glass-panel p-4 sm:p-5 shadow-soft border border-emerald/25 bg-gradient-to-br from-white/95 via-mint/35 to-white/80 transition-all duration-300 hover:shadow-lift">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex size-8 items-center justify-center rounded-xl bg-emerald text-white shadow-xs">
-                    <ShoppingBag className="size-4" />
-                  </span>
-                  <div>
-                    <span className="text-[0.68rem] font-extrabold uppercase tracking-widest text-emerald block">
-                      {isBn ? 'সার্টিফাইড নার্সারি ও সেচ প্রযুক্তি' : 'CERTIFIED NURSERY · SMART IRRIGATION'}
+            {/* Architectural Engineering Credentials Bar */}
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="flex items-center gap-2.5 rounded-2xl glass-card px-3.5 py-2.5 text-xs font-semibold text-forest border border-white/70">
+                <ShieldCheck className="size-4 text-emerald shrink-0" />
+                <span className="line-clamp-1">{isBn ? '১০০% ওয়াটারপ্রুফ গ্যারান্টি' : '100% Leak-Proof Rooftops'}</span>
+              </div>
+              <div className="flex items-center gap-2.5 rounded-2xl glass-card px-3.5 py-2.5 text-xs font-semibold text-forest border border-white/70">
+                <Waves className="size-4 text-bright shrink-0" />
+                <span className="line-clamp-1">{isBn ? 'স্বয়ংক্রিয় ড্রিপ ও স্প্রিংকলার' : 'Precision Micro-Irrigation'}</span>
+              </div>
+              <div className="flex items-center gap-2.5 rounded-2xl glass-card px-3.5 py-2.5 text-xs font-semibold text-forest border border-white/70">
+                <Layers className="size-4 text-bloom shrink-0" />
+                <span className="line-clamp-1">{isBn ? 'সিলেট স্যান্ডস্টোন পেভার্স' : 'Sylhet Stone Hardscapes'}</span>
+              </div>
+            </div>
+
+            {/* Founder Authority Footnote */}
+            <p className="mt-4 text-xs font-medium text-forest/70 flex items-center gap-2">
+              <span className="size-1.5 rounded-full bg-emerald" />
+              <span>{copy.founderLine}</span>
+            </p>
+          </div>
+
+          {/* RIGHT: Layered Architectural Visual Monograph */}
+          <div className="lg:col-span-5 xl:col-span-5">
+            <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+              {/* Main Architectural Showcase Frame */}
+              <InteractiveCard3D
+                maxTilt={5}
+                glare={true}
+                className="relative aspect-[4/4.6] sm:aspect-[4/4.4] w-full overflow-hidden rounded-3xl glass-panel p-3 shadow-lift border border-white/80 ring-1 ring-forest/5"
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-2xl bg-mint">
+                  <Img photo={photos.rooftopTerrace} width={1200} sizes="(min-width: 1024px) 42vw, 92vw" priority />
+                  <div className="absolute inset-0 bg-gradient-to-t from-forest/90 via-forest/20 to-transparent" />
+
+                  {/* Architectural Blueprint Spec Stamp */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 rounded-full glass-surface px-3 py-1 text-[0.68rem] font-mono font-bold tracking-widest uppercase text-white shadow-soft">
+                      <Compass className="size-3 text-bright" />
+                      <span>SPEC 418 · GULSHAN TERRACE</span>
                     </span>
-                    <strong className="text-forest text-sm font-display font-bold">
-                      {isBn ? '৮", ১০", ১/২ ব্যাগ সাইজের চারা ও অটোমেটেড সেচ' : 'Standard Bag Plants & Smart Irrigation'}
+                    <span className="inline-flex items-center gap-1 rounded-full bg-forest/80 backdrop-blur-md px-2.5 py-1 text-[0.65rem] font-mono font-bold text-white">
+                      100% LEAKPROOF
+                    </span>
+                  </div>
+
+                  {/* Bottom Architectural Caption */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <span className="text-[0.65rem] font-mono uppercase tracking-widest text-bright block">
+                      {isBn ? 'স্বাক্ষরিত ল্যান্ডস্কেপ প্রকল্প' : 'SIGNATURE ARCHITECTURAL LANDSCAPE'}
+                    </span>
+                    <strong className="block font-display text-lg sm:text-xl font-bold leading-tight mt-0.5">
+                      {isBn ? 'আরবান রুফটপ স্যাঙ্কচুয়ারি ও টেরেস' : 'Urban Rooftop Sanctuary & Lounge'}
                     </strong>
+                    <p className="mt-1 text-xs text-white/80 line-clamp-2">
+                      {isBn
+                        ? 'মাল্টি-লেয়ার রুট-ব্যারিয়ার মেমব্রেন, পারলাইট-ভার্মিকম্পোস্ট গ্রোয়িং মিডিয়া এবং ড্রিপ ইরিগেশন।'
+                        : 'Sub-slab drainage cells, lightweight volcanic substrate, and root-zone micro-drip networks.'}
+                    </p>
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full bg-bright/25 px-2.5 py-1 text-[0.65rem] font-extrabold text-emerald shadow-xs">
-                  <span className="size-1.5 rounded-full bg-emerald animate-pulse" />
-                  {isBn ? 'নতুন ক্যাটালগ' : 'NEW STORE'}
-                </span>
-              </div>
+              </InteractiveCard3D>
 
-              <p className="mt-2.5 text-xs sm:text-[0.84rem] font-medium text-forest/85 leading-relaxed">
-                {isBn
-                  ? 'ইনডোর, ছাদবাগানের মিষ্টি ফলদ, সুগন্ধি ফুল ও ভেলভেট লন ঘাস সরাসরি সংগ্রহ করুন। প্রতিটি অর্ডারে সাথে সাথে পাবেন প্রফেশনাল PDF কোটেশন ও হোয়াটসঅ্যাপ ডেলিভারি সুবিধা।'
-                  : 'Acclimatized indoor foliage, rooftop sweet fruits, and turf in 8", 10", and 1/2 Bag sizes. Generate instant PDF quotation and order swiftly via WhatsApp.'}
-              </p>
-
-              <div className="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* Floating Overlapping Botanical Specimen Inset (Bottom Left) */}
+              <div className="absolute -bottom-6 -left-4 sm:-bottom-8 sm:-left-8 z-20 max-w-[260px] sm:max-w-[280px] rounded-2xl glass-panel p-3 shadow-lift border border-white/90 backdrop-blur-xl animate-float">
+                <div className="flex items-center gap-3">
+                  <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-mint border border-forest/10">
+                    <Img photo={photos.eggBoxSeedlings} width={200} />
+                  </div>
+                  <div>
+                    <span className="text-[0.62rem] font-mono font-bold uppercase tracking-wider text-emerald block">
+                      {isBn ? 'নার্সারি কালেকশন' : 'BOTANICAL NURSERY'}
+                    </span>
+                    <strong className="text-forest text-xs font-bold block leading-tight font-display">
+                      {isBn ? '৭০০+ অ্যাক্লিমেটাইজড চারা' : '715+ Acclimatized Plants'}
+                    </strong>
+                    <span className="text-[0.65rem] text-charcoal/70 block mt-0.5">
+                      {isBn ? '৮", ১০", ১/২ ব্যাগ সাইজ প্রস্তুত' : '8", 10", 1/2 Bag sizes in stock'}
+                    </span>
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={() => navigate('/store')}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-forest px-3.5 py-2.5 text-xs font-bold text-white shadow-soft transition-all duration-200 hover:bg-emerald hover:scale-[1.02] active:scale-[0.98]"
+                  className="mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-lg bg-forest/90 py-1.5 text-[0.68rem] font-bold text-white hover:bg-forest transition"
                 >
-                  <ShoppingBag className="size-3.5 text-bright" />
-                  <span>{isBn ? 'গাছের ক্যাটালগ দেখুন' : 'Explore Plant Store'}</span>
-                  <span className="text-[0.65rem] opacity-75">→</span>
+                  <ShoppingBag className="size-3 text-bright" />
+                  <span>{isBn ? 'প্ল্যান্ট স্টোর দেখুন' : 'Explore Catalog'}</span>
+                  <span className="text-[0.6rem]">→</span>
                 </button>
+              </div>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    const el = document.getElementById('irrigation-demo')
-                    if (el) {
-                      el.scrollIntoView({ behavior: 'smooth' })
-                    } else {
-                      navigate('/services#irrigation-demo')
-                    }
-                  }}
-                  className="flex items-center justify-center gap-2 rounded-xl glass-pill border border-emerald/20 px-3.5 py-2.5 text-xs font-bold text-forest transition-all duration-200 hover:bg-white hover:text-emerald hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <Waves className="size-3.5 text-emerald" />
-                  <span>{isBn ? 'অটোমেটেড সেচ সিমুলেশন' : 'Smart Irrigation Demo'}</span>
-                  <span className="text-[0.65rem] opacity-75">→</span>
-                </button>
+              {/* Floating Overlapping Micro-Irrigation Capsule (Top Right) */}
+              <div className="absolute -top-4 -right-3 sm:-top-6 sm:-right-6 z-20 rounded-2xl glass-surface px-3.5 py-2 shadow-lift border border-white/90 backdrop-blur-xl animate-float-slow">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-7 items-center justify-center rounded-xl bg-emerald text-white shadow-xs">
+                    <Droplets className="size-3.5 animate-pulse" />
+                  </span>
+                  <div>
+                    <span className="text-[0.6rem] font-mono font-extrabold tracking-widest text-emerald uppercase block">
+                      SMART IRRIGATION
+                    </span>
+                    <strong className="text-forest text-xs font-bold block">
+                      {isBn ? 'স্বয়ংক্রিয় সেচ সক্রিয়' : 'Root-Zone Micro-Pulse'}
+                    </strong>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-
-          {/* RIGHT: Floating Frosted 3D Glass Showcase Card */}
-          <div className="lg:col-span-5">
-            <InteractiveCard3D
-              maxTilt={6}
-              glare={true}
-              className="relative mx-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-3xl glass-panel p-3.5 shadow-lift border border-white/80"
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-2xl bg-mint">
-                <Img photo={photos.rooftopTerrace} width={1000} sizes="(min-width: 1024px) 38vw, 90vw" priority />
-                <div className="absolute inset-0 bg-gradient-to-t from-forest/85 via-forest/20 to-transparent" />
-                
-                {/* Floating Glass Tag inside the photo */}
-                <div className="absolute top-3 left-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full glass-pill px-3 py-1 text-[0.7rem] font-bold uppercase text-white shadow-soft">
-                    <Sparkles className="size-3 text-bloom" />
-                    <span>ENGINEERED ROOFTOP</span>
-                  </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <strong className="block font-display text-lg font-bold">
-                    {lang === 'bn' ? 'শতভাগ ওয়াটারপ্রুফ আরবান ছাদবাগান' : '100% Leakproof Urban Rooftop Sanctuary'}
-                  </strong>
-                  <p className="mt-1 text-xs text-white/85">
-                    {lang === 'bn' ? 'নিখুঁত ড্রেনেজ ও হালকা ওজনের গ্রোয়িং মিডিয়া সমৃদ্ধ' : 'Engineered with drainage cells and lightweight organic media'}
-                  </p>
-                </div>
-              </div>
-            </InteractiveCard3D>
-          </div>
         </div>
 
-        {/* INTEGRATED BANGLADESH CLIMATE & AGRONOMY BAROMETER — FROSTED GLASS BAR */}
-        <div className="mt-12 rounded-2xl glass-card p-4 sm:p-5 shadow-soft border border-white/70">
-          <div className="flex flex-wrap items-center justify-between gap-4 text-xs">
-            {/* Location & Season */}
-            <div className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-xl glass-pill text-lg shadow-xs">
+        {/* INTEGRATED BANGLADESH AGRONOMY & CLIMATE BAROMETER — MINIMALIST ARCHITECTURAL STRIP */}
+        <div className="mt-16 rounded-3xl glass-card p-4 sm:p-5 shadow-soft border border-white/80">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center text-xs">
+            {/* Col 1: Season & Bulletin */}
+            <div className="md:col-span-4 flex items-center gap-3">
+              <span className="grid size-10 shrink-0 place-items-center rounded-2xl glass-pill text-xl shadow-xs">
                 🌾
               </span>
               <div>
-                <span className="text-[0.68rem] uppercase font-bold tracking-wider text-forest/70 block">
-                  {lang === 'bn' ? 'বাংলাদেশ কৃষি আবহাওয়া বুলেটিন' : 'Bangladesh Agronomy Barometer'}
+                <span className="text-[0.65rem] uppercase font-mono font-bold tracking-wider text-forest/70 block">
+                  {isBn ? 'বাংলাদেশ কৃষি আবহাওয়া বুলেটিন' : 'Bangladesh Agronomy Barometer'}
                 </span>
-                <strong className="text-forest text-sm font-display">
-                  {lang === 'bn' ? 'বর্তমান ঋতু: হেমন্ত কাল (কার্তিক-অগ্রহায়ণ)' : 'Season: Late Autumn (Hemanto)'}
+                <strong className="text-forest text-xs sm:text-sm font-display font-bold">
+                  {isBn ? 'বর্তমান ঋতু: হেমন্ত কাল (কার্তিক-অগ্রহায়ণ)' : 'Current Season: Late Autumn (Hemanto)'}
                 </strong>
               </div>
             </div>
 
-            {/* Live Metrics */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-charcoal/90">
-              <div className="flex items-center gap-2 rounded-xl glass-pill px-3 py-1.5">
-                <Thermometer className="size-4 text-amber-600" />
-                <span className="font-semibold">২৮° সে. (মাঝারি রোদ)</span>
+            {/* Col 2: Climate Metrics */}
+            <div className="md:col-span-5 flex flex-wrap items-center gap-2 sm:gap-4 text-charcoal/90">
+              <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
+                <Thermometer className="size-3.5 text-amber-600" />
+                <span>২৮° সে. (মাঝারি রোদ)</span>
               </div>
-              <div className="flex items-center gap-2 rounded-xl glass-pill px-3 py-1.5">
-                <Droplets className="size-4 text-sky-600" />
-                <span className="font-semibold">{lang === 'bn' ? 'সেচ: সকাল ৮টার আগে' : 'Irrigation: Before 8 AM'}</span>
+              <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
+                <Droplets className="size-3.5 text-sky-600" />
+                <span>{isBn ? 'সেচ: সকাল ৮টার আগে' : 'Water: Pre-8 AM'}</span>
               </div>
-              <div className="flex items-center gap-2 rounded-xl glass-pill px-3 py-1.5">
-                <Sun className="size-4 text-yellow-600" />
-                <span className="font-semibold">৭.৫ ঘণ্টা সূর্যালোক</span>
+              <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
+                <Sun className="size-3.5 text-yellow-600" />
+                <span>৭.৫ ঘণ্টা সূর্যালোক</span>
               </div>
             </div>
 
-            {/* Agronomist Advisory */}
-            <div className="w-full lg:w-auto border-t lg:border-t-0 border-forest/10 pt-2 lg:pt-0">
-              <span className="inline-flex items-center gap-2 text-emerald font-semibold text-xs rounded-full glass-pill px-3.5 py-1.5">
-                <ShieldCheck className="size-4" />
-                <span>{lang === 'bn' ? 'পরামর্শ: ছাদবাগানে ফলদ গাছে ভার্মিকম্পোস্ট প্রয়োগের আদর্শ সময়।' : 'Advisory: Ideal window for organic fruit tree fertilization.'}</span>
-              </span>
+            {/* Col 3: Nursery Dispatch Alert */}
+            <div className="md:col-span-3 border-t md:border-t-0 md:border-l border-forest/10 pt-2 md:pt-0 md:pl-4">
+              <div className="flex items-center gap-2 text-forest text-xs">
+                <span className="size-2 rounded-full bg-emerald animate-pulse shrink-0" />
+                <span className="font-semibold text-[0.72rem] leading-snug">
+                  {isBn ? 'নওগাঁ ও ঢাকা হাব থেকে দৈনিক চারা ডেলিভারি চালু' : 'Daily Plant Dispatch across Dhaka & Hubs'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -238,3 +286,4 @@ export default function Hero() {
     </section>
   )
 }
+

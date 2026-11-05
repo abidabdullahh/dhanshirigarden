@@ -78,13 +78,24 @@ export default function CartDrawer() {
                 </span>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setIsCartOpen(false)}
-              className="size-8 rounded-full hover:bg-forest/10 flex items-center justify-center text-forest transition"
-            >
-              <X className="size-5" />
-            </button>
+            <div className="flex items-center gap-2">
+              {items.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearCart}
+                  className="text-[0.7rem] text-forest/60 hover:text-alert font-medium transition px-2 py-1"
+                >
+                  {isBn ? 'খালি করুন' : 'Clear'}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(false)}
+                className="size-8 rounded-full hover:bg-forest/10 flex items-center justify-center text-forest transition"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
           </div>
 
           {/* Cart Items List */}
@@ -180,9 +191,16 @@ export default function CartDrawer() {
                 />
                 <input
                   type="text"
-                  placeholder={isBn ? 'মোবাইল নম্বর / ঠিকানা' : 'Phone / Delivery Area (e.g. Uttara, Dhaka)'}
+                  placeholder={isBn ? 'মোবাইল নম্বর (Phone)' : 'Mobile Phone'}
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
+                  className="w-full rounded-xl border border-forest/15 bg-white px-3 py-2 text-xs text-forest focus:outline-emerald"
+                />
+                <input
+                  type="text"
+                  placeholder={isBn ? 'ডেলিভারির ঠিকানা (যেমন: গুলশান ২, ঢাকা)' : 'Delivery Address (e.g. Gulshan 2, Dhaka)'}
+                  value={customerAddress}
+                  onChange={(e) => setCustomerAddress(e.target.value)}
                   className="w-full rounded-xl border border-forest/15 bg-white px-3 py-2 text-xs text-forest focus:outline-emerald"
                 />
               </div>

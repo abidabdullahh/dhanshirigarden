@@ -11,8 +11,6 @@ import {
   Sparkles,
   Sun,
   Sunset,
-  Volume2,
-  VolumeX,
 } from 'lucide-react'
 import { site } from '../../data/site'
 import { useAtmosphere } from '../../lib/atmosphere'
@@ -26,7 +24,7 @@ export default function FloatingDock() {
   const { navigate } = useRouter()
   const isBn = lang === 'bn'
   const { progress } = useScrollProgress()
-  const { atmosphere, effectiveAtmosphere, setAtmosphere, soundEnabled, toggleSound, playClick } = useAtmosphere()
+  const { atmosphere, effectiveAtmosphere, setAtmosphere, playClick } = useAtmosphere()
   const [atmosphereMenuOpen, setAtmosphereMenuOpen] = useState(false)
   const menuRef = useRef(null)
 
@@ -118,32 +116,6 @@ export default function FloatingDock() {
         >
           <CurrentAtmosphereIcon className="size-4 text-bloom transition-transform group-hover:rotate-45" />
           <span className="capitalize">{atmosphere === 'auto' ? atmosphereCopy.auto : atmosphereCopy[atmosphere]}</span>
-        </button>
-
-        <span className="h-4 w-px bg-forest/20" />
-
-        {/* 2. Nature Audio Synthesizer Toggle */}
-        <button
-          type="button"
-          onClick={toggleSound}
-          aria-label={soundEnabled ? atmosphereCopy.soundOff : atmosphereCopy.soundOn}
-          className={`group flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold transition ${
-            soundEnabled
-              ? 'bg-bright/30 text-forest ring-1 ring-bright/50'
-              : 'text-forest/70 hover:bg-forest/10 hover:text-forest'
-          }`}
-        >
-          {soundEnabled ? (
-            <>
-              <Volume2 className="size-4 text-emerald animate-pulse" />
-              <span>{atmosphereCopy.soundOn}</span>
-            </>
-          ) : (
-            <>
-              <VolumeX className="size-4 text-forest/50" />
-              <span className="text-forest/60">{atmosphereCopy.soundOff}</span>
-            </>
-          )}
         </button>
 
         <span className="h-4 w-px bg-forest/20" />
@@ -242,16 +214,6 @@ export default function FloatingDock() {
           className="grid size-11 place-items-center rounded-full bg-forest/5 text-forest"
         >
           <CurrentAtmosphereIcon className="size-5 text-bloom" />
-        </button>
-
-        {/* Sound toggle */}
-        <button
-          type="button"
-          onClick={toggleSound}
-          aria-label={soundEnabled ? atmosphereCopy.soundOff : atmosphereCopy.soundOn}
-          className={`grid size-11 place-items-center rounded-full ${soundEnabled ? 'bg-bright/30 text-forest' : 'bg-forest/5 text-forest/60'}`}
-        >
-          {soundEnabled ? <Volume2 className="size-5 text-emerald" /> : <VolumeX className="size-5" />}
         </button>
 
         {/* Plant Store Shortcut */}

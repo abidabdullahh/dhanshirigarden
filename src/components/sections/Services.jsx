@@ -23,6 +23,7 @@ import InteractiveCard3D from '../dynamic/InteractiveCard3D'
 
 const serviceMeta = {
   landscapeDesign: { icon: PencilRuler, photo: 'gardenPath' },
+  hardscapeDesign: { icon: Layers, photo: 'palmSteps' },
   verticalGarden: { icon: Layers, photo: 'greenWall' },
   rooftopPlanter: { icon: Building2, photo: 'rooftopTerrace' },
   lawnCarpeting: { icon: MowerDoodle, photo: 'mowerClose' },

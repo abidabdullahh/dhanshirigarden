@@ -8,7 +8,7 @@ import Logo from '../ui/Logo'
 const YEAR = new Date().getFullYear()
 
 export default function Footer() {
-  const { t, lang, n } = useLocale()
+  const { t, lang } = useLocale()
   const isBn = lang === 'bn'
   const { navigate } = useRouter()
 
@@ -172,12 +172,23 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 border-t border-forest/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-charcoal/60 gap-4">
+        {/* Copyright & Innerloop Atelier Credits */}
+        <div className="mt-8 border-t border-forest/10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-charcoal/70 gap-4">
           <p>© {YEAR} ধানসিঁড়ি গার্ডেন (Dhanshiri Garden). সর্বস্বত্ব সংরক্ষিত।</p>
-          <p className="text-right">
-            {isBn ? 'ডিএই সনদপ্রাপ্ত প্রধান কৃষিবিদ আমির আলী' : 'DAE Certified Head Agronomist Amir Ali'}
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-right">
+            <a
+              href="https://www.innerloopatelier.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium hover:text-forest text-charcoal/80 transition underline underline-offset-4 decoration-emerald/40"
+            >
+              Designed by Innerloop Atelier (www.innerloopatelier.com)
+            </a>
+            <span className="hidden sm:inline text-forest/30">|</span>
+            <span className="text-charcoal/60">
+              {isBn ? 'ডিএই সনদপ্রাপ্ত প্রধান কৃষিবিদ আমির আলী' : 'DAE Certified Head Agronomist Amir Ali'}
+            </span>
+          </div>
         </div>
       </Container>
     </footer>
