@@ -20,6 +20,105 @@ export const blogCategories = [
 
 export const blogPosts = [
   {
+    slug: "rooftop-waterproofing-concrete-safety-bangladesh",
+    date: "2026-11-09",
+    category: "rooftop",
+    readTime: 7,
+    featuredImage: "rooftopTerrace",
+    meta: {
+      "keywords": [
+            "ছাদবাগান ওয়াটারপ্রুফিং ঢাকা",
+            "ছাদে বাগানে ছাদ ড্যাম রোধ",
+            "ছাদবাগান লোড ক্যালকুলেশন",
+            "rooftop waterproofing garden Dhaka",
+            "terrace structural safety Bangladesh"
+      ]
+},
+    bn: {
+      "title": "ছাদবাগান করার পূর্বে ছাদের ওয়াটারপ্রুফিং ও কাঠামোগত সুরক্ষার প্রকৌশল নির্দেশিকা",
+      "categoryLabel": "ছাদবাগান ও ড্রেইনেজ",
+      "summary": "ভবনের সিলিংয়ে শ্যাওলা, নোনা ধরা ও লিকেজ স্থায়ীভাবে রোধ করতে আধুনিক পলিমার ওয়াটারপ্রুফিং, ড্রেইনেজ ঢাল ও কলামে ওজন বিন্যাসের নিয়ম।",
+      "tags": [
+            "ওয়াটারপ্রুফিং",
+            "ছাদের নিরাপত্তা",
+            "ছাদবাগান ঢাকা",
+            "ড্রেইনেজ গ্রেডিং",
+            "আমির আলী"
+      ],
+      "author": "জনাব আমির আলী",
+      "authorRole": "প্রতিষ্ঠাতা ও প্রধান কৃষি পরামর্শক, ধানসিঁড়ি গার্ডেন",
+      "sections": [
+            {
+                  "heading": "১. কেন সাধারণ ছাদবাগান থেকে ছাদ চুইয়ে পানি পড়ে?",
+                  "content": "ঢাকায় বহু বাড়ির মালিক ছাদবাগান করতে গিয়ে কয়েক বছর পর নিচে ড্রয়িংরুমের সিলিংয়ে পলেস্তারা খসে পড়া বা স্যাঁতসেঁতে নোনা ধরার শিকার হন। এর মূল কারণ: মাটির সরাসরি সংস্পর্শ, টবের নিচে পানি জমে থাকা এবং ছাদের ঢাল না মেনে ভুল ড্রেনেজ পাইপ স্থাপন করা। কংক্রিটের ছাদ পুরোপুরি পানিনিরোধক নয়; এতে ক্ষুদ্রাতিক্ষুদ্র কৈশিক ছিদ্র থাকে যা দিয়ে পানি ধীরে ধীরে ভেতরে প্রবেশ করে রডে মরিচা ধরায়।",
+                  "bulletPoints": [
+                        "টব বা ড্রামকে কখনোই সরাসরি ছাদের মেঝের ওপর রাখবেন না।",
+                        "ছাদের বৃষ্টির পানি নামার ড্রেন পাইপে জালি বা ফিল্টার না দিলে ঝরা পাতায় লাইন বন্ধ হয়ে ছাদ সুইমিংপুলে পরিণত হয়।",
+                        "স্থায়ী মাটির বেড করার পূর্বে অবশ্যই ৩ স্তরের পলিমারিক ওয়াটারপ্রুফিং মেমব্রেন স্থাপন করতে হবে।"
+                  ]
+            },
+            {
+                  "heading": "২. ৩-স্তরের বৈজ্ঞানিক ওয়াটারপ্রুফিং পদ্ধতি",
+                  "content": "ধানসিঁড়ি গার্ডেন যেকোনো স্থায়ী ছাদবাগান তৈরির পূর্বে এই প্রমাণিত প্রযুক্তি প্রয়োগ করে:",
+                  "bulletPoints": [
+                        "স্তর ১: ছাদের মেঝে এসিড-মুক্ত পানি দিয়ে পরিষ্কার করে ক্র্যাক বা ফাটল থাকলে নন-শ্রিঙ্ক গ্রাউট দিয়ে সিল করা।",
+                        "স্তর ২: ইলাস্টোমেরিক পলিমার মডিফায়েড বিটুমিন বা এক্রিলিক ওয়াটারপ্রুফিং কেমিক্যালের ২ কোট আড়াআড়ি প্রয়োগ।",
+                        "স্তর ৩: ড্রেইনেজ সেল ও নন-ওভেন জিওটেক্সটাইল মেমব্রেন স্থাপন, যা ছাদ ও মাটির মাঝে ২ ইঞ্চির ফাঁকা এয়ার-গ্যাপ তৈরি করে।"
+                  ],
+                  "expertTip": "ভারী সিমেন্টের প্ল্যান্টার ও ফলের হাফ ড্রাম সর্বদা ভবনের প্রধান কলাম ও বিমের ওপর বসান। ছাদের মাঝখানের স্ল্যাব অপেক্ষাকৃত দুর্বল থাকে, সেখানে হালকা টব বা ঝুলন্ত প্ল্যান্টার রাখা নিরাপদ।"
+            }
+      ],
+      "faq": [
+            {
+                  "q": "টাইলস করা ছাদে কি ছাদবাগান করা নিরাপদ?",
+                  "a": "টাইলস করা ছাদে পানি দ্রুত সরে যায় ঠিকই, তবে টাইলসের গ্রাউটিং বা জোড়া দিয়ে পানি চুইয়ে ছাদের স্ল্যাবে ঢুকতে পারে। তাই টাইলসের ওপরেও স্ট্যান্ড দিয়ে টব ওঠানো আবশ্যক।"
+            }
+      ]
+},
+    en: {
+      "title": "Rooftop Waterproofing and Structural Slab Load Engineering for Bangladesh Residences",
+      "categoryLabel": "Rooftop & Drainage",
+      "summary": "Preventing ceiling dampness, concrete carbonation, and efflorescence in Dhaka buildings through elastomeric barriers, drainage cells, and column weight alignment.",
+      "tags": [
+            "Waterproofing",
+            "Structural Safety",
+            "Rooftop Garden",
+            "Drainage Slope",
+            "Amir Ali"
+      ],
+      "author": "Mr. Amir Ali",
+      "authorRole": "Founder & Chief Agronomy Consultant, Dhanshiri Garden",
+      "sections": [
+            {
+                  "heading": "1. Root Causes of Ceiling Seepage in Urban Dhaka Terraces",
+                  "content": "Without proper waterproofing safeguards, constant contact with moist soil causes moisture ingress into micro-capillaries of concrete slabs, oxidizing steel rebar and causing catastrophic spalling.",
+                  "bulletPoints": [
+                        "Direct pot placement traps stagnant moisture against roof bitumen.",
+                        "Foliage debris clogging rainwater spouts creates accidental rooftop pooling.",
+                        "Permanent brick planter beds require certified multi-layer chemical barriers before soil loading."
+                  ]
+            },
+            {
+                  "heading": "2. The 3-Tier Elastomeric Membrane Standard",
+                  "content": "Dhanshiri Garden mandates an uncompromising waterproofing engineering standard for all turnkey installations:",
+                  "bulletPoints": [
+                        "Tier 1: High-pressure surface cleaning and non-shrink crystalline grout injection into existing hairline fractures.",
+                        "Tier 2: Two criss-cross coats of high-elongation elastomeric polymer waterproofing coating.",
+                        "Tier 3: Installation of dimpled plastic drainage cells covered with 150 GSM non-woven geotextile to create a permanent air buffer beneath soil."
+                  ],
+                  "expertTip": "Position massive container orchards exclusively over structural columns and perimeter bearing beams where deflection is zero. Never overload center span slabs."
+            }
+      ],
+      "faq": [
+            {
+                  "q": "Is tiled roofing automatically waterproof for container gardens?",
+                  "a": "No. Ceramic tile grouting deteriorates over time under UV rays, allowing seepage into the underlying screed. Planters must still be elevated on 3-inch pedestals."
+            }
+      ]
+},
+  },
+
+  {
     slug: "bougainvillea-kagoji-ful-pruning-blooming-bangladesh",
     date: "2026-11-02",
     category: "plantCare",
