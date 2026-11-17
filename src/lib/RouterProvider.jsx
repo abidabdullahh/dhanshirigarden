@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { RouterContext } from './routerContext'
 
-export const KNOWN_ROUTES = [
+const KNOWN_ROUTES = [
   '/',
   '/store',
   '/services',
@@ -10,6 +10,10 @@ export const KNOWN_ROUTES = [
   '/contact',
   '/admin',
   '/blog',
+  '/toolkit',
+  '/doctor',
+  '/studio',
+  '/wiki',
 ]
 
 function getRouteFromLocation() {

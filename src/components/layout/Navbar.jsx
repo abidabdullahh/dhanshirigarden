@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
+  BookOpen,
   Building2,
   Calendar,
   Info,
@@ -7,7 +8,9 @@ import {
   LayoutGrid,
   Menu,
   Phone,
+  ScanSearch,
   ShoppingBag,
+  Sparkles,
   Trees,
   X,
 } from 'lucide-react'
@@ -20,6 +23,7 @@ import Button from '../ui/Button'
 import { MowerDoodle } from '../ui/Doodles'
 import LangToggle from '../ui/LangToggle'
 import Logo from '../ui/Logo'
+import UserAuthMenu from '../ui/UserAuthMenu'
 
 const BULLETINS = [
   {
@@ -81,7 +85,8 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/', label: t.nav.home, icon: Trees },
-    { path: '/store', label: isBn ? 'প্ল্যান্ট স্টোর' : 'Plant Store', badge: 'NURSERY', icon: ShoppingBag },
+    { path: '/store', label: t.nav.store, badge: 'NURSERY', icon: ShoppingBag },
+    { path: '/toolkit', label: t.nav.toolkit, badge: 'NEW', icon: Sparkles },
     { path: '/services', label: t.nav.services, icon: Layers },
     { path: '/projects', label: t.nav.projects, icon: LayoutGrid },
     { path: '/about', label: t.nav.about, icon: Info },
@@ -190,6 +195,8 @@ export default function Navbar() {
                   </span>
                 )}
               </button>
+
+              <UserAuthMenu />
 
               <div className="lg:hidden">
                 <LangToggle />
@@ -313,6 +320,22 @@ export default function Navbar() {
                 >
                   <LayoutGrid className="size-4 text-emerald" />
                   <span>{isBn ? 'প্রজেক্ট গ্যালারি' : 'Projects'}</span>
+                </a>
+                <a
+                  href="/doctor"
+                  onClick={(e) => handleNavClick(e, '/doctor')}
+                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
+                >
+                  <ScanSearch className="size-4 text-emerald" />
+                  <span>{t.nav.plantDoctor}</span>
+                </a>
+                <a
+                  href="/blog"
+                  onClick={(e) => handleNavClick(e, '/blog')}
+                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
+                >
+                  <BookOpen className="size-4 text-emerald" />
+                  <span>{t.nav.blog}</span>
                 </a>
               </div>
             </div>

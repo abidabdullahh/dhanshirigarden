@@ -63,6 +63,11 @@ export function generateOrderPdf({ orderId, items, subtotal, customer, date }) {
       padding: 30px;
       line-height: 1.5;
     }
+    @media print {
+      .no-print { display: none !important; }
+      body { padding: 0; background: #ffffff; }
+      .invoice-card { box-shadow: none !important; border: none !important; padding: 15px 0 !important; }
+    }
     .invoice-card {
       max-width: 820px;
       margin: 0 auto;
@@ -168,11 +173,6 @@ export function generateOrderPdf({ orderId, items, subtotal, customer, date }) {
       padding-top: 5px;
       font-weight: 600;
       color: #1b4332;
-    }
-    @media print {
-      body { background: #ffffff; padding: 0; }
-      .invoice-card { box-shadow: none; border: none; padding: 20px; }
-      .no-print { display: none; }
     }
   </style>
 </head>

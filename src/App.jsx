@@ -31,6 +31,10 @@ const AboutPage = lazy(() => import('./pages/AboutPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const AdminPage = lazy(() => import('./pages/AdminPage'))
 const BlogPage = lazy(() => import('./pages/BlogPage'))
+const ToolkitPage = lazy(() => import('./pages/ToolkitPage'))
+const PlantDoctorPage = lazy(() => import('./pages/PlantDoctorPage'))
+const StudioPage = lazy(() => import('./pages/StudioPage'))
+const PlantWikiPage = lazy(() => import('./pages/PlantWikiPage'))
 
 function PageFallback() {
   return (
@@ -146,6 +150,34 @@ function MainContent() {
     return (
       <Suspense fallback={<PageFallback />}>
         <BlogPage />
+      </Suspense>
+    )
+  }
+  if (route === '/toolkit') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <ToolkitPage />
+      </Suspense>
+    )
+  }
+  if (route === '/doctor') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <PlantDoctorPage />
+      </Suspense>
+    )
+  }
+  if (route === '/studio') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <StudioPage />
+      </Suspense>
+    )
+  }
+  if (route === '/wiki') {
+    return (
+      <Suspense fallback={<PageFallback />}>
+        <PlantWikiPage />
       </Suspense>
     )
   }

@@ -121,7 +121,7 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Button
-                  href={getWhatsAppLink('Site Consultation Request', null, lang)}
+                  href={getWhatsAppLink(isBn ? 'সাইট পরিদর্শন ও পরামর্শ' : 'Site Consultation Request', null, lang)}
                   variant="primary"
                   size="lg"
                   className="bg-white text-forest hover:bg-cream hover:text-emerald"

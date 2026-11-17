@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { BookOpen, Check, Droplets, MessageCircle, Plus, Search, Sun } from 'lucide-react'
 import { plantsDatabase } from '../../data/plantsData'
 import { useLocale } from '../../lib/locale'
-import { getWhatsAppLink } from '../../lib/whatsapp'
+import { getCustomWhatsAppLink } from '../../lib/whatsapp'
 import { Container, Section, SectionHeading } from '../ui/Section'
 import InteractiveCard3D from './InteractiveCard3D'
 
@@ -116,12 +116,10 @@ export default function PlantExplorer() {
             const plantDesc = plant.desc[lang] || plant.desc.en
             const plantHarvest = plant.harvest[lang] || plant.harvest.en
 
-            const whatsappAsk = getWhatsAppLink(
+            const whatsappAsk = getCustomWhatsAppLink(
               lang === 'bn'
                 ? `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেন থেকে "${plant.name.bn}" গাছটি সম্পর্কে বিস্তারিত ও চারা সংগ্রহের তথ্য জানতে চাই।`
-                : `Hello, I would like to inquire about sourcing "${plant.name.en}" from Dhanshiri Garden.`,
-              null,
-              lang
+                : `Hello, I would like to inquire about sourcing "${plant.name.en}" from Dhanshiri Garden.`
             )
 
             return (

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Check, Compass, MessageCircle, PencilRuler } from 'lucide-react'
 import { useLocale } from '../../lib/locale'
-import { getWhatsAppLink } from '../../lib/whatsapp'
+import { getCustomWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
 import { Container, Section, SectionHeading } from '../ui/Section'
 
@@ -440,7 +440,7 @@ I would like to book an on-site structural audit and consultation.`
 
                 {/* WhatsApp Action */}
                 <Button
-                  href={getWhatsAppLink(whatsappBlueprint, null, lang)}
+                  href={getCustomWhatsAppLink(whatsappBlueprint)}
                   size="lg"
                   variant="primary"
                   icon={MessageCircle}

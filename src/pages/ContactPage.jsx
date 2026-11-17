@@ -20,7 +20,7 @@ import Faq from '../components/sections/Faq'
 import { Container } from '../components/ui/Section'
 import Button from '../components/ui/Button'
 import { site } from '../data/site'
-import { getWhatsAppLink } from '../lib/whatsapp'
+import { getCustomWhatsAppLink, getWhatsAppLink } from '../lib/whatsapp'
 import { submitConsultationLead } from '../lib/consultationApi'
 
 function CopyButton({ text }) {
@@ -170,10 +170,8 @@ export default function ContactPage() {
 
                       <div className="mt-6 flex flex-wrap gap-3">
                         <Button
-                          href={getWhatsAppLink(
-                            `Consultation Lead [${submittedResult.referenceId}]: ${form.spaceType} (${form.areaSqft} sq.ft) in ${form.location}. Please follow up.`,
-                            null,
-                            lang
+                          href={getCustomWhatsAppLink(
+                            `Consultation Lead [${submittedResult.referenceId}]: ${form.spaceType} (${form.areaSqft} sq.ft) in ${form.location}. Please follow up.`
                           )}
                           variant="primary"
                           size="md"

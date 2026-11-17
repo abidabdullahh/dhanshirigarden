@@ -41,6 +41,7 @@ export const content = {
 
     nav: {
       store: 'প্ল্যান্ট স্টোর',
+      toolkit: 'প্ল্যানার ওএস',
       services: 'সেবা',
       projects: 'প্রকল্প',
       studio: 'ডিজাইন স্টুডিও',
@@ -745,6 +746,7 @@ export const content = {
 
     nav: {
       store: 'Plant Store',
+      toolkit: 'Garden OS',
       services: 'Services',
       projects: 'Projects',
       studio: 'Design Studio',

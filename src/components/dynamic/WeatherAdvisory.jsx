@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { CloudSun, Droplets, MessageCircle, ShieldCheck, Sparkles, Sun, Thermometer } from 'lucide-react'
 import { useLocale } from '../../lib/locale'
-import { getWhatsAppLink } from '../../lib/whatsapp'
+import { getCustomWhatsAppLink } from '../../lib/whatsapp'
 import Button from '../ui/Button'
 import { LeafDoodle } from '../ui/Doodles'
 import { Container } from '../ui/Section'
@@ -47,12 +47,10 @@ export default function WeatherAdvisory() {
     },
   ]
 
-  const whatsappLink = getWhatsAppLink(
+  const whatsappLink = getCustomWhatsAppLink(
     lang === 'bn'
       ? 'আসসালামু আলাইকুম, আমি ধানসিঁড়ি ওয়েবসাইটের আজকের কৃষি বুলেটিন দেখে আমার বাগানের পরিচর্যা সম্পর্কে পরামর্শ চাই।'
-      : 'Hello Mr. Amir Ali, I would like expert advice on today’s garden advisory for my rooftop.',
-    null,
-    lang
+      : 'Hello Mr. Amir Ali, I would like expert advice on today’s garden advisory for my rooftop.'
   )
 
   return (

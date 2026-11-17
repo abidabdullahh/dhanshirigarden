@@ -95,6 +95,26 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="/toolkit"
+                  onClick={(e) => handleLink(e, '/toolkit')}
+                  className="hover:text-emerald transition flex items-center gap-2"
+                >
+                  <span className="size-1.5 rounded-full bg-emerald" />
+                  <span>{t.nav.toolkit}</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/blog"
+                  onClick={(e) => handleLink(e, '/blog')}
+                  className="hover:text-emerald transition flex items-center gap-2"
+                >
+                  <span className="size-1.5 rounded-full bg-emerald" />
+                  <span>{t.nav.blog}</span>
+                </a>
+              </li>
+              <li>
+                <a
                   href="/about"
                   onClick={(e) => handleLink(e, '/about')}
                   className="hover:text-emerald transition flex items-center gap-2"
@@ -147,6 +167,36 @@ export default function Footer() {
                 <p className="text-xs text-charcoal/60 ml-4">
                   {isBn ? 'পপ-আপ স্প্রিংকলার ও রুট-জোন ড্রিপ লাইন' : 'Pop-up rotary sprinklers and micro-drip'}
                 </p>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="/doctor"
+                  onClick={(e) => handleLink(e, '/doctor')}
+                  className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
+                >
+                  <span className="size-2 rounded-full bg-emerald" />
+                  <span>{isBn ? 'এআই উদ্ভিদ ডাক্তার (Plant Doctor)' : 'AI Plant Doctor Diagnostics'}</span>
+                </a>
+              </li>
+              <li className="pt-1">
+                <a
+                  href="/studio"
+                  onClick={(e) => handleLink(e, '/studio')}
+                  className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
+                >
+                  <span className="size-2 rounded-full bg-emerald" />
+                  <span>{isBn ? 'ক্যাড গার্ডেন স্টুডিও ও লোড হিসাব' : 'CAD Garden Studio & Load Estimator'}</span>
+                </a>
+              </li>
+              <li className="pt-1">
+                <a
+                  href="/wiki"
+                  onClick={(e) => handleLink(e, '/wiki')}
+                  className="flex items-center gap-2 font-semibold text-forest hover:text-emerald transition"
+                >
+                  <span className="size-2 rounded-full bg-emerald" />
+                  <span>{isBn ? 'বোটানিক্যাল উইকি ও উদ্ভিদ স্ক্যানার' : 'Botanical Wiki & Plant Scanner'}</span>
+                </a>
               </li>
               <li className="pt-2">
                 <a

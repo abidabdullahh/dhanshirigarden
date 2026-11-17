@@ -259,7 +259,7 @@ export default function Hero() {
             <div className="md:col-span-5 flex flex-wrap items-center gap-2 sm:gap-4 text-charcoal/90">
               <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
                 <Thermometer className="size-3.5 text-amber-600" />
-                <span>২৮° সে. (মাঝারি রোদ)</span>
+                <span>{isBn ? '২৮° সে. (মাঝারি রোদ)' : '28°C (Moderate Sun)'}</span>
               </div>
               <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
                 <Droplets className="size-3.5 text-sky-600" />
@@ -267,7 +267,7 @@ export default function Hero() {
               </div>
               <div className="flex items-center gap-1.5 rounded-xl glass-pill px-3 py-1.5 text-xs font-medium">
                 <Sun className="size-3.5 text-yellow-600" />
-                <span>৭.৫ ঘণ্টা সূর্যালোক</span>
+                <span>{isBn ? '৭.৫ ঘণ্টা সূর্যালোক' : '7.5h Sunlight'}</span>
               </div>
             </div>
 

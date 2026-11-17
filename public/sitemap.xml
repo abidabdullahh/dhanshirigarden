@@ -85,7 +85,7 @@
   <!-- 7. Agronomy & Urban Garden Blog -->
   <url>
     <loc>https://www.dhanshirigarden.com/blog</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -94,5 +94,37 @@
     <lastmod>2026-11-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+  </url>
+
+  <!-- 8. Rooftop Garden Planner OS & Toolkit -->
+  <url>
+    <loc>https://www.dhanshirigarden.com/toolkit</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 9. AI Plant Doctor Diagnosis -->
+  <url>
+    <loc>https://www.dhanshirigarden.com/doctor</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 10. Interactive 3D Garden Studio & CAD Estimator -->
+  <url>
+    <loc>https://www.dhanshirigarden.com/studio</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- 11. Botanical Encyclopedia & Plant Identifier -->
+  <url>
+    <loc>https://www.dhanshirigarden.com/wiki</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
 </urlset>
