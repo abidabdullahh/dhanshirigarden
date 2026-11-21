@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import {
   Menu,
+  Phone,
   ShoppingBag,
   X,
 } from 'lucide-react'
@@ -9,7 +10,7 @@ import { useEscape, useLockBodyScroll } from '../../lib/hooks'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
 import { useCart } from '../../lib/CartContext'
-import LangToggle from '../ui/LangToggle'
+import Logo from '../ui/Logo'
 import UserAuthMenu from '../ui/UserAuthMenu'
 
 export default function Navbar() {
@@ -25,9 +26,9 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/services', hash: '#services', label: isBn ? 'সেবাসমূহ' : 'Services' },
-    { path: '/projects', hash: '#works', label: isBn ? 'নির্বাচিত প্রকল্প' : 'Selected Works' },
-    { path: '/store', hash: '#nursery', label: isBn ? 'বোটানিক্যাল নার্সারি' : 'Specimen Nursery' },
-    { path: '/about', hash: '#atelier', label: isBn ? 'অ্যাটেলিয়ার' : 'The Atelier' },
+    { path: '/projects', hash: '#works', label: isBn ? 'সম্পন্ন প্রকল্প' : 'Projects' },
+    { path: '/store', hash: '#nursery', label: isBn ? 'গাছ ও ঘাস নার্সারি' : 'Nursery' },
+    { path: '/about', hash: '#about', label: isBn ? 'আমাদের কথা' : 'About' },
     { path: '/contact', hash: '#contact', label: isBn ? 'যোগাযোগ' : 'Contact' },
   ]
 
@@ -35,7 +36,7 @@ export default function Navbar() {
     e.preventDefault()
     closeMobile()
     if (route === '/') {
-      const el = document.querySelector(hash)
+      const el = document.querySelector(hash) || (hash === '#about' ? document.querySelector('#atelier') : null)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
         return
@@ -46,13 +47,13 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-xl bg-white/85 border-b border-black/[0.06]">
-        <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-12">
+      <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-xl bg-white/95 border-b border-stone-200/80 shadow-xs">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav
-            aria-label="Dhanshiri Atelier"
-            className="flex h-16 sm:h-20 items-center justify-between"
+            aria-label="ধানসিঁড়ি গার্ডেন"
+            className="flex h-18 sm:h-20 items-center justify-between gap-4"
           >
-            {/* Brand Monogram & Wordmark (Swiss Minimalist) */}
+            {/* Brand Logo in Bangla */}
             <a
               href="/"
               onClick={(e) => {
@@ -61,18 +62,13 @@ export default function Navbar() {
                 if (route !== '/') navigate('/')
                 else window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
-              className="group flex items-baseline gap-2.5 transition-opacity hover:opacity-75"
+              className="shrink-0 transition-opacity hover:opacity-90"
             >
-              <span className="font-display text-xl sm:text-2xl font-bold tracking-tight text-forest">
-                DHANSHIRI
-              </span>
-              <span className="font-mono text-[0.62rem] tracking-[0.2em] uppercase text-charcoal/60 hidden sm:inline">
-                ATELIER · LANDSCAPES
-              </span>
+              <Logo />
             </a>
 
-            {/* Desktop Navigation Links — Pure Architectural Typography */}
-            <ul className="hidden items-center gap-8 lg:flex">
+            {/* Desktop Navigation Links — High-Contrast Clean Typography */}
+            <ul className="hidden items-center gap-7 lg:flex">
               {navLinks.map((link) => {
                 const isActive = route === link.path
                 return (
@@ -80,10 +76,10 @@ export default function Navbar() {
                     <a
                       href={link.path}
                       onClick={(e) => handleNavClick(e, link.path, link.hash)}
-                      className={`text-[0.82rem] font-medium tracking-wide transition-colors ${
+                      className={`text-[0.92rem] font-semibold tracking-wide transition-colors ${
                         isActive
-                          ? 'text-forest font-semibold'
-                          : 'text-charcoal/70 hover:text-forest'
+                          ? 'text-[#1b4332] border-b-2 border-[#1b4332] pb-0.5'
+                          : 'text-stone-800 hover:text-[#1b4332]'
                       }`}
                     >
                       {link.label}
@@ -94,72 +90,78 @@ export default function Navbar() {
             </ul>
 
             {/* Right Action Deck */}
-            <div className="flex items-center gap-3 sm:gap-4">
-              <LangToggle />
+            <div className="flex items-center gap-2.5 sm:gap-3.5">
+              {/* Direct Call Line for Housewife / Architect convenience */}
+              <a
+                href={`tel:${site.phones[0].tel}`}
+                className="hidden md:inline-flex items-center gap-2 rounded-full border border-emerald-700/20 bg-emerald-50/80 px-3.5 py-1.5 text-xs font-bold text-[#1b4332] hover:bg-emerald-100/80 transition shadow-2xs"
+                title="সরাসরি ফোন করুন"
+              >
+                <Phone className="size-3.5 text-[#2d6a4f]" />
+                <span className="font-mono text-[0.82rem] tracking-tight">{site.phones[0].number}</span>
+              </a>
 
               {/* Minimal Cart Trigger */}
               <button
                 type="button"
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-forest/80 hover:text-forest transition"
-                aria-label="Shopping Bag"
+                className="relative p-2 text-stone-800 hover:text-[#1b4332] transition rounded-full hover:bg-stone-100"
+                aria-label="শপিং ব্যাগ"
               >
-                <ShoppingBag className="size-4.5" />
+                <ShoppingBag className="size-5" />
                 {totalItems > 0 && (
-                  <span className="absolute top-1 right-1 size-2 rounded-full bg-emerald" />
+                  <span className="absolute top-1 right-1 size-2.5 rounded-full bg-[#2d6a4f] ring-2 ring-white" />
                 )}
               </button>
 
               <UserAuthMenu />
 
-              {/* Minimal Apple-style CTA */}
+              {/* Primary Consultation Action Button */}
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '/contact', '#contact')}
-                className="hidden sm:inline-flex items-center justify-center rounded-full bg-forest px-5 py-2 text-xs font-medium text-white hover:bg-forest/90 transition-all tracking-wide"
+                className="hidden sm:inline-flex items-center justify-center rounded-full bg-[#1b4332] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#2d6a4f] transition-all tracking-wide shadow-xs"
               >
-                <span>{isBn ? 'প্রকল্প আলোচনা' : 'Inquire'}</span>
+                <span>{isBn ? 'পরামর্শ নিন' : 'Inquire'}</span>
               </a>
 
               {/* Mobile Hamburger */}
               <button
                 type="button"
-                aria-label="Toggle menu"
+                aria-label="মেনু খুলুন"
                 onClick={() => setMobileOpen(true)}
-                className="p-2 text-forest/90 lg:hidden"
+                className="p-2 text-stone-800 hover:text-[#1b4332] lg:hidden rounded-lg hover:bg-stone-100"
               >
-                <Menu className="size-5" />
+                <Menu className="size-6" />
               </button>
             </div>
           </nav>
         </div>
       </header>
 
-      {/* Mobile Drawer (Clean Swiss Slide-over) */}
+      {/* Mobile Drawer */}
       {mobileOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 flex justify-end bg-black/30 backdrop-blur-sm lg:hidden animate-fade-in"
+          className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs lg:hidden animate-fade-in"
         >
-          <div className="flex h-full w-full max-w-sm flex-col bg-white p-8 shadow-2xl">
+          <div className="flex h-full w-full max-w-sm flex-col bg-white p-6 shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-black/[0.06] pb-6">
-              <span className="font-display text-xl font-bold tracking-tight text-forest">
-                DHANSHIRI
-              </span>
+            <div className="flex items-center justify-between border-b border-stone-200 pb-5">
+              <Logo />
               <button
                 type="button"
-                aria-label="Close menu"
+                aria-label="মেনু বন্ধ করুন"
                 onClick={closeMobile}
-                className="p-2 text-forest/70 hover:text-forest"
+                className="p-2 text-stone-700 hover:text-[#1b4332] rounded-lg hover:bg-stone-100"
               >
-                <X className="size-5" />
+                <X className="size-6" />
               </button>
             </div>
 
             {/* Navigation Links */}
-            <ul className="mt-8 space-y-6">
+            <ul className="mt-6 space-y-4">
               {navLinks.map((link) => {
                 const isActive = route === link.path
                 return (
@@ -167,8 +169,8 @@ export default function Navbar() {
                     <a
                       href={link.path}
                       onClick={(e) => handleNavClick(e, link.path, link.hash)}
-                      className={`block font-display text-2xl font-light tracking-tight transition ${
-                        isActive ? 'text-forest font-semibold' : 'text-charcoal/80 hover:text-forest'
+                      className={`block font-sutonny text-2xl font-bold tracking-tight transition ${
+                        isActive ? 'text-[#1b4332]' : 'text-stone-800 hover:text-[#1b4332]'
                       }`}
                     >
                       {link.label}
@@ -179,19 +181,26 @@ export default function Navbar() {
             </ul>
 
             {/* Drawer Bottom Actions */}
-            <div className="mt-auto border-t border-black/[0.06] pt-6 space-y-4">
+            <div className="mt-auto border-t border-stone-200 pt-6 space-y-3">
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '/contact', '#contact')}
-                className="flex w-full items-center justify-center rounded-full bg-forest py-3 text-sm font-medium text-white hover:bg-forest/90 transition"
+                className="flex w-full items-center justify-center rounded-xl bg-[#1b4332] py-3.5 text-sm font-bold text-white hover:bg-[#2d6a4f] transition shadow-xs"
               >
-                <span>{isBn ? 'প্রকল্প আলোচনা শুরু করুন' : 'Start a Project'}</span>
+                <span>{isBn ? 'বিনামূল্যে সাইট ভিজিট ও বাজেট পরামর্শ' : 'Free Site Visit & Budget Quote'}</span>
               </a>
-              <div className="flex items-center justify-between text-xs text-charcoal/60 pt-2 font-mono">
-                <a href={`tel:${site.phones[0].tel}`} className="hover:text-forest">
-                  {site.phones[0].number}
-                </a>
-                <span>DHAKA · NAOGAON</span>
+
+              <a
+                href={`tel:${site.phones[0].tel}`}
+                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-emerald-700/20 bg-emerald-50 py-3 text-sm font-bold text-[#1b4332] hover:bg-emerald-100 transition"
+              >
+                <Phone className="size-4 text-[#2d6a4f]" />
+                <span>সরাসরি কল: {site.phones[0].number}</span>
+              </a>
+
+              <div className="flex items-center justify-between text-xs text-stone-600 pt-2 font-mono">
+                <span>ঢাকা হেড অফিস</span>
+                <span>নওগাঁ নার্সারি ও খামার</span>
               </div>
             </div>
           </div>

@@ -13,47 +13,47 @@ export default function ServicesPage() {
   const { navigate } = useRouter()
 
   return (
-    <div className="min-h-screen bg-[#FCFCFA] text-charcoal flex flex-col">
+    <div className="min-h-screen bg-[#FCFCFA] text-stone-900 flex flex-col">
       <Navbar />
       <CartDrawer />
 
       <main className="flex-1 pt-24 sm:pt-32">
         {/* Page Header */}
-        <section className="py-16 sm:py-24 border-b border-black/[0.06]">
+        <section className="py-14 sm:py-20 border-b-2 border-stone-200 bg-white">
           <Container>
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-xs font-mono text-charcoal/50">
+            <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-mono font-bold text-stone-600">
               <button
                 type="button"
                 onClick={() => navigate('/')}
-                className="hover:text-forest transition"
+                className="hover:text-[#1b4332] transition"
               >
                 {isBn ? 'প্রচ্ছদ' : 'HOME'}
               </button>
               <span>/</span>
-              <span className="text-forest font-semibold">{isBn ? 'সেবাসমূহ' : 'SERVICES'}</span>
+              <span className="text-[#1b4332]">{isBn ? 'সেবাসমূহ' : 'SERVICES'}</span>
             </nav>
 
             <div className="max-w-4xl">
-              <span className="font-mono text-xs tracking-[0.2em] uppercase text-emerald block mb-4">
-                {isBn ? 'আর্কিটেকচারাল ডিসিপ্লিনস' : 'ARCHITECTURAL DISCIPLINES'}
+              <span className="font-mono text-xs tracking-wider uppercase text-[#2d6a4f] font-bold block mb-3">
+                {isBn ? 'ল্যান্ডস্কেপ সেবাসমূহ' : 'ARCHITECTURAL DISCIPLINES'}
               </span>
-              <h1 className="font-display text-4xl sm:text-6xl font-light tracking-[-0.035em] text-forest leading-[1.05]">
+              <h1 className="font-sutonny text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1b4332] leading-[1.12]">
                 {isBn ? 'বিশেষায়িত ল্যান্ডস্কেপিং সেবা' : 'Architectural Landscape Services'}
               </h1>
-              <p className="mt-6 text-base sm:text-xl text-charcoal/70 font-light leading-relaxed max-w-2xl">
+              <p className="mt-4 text-base sm:text-xl text-stone-800 font-medium leading-relaxed max-w-2xl">
                 {isBn
-                  ? 'আবাসিক এস্টেট, শতভাগ লিকপ্রুফ ছাদবাগান, সিলেট স্যান্ডস্টোন ওয়াকওয়ে ও গল্ফ-গ্রেড লন—ডিএই বৈজ্ঞানিক এগ্রোনমি ও আধুনিক স্থাপত্যের মেলবন্ধন।'
-                  : 'Bespoke estate grounds, zero-leakage rooftop sanctuaries, and natural stone hardscapes engineered under certified agricultural science.'}
+                  ? 'ছাদবাগান থেকে প্রাইভেট এস্টেট—১০০% লিকপ্রুফ ওয়াটারপ্রুফিং ও বৈজ্ঞানিক মাটির পুষ্টিতে আপনার বহিরাঙ্গনের রূপান্তর।'
+                  : 'Engineered for longevity, ecological harmony, and zero-leak rooftop assurance.'}
               </p>
             </div>
           </Container>
         </section>
 
-        {/* Core Services Component */}
+        {/* Services Disciplines Matrix */}
         <Services />
 
-        {/* Direct Consultation / Contact */}
+        {/* Commission */}
         <Contact />
       </main>
 

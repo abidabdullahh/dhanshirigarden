@@ -1,12 +1,13 @@
 import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
+import Logo from '../ui/Logo'
 import { Container } from '../ui/Section'
 
 const YEAR = new Date().getFullYear()
 
 export default function Footer() {
-  const { lang } = useLocale()
+  const { lang, setLang } = useLocale()
   const isBn = lang === 'bn'
   const { navigate } = useRouter()
 
@@ -16,60 +17,57 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative bg-[#FCFCFA] border-t border-black/[0.06] py-20 sm:py-28 text-charcoal">
+    <footer className="relative bg-[#14261C] text-stone-200 border-t border-emerald-950 py-16 sm:py-24">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 sm:gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-14 items-start">
           {/* Col 1: Wordmark & Core Identity */}
           <div className="md:col-span-5 space-y-4">
             <a
               href="/"
               onClick={(e) => handleLink(e, '/')}
-              className="inline-block font-display text-2xl font-bold tracking-tight text-forest"
+              className="inline-block"
             >
-              DHANSHIRI
+              <Logo light={true} />
             </a>
-            <p className="font-mono text-xs text-charcoal/50 tracking-[0.15em] uppercase">
-              ATELIER · LANDSCAPE ARCHITECTURE
-            </p>
-            <p className="text-sm text-charcoal/70 font-light leading-relaxed max-w-sm pt-2">
+            <p className="text-sm text-stone-300 font-normal leading-relaxed max-w-sm pt-2">
               {isBn
-                ? 'আবাসিক ও প্রাতিষ্ঠানিক বহিরাঙ্গন পরিকল্পনা, শতভাগ লিকপ্রুফ ছাদবাগান ও সিলেট স্টোন হার্ডস্কেপ।'
-                : 'Bespoke estate grounds, zero-leakage rooftop sanctuaries, and natural stone hardscapes engineered under certified agricultural science.'}
+                ? 'আবাসিক ছাদবাগান, প্রাইভেট ভিলা এস্টেট ও ভেলভেট কার্পেট ঘাসের লন—কৃষি সম্প্রসারণ অধিদপ্তরের (ডিএই) সাবেক কর্মকর্তার বিজ্ঞানসম্মত নির্দেশনায় ১০০% লিকপ্রুফ ওয়াটারপ্রুফিং সহ টেকসই ল্যান্ডস্কেপিং।'
+                : 'Bespoke estate grounds, zero-leakage rooftop sanctuaries, and velvet turf lawns engineered under certified agricultural science.'}
             </p>
 
-            <div className="pt-4 font-mono text-xs text-charcoal/50">
-              <span>DAE CERTIFIED AGRONOMY · AMIR ALI (FORMER SAAO)</span>
+            <div className="pt-2 text-xs font-mono text-emerald-400 font-semibold">
+              <span>DAE CERTIFIED AGRONOMY · AMIR ALI (EX-SAAO)</span>
             </div>
           </div>
 
           {/* Col 2: Navigation Links */}
           <div className="md:col-span-3 space-y-3">
-            <span className="font-mono text-[0.68rem] tracking-[0.2em] uppercase text-charcoal/40 block mb-4">
+            <span className="font-mono text-xs tracking-wider uppercase text-emerald-300 font-bold block mb-4">
               {isBn ? 'ন্যাভিগেশন' : 'EXPLORE'}
             </span>
-            <ul className="space-y-3 text-sm font-light text-charcoal/80">
+            <ul className="space-y-3 text-sm font-medium text-stone-300">
               <li>
-                <a href="/services" onClick={(e) => handleLink(e, '/services')} className="hover:text-forest transition">
+                <a href="/services" onClick={(e) => handleLink(e, '/services')} className="hover:text-emerald-300 transition">
                   {isBn ? 'সেবাসমূহ' : 'Services & Disciplines'}
                 </a>
               </li>
               <li>
-                <a href="/projects" onClick={(e) => handleLink(e, '/projects')} className="hover:text-forest transition">
-                  {isBn ? 'নির্বাচিত কাজসমূহ' : 'Selected Works'}
+                <a href="/projects" onClick={(e) => handleLink(e, '/projects')} className="hover:text-emerald-300 transition">
+                  {isBn ? 'সম্পন্ন প্রকল্পসমূহ' : 'Selected Works'}
                 </a>
               </li>
               <li>
-                <a href="/store" onClick={(e) => handleLink(e, '/store')} className="hover:text-forest transition">
-                  {isBn ? 'বোটানিক্যাল নার্সারি' : 'Specimen Nursery Catalog'}
+                <a href="/store" onClick={(e) => handleLink(e, '/store')} className="hover:text-emerald-300 transition">
+                  {isBn ? 'উদ্ভিদ ও ঘাস নার্সারি' : 'Specimen Nursery Catalog'}
                 </a>
               </li>
               <li>
-                <a href="/about" onClick={(e) => handleLink(e, '/about')} className="hover:text-forest transition">
-                  {isBn ? 'অ্যাটেলিয়ার ও বিজ্ঞান' : 'The Atelier'}
+                <a href="/about" onClick={(e) => handleLink(e, '/about')} className="hover:text-emerald-300 transition">
+                  {isBn ? 'আমাদের কথা ও বিজ্ঞান' : 'About & Soil Science'}
                 </a>
               </li>
               <li>
-                <a href="/contact" onClick={(e) => handleLink(e, '/contact')} className="hover:text-forest transition">
+                <a href="/contact" onClick={(e) => handleLink(e, '/contact')} className="hover:text-emerald-300 transition">
                   {isBn ? 'যোগাযোগ ও সাইট ভিজিট' : 'Commission & Contact'}
                 </a>
               </li>
@@ -78,42 +76,65 @@ export default function Footer() {
 
           {/* Col 3: Studios & Direct Lines */}
           <div className="md:col-span-4 space-y-4">
-            <span className="font-mono text-[0.68rem] tracking-[0.2em] uppercase text-charcoal/40 block mb-4">
-              {isBn ? 'স্টুডিও ও নার্সারি' : 'LOCATIONS'}
+            <span className="font-mono text-xs tracking-wider uppercase text-emerald-300 font-bold block mb-4">
+              {isBn ? 'অফিস ও নার্সারি' : 'LOCATIONS'}
             </span>
 
-            <div className="space-y-3 text-xs sm:text-sm text-charcoal/70 font-light">
+            <div className="space-y-3 text-sm text-stone-300 font-normal">
               <div>
-                <strong className="block text-forest font-normal">Dhaka Studio &amp; HQ</strong>
-                <span>K-26/1, Mohakhali, Dhaka-1212</span>
+                <strong className="block text-white font-bold">ঢাকা অফিস ও ডিজাইন স্টুডিও</strong>
+                <span>ক-২৬/১, মহাখালী, ঢাকা-১২১২</span>
               </div>
               <div>
-                <strong className="block text-forest font-normal">Naogaon Agronomy Farm &amp; Nursery</strong>
-                <span>Sultanpur, Pandit Para, Naogaon Sadar-6500</span>
+                <strong className="block text-white font-bold">নওগাঁ কৃষি গবেষণা ফার্ম ও নার্সারি</strong>
+                <span>সুলতানপুর, পণ্ডিত পাড়া, নওগাঁ সদর-৬৫০০</span>
               </div>
               <div className="pt-2 font-mono text-xs">
-                <a href={`tel:${site.phones[0].tel}`} className="text-forest hover:text-emerald transition">
-                  Direct: {site.phones[0].number}
+                <a href={`tel:${site.phones[0].tel}`} className="text-emerald-300 hover:text-white transition font-bold block">
+                  সরাসরি হটলাইন: {site.phones[0].number}
+                </a>
+                <a href={`tel:${site.phones[1].tel}`} className="text-stone-300 hover:text-white transition block mt-1">
+                  সহকারী লাইন: {site.phones[1].number}
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Baseline Row */}
-        <div className="mt-16 sm:mt-24 pt-8 border-t border-black/[0.06] flex flex-col sm:flex-row items-center justify-between text-xs text-charcoal/50 font-light gap-4">
-          <p>© {YEAR} Dhanshiri Garden Atelier. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://www.innerloopatelier.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-forest transition"
+        {/* Bottom Baseline Row with Language Switcher */}
+        <div className="mt-14 sm:mt-20 pt-8 border-t border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 font-normal gap-4">
+          <p>© {YEAR} ধানসিঁড়ি গার্ডেন (Dhanshiri Garden). সর্বস্বত্ব সংরক্ষিত।</p>
+
+          {/* English / Bengali Switcher Option in Footer as requested */}
+          <div className="flex items-center gap-2 bg-emerald-950/80 px-3 py-1.5 rounded-full border border-emerald-800/40">
+            <span className="text-stone-400 font-medium">Language / ভাষা:</span>
+            <button
+              type="button"
+              onClick={() => setLang('bn')}
+              className={`px-2 py-0.5 rounded text-xs transition ${
+                lang === 'bn'
+                  ? 'bg-[#2d6a4f] text-white font-bold'
+                  : 'text-stone-400 hover:text-white'
+              }`}
             >
-              Crafted by Innerloop Atelier
-            </a>
-            <span>·</span>
-            <span>Dhaka &amp; Naogaon</span>
+              বাংলা
+            </button>
+            <span className="text-emerald-800">|</span>
+            <button
+              type="button"
+              onClick={() => setLang('en')}
+              className={`px-2 py-0.5 rounded text-xs transition ${
+                lang === 'en'
+                  ? 'bg-[#2d6a4f] text-white font-bold'
+                  : 'text-stone-400 hover:text-white'
+              }`}
+            >
+              English
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3 text-stone-400">
+            <span>ঢাকা · নওগাঁ · সমগ্র বাংলাদেশ</span>
           </div>
         </div>
       </Container>

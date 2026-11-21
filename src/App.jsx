@@ -33,7 +33,7 @@ function PageFallback() {
       <div className="flex flex-col items-center gap-3 p-8">
         <div className="size-8 rounded-full border-2 border-forest/20 border-t-forest animate-spin" />
         <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-forest/70">
-          DHANSHIRI ATELIER
+          DHANSHIRI GARDEN
         </span>
       </div>
     </div>
@@ -68,7 +68,7 @@ function HomePage() {
         {/* 4. Dynamic Botanical Specimen Nursery */}
         <DynamicNursery />
 
-        {/* 5. The Atelier & DAE Agronomic Heritage */}
+        {/* 5. About & DAE Agronomic Heritage */}
         <About />
 
         {/* 6. Direct Commission & Site Consultation */}

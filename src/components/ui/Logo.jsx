@@ -11,16 +11,26 @@ export function LogoMark({ className = 'size-9 sm:size-10' }) {
 }
 
 export default function Logo({ className = '', light = false }) {
-  const { t } = useLocale()
+  const { lang } = useLocale()
+  const isBn = lang === 'bn'
+
   return (
-    <span className={`inline-flex items-center gap-2 sm:gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center gap-2.5 sm:gap-3 ${className}`}>
       <LogoMark />
       <span className="flex flex-col leading-none">
-        <span className={`font-display text-[0.95rem] font-bold min-[390px]:text-[1.02rem] sm:text-[1.15rem] ${light ? 'text-white' : 'text-forest'}`}>
-          {t.brand.name}
+        <span
+          className={`font-sutonny text-[1.12rem] sm:text-[1.28rem] font-bold tracking-tight ${
+            light ? 'text-white' : 'text-[#1b4332]'
+          }`}
+        >
+          ধানসিঁড়ি গার্ডেন
         </span>
-        <span className={`mt-1 hidden text-[0.72rem] font-medium sm:block ${light ? 'text-mint/80' : 'text-emerald/80'}`}>
-          {t.brand.tagline}
+        <span
+          className={`mt-1 text-[0.72rem] sm:text-[0.76rem] font-semibold tracking-wide ${
+            light ? 'text-mint/90' : 'text-[#2d6a4f]'
+          }`}
+        >
+          {isBn ? 'ল্যান্ডস্কেপ ও ছাদবাগান বিশেষজ্ঞ' : 'Landscape Architecture & Nursery'}
         </span>
       </span>
     </span>

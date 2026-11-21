@@ -21,8 +21,9 @@
 
   --font-display-en: 'Bricolage Grotesque Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body-en: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display-bn: 'Li Ador Noirrit', 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+  --font-display-bn: 'SutonnyMJ', 'Sutonny', 'Noto Serif Bengali', 'Tiro Bangla', 'Li Ador Noirrit', 'Hind Siliguri', serif;
   --font-body-bn: 'Hind Siliguri', 'Noto Sans Bengali', sans-serif;
+  --font-sutonny: 'SutonnyMJ', 'Sutonny', 'SutonnyOMJ', 'Noto Serif Bengali', 'Tiro Bangla', 'SolaimanLipi', 'Kalpurush', 'Hind Siliguri', serif;
 
   --shadow-soft: 0 10px 30px -14px rgb(27 67 50 / 0.25);
   --shadow-lift: 0 24px 50px -18px rgb(27 67 50 / 0.35);
@@ -442,3 +443,23 @@ html[data-atmosphere='rain'] .mesh-glow {
     radial-gradient(circle at 20% 20%, rgb(56 189 248 / 0.14), transparent 45%),
     radial-gradient(circle at 80% 70%, rgb(45 106 79 / 0.16), transparent 45%);
 }
+
+/* Sutonny & Classical Bengali Serif Typography Utilities */
+.font-sutonny {
+  font-family: var(--font-sutonny);
+}
+.font-sutonny-regular {
+  font-family: var(--font-sutonny);
+  font-weight: 400;
+  font-style: normal;
+}
+.font-sutonny-bold {
+  font-family: var(--font-sutonny);
+  font-weight: 700;
+  font-style: normal;
+}
+.font-sutonny-italic {
+  font-family: var(--font-sutonny);
+  font-style: italic;
+}
+

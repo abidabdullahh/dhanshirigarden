@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Check } from 'lucide-react'
+import { Check, Phone } from 'lucide-react'
 import { site } from '../../data/site'
 import { useLocale } from '../../lib/locale'
 import { getWhatsAppLink } from '../../lib/whatsapp'
@@ -38,185 +38,184 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative isolate py-28 sm:py-36 lg:py-48 bg-white border-b border-black/[0.06]">
+    <section id="contact" className="relative isolate py-20 sm:py-28 lg:py-36 bg-white border-b border-stone-200">
       <Container>
         {/* Section Header */}
-        <div className="flex items-center justify-between border-b border-black/[0.06] pb-6 mb-16 sm:mb-24">
+        <div className="flex items-center justify-between border-b-2 border-stone-200 pb-5 mb-14 sm:mb-20">
           <div className="flex items-center gap-3">
-            <span className="size-1.5 rounded-full bg-emerald" />
-            <span className="font-mono text-xs tracking-[0.2em] uppercase text-charcoal/60">
-              {isBn ? 'প্রকল্প আলোচনা ও যোগাযোগ' : 'COMMISSION & INQUIRY'}
+            <span className="size-2 rounded-full bg-[#2d6a4f]" />
+            <span className="font-sutonny font-bold text-sm tracking-wider uppercase text-[#1b4332]">
+              {isBn ? 'যোগাযোগ ও সাইট ভিজিট' : 'COMMISSION & INQUIRY'}
             </span>
           </div>
-          <span className="font-mono text-xs text-charcoal/40">
-            [DHAKA · NAOGAON]
+          <span className="font-mono text-xs sm:text-sm font-bold text-stone-700 bg-stone-100 px-3 py-1 rounded-full border border-stone-300">
+            [ঢাকা ও নওগাঁ]
           </span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-          {/* LEFT 6 COLS: Swiss Typography & Studio Details */}
-          <div className="lg:col-span-6 space-y-8">
-            <h2 className="font-display text-4xl sm:text-6xl font-light tracking-[-0.035em] text-forest leading-[1.05]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* LEFT 6 COLS: Studio Details */}
+          <div className="lg:col-span-6 space-y-6">
+            <h2 className="font-sutonny text-3xl sm:text-5xl font-bold tracking-tight text-[#1b4332] leading-[1.15]">
               {isBn ? (
                 <>
-                  আসুন একটি জীবন্ত <br />
-                  <span className="text-emerald font-normal">নিসর্গ সৃষ্টি করি।</span>
+                  আসুন আপনার আঙিনায় একটি <br />
+                  <span className="text-[#2d6a4f]">জীবন্ত নিসর্গ সৃষ্টি করি।</span>
                 </>
               ) : (
                 <>
                   Let&apos;s engineer <br />
-                  <span className="text-emerald font-normal">a living sanctuary.</span>
+                  <span className="text-[#2d6a4f]">a living sanctuary.</span>
                 </>
               )}
             </h2>
 
-            <p className="text-base sm:text-lg text-charcoal/70 font-light leading-relaxed max-w-lg">
+            <p className="text-base sm:text-lg text-stone-800 font-medium leading-relaxed max-w-lg">
               {isBn
-                ? 'আপনার ছাদবাগান, আঙিনা কিংবা এস্টেটের প্রাথমিক সাইট পরিদর্শন ও সম্ভাব্যতা যাচাইয়ের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন।'
+                ? 'আপনার ছাদবাগান, আঙিনা কিংবা এস্টেটের প্রাথমিক সাইট পরিদর্শন ও বিনামূল্যে বাজেট সম্ভাব্যতা যাচাইয়ের জন্য আমাদের সাথে সরাসরি যোগাযোগ করুন।'
                 : 'Direct architectural and agronomic consultation for private residences, commercial developments, and estate grounds.'}
             </p>
 
             {/* Direct Studio Contact Cards */}
-            <div className="space-y-4 pt-6 border-t border-black/[0.06]">
+            <div className="space-y-3 pt-6 border-t-2 border-stone-200">
               {site.phones.map((phone) => (
                 <a
                   key={phone.tel}
                   href={`tel:${phone.tel}`}
-                  className="group flex items-baseline justify-between py-3 border-b border-black/[0.06] text-forest hover:text-emerald transition"
+                  className="group flex items-center justify-between p-4 rounded-2xl border-2 border-stone-200 bg-stone-50 hover:border-[#1b4332] hover:bg-emerald-50/50 transition"
                 >
-                  <span className="font-display text-lg sm:text-xl font-normal tracking-tight">
-                    {phone.number}
-                  </span>
-                  <span className="font-mono text-xs text-charcoal/40 uppercase group-hover:text-emerald transition">
-                    {phone.label[lang] || phone.label.en} →
+                  <div className="flex items-center gap-3">
+                    <Phone className="size-5 text-[#2d6a4f]" />
+                    <span className="font-mono text-base sm:text-lg font-bold text-[#1b4332]">
+                      {phone.number}
+                    </span>
+                  </div>
+                  <span className="text-xs font-bold text-stone-600 group-hover:text-[#1b4332] transition">
+                    {phone.label[lang] || phone.label.bn} →
                   </span>
                 </a>
               ))}
 
-              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs text-charcoal/70">
-                <div>
-                  <strong className="block font-mono text-[0.68rem] text-charcoal/40 uppercase tracking-wider mb-1">
-                    DHAKA STUDIO &amp; HEADQUARTERS
+              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-stone-800 font-medium">
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                  <strong className="block font-bold text-[#1b4332] mb-1">
+                    ঢাকা অফিস ও স্টুডিও
                   </strong>
-                  <p className="font-light leading-relaxed">
-                    K-26/1, Mohakhali, Dhaka-1212
-                  </p>
+                  <span>ক-২৬/১, মহাখালী, ঢাকা-১২১২</span>
                 </div>
-                <div>
-                  <strong className="block font-mono text-[0.68rem] text-charcoal/40 uppercase tracking-wider mb-1">
-                    NAOGAON AGRONOMY FARM &amp; NURSERY
+                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                  <strong className="block font-bold text-[#1b4332] mb-1">
+                    নওগাঁ গবেষণা নার্সারি
                   </strong>
-                  <p className="font-light leading-relaxed">
-                    Sultanpur, Pandit Para, Naogaon Sadar
-                  </p>
+                  <span>সুলতানপুর, পণ্ডিত পাড়া, নওগাঁ সদর-৬৫০০</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* RIGHT 6 COLS: Swiss Architectural Inquiry Form */}
-          <div className="lg:col-span-6 bg-neutral-50/80 rounded-2xl border border-black/[0.06] p-8 sm:p-12">
-            <span className="font-mono text-[0.68rem] tracking-[0.2em] uppercase text-emerald block mb-6">
-              {isBn ? 'ইনকোয়ারি ফর্ম' : 'DIRECT CONSULTATION FORM'}
-            </span>
+          {/* RIGHT 6 COLS: Direct Inquiry Form */}
+          <div className="lg:col-span-6">
+            <div className="rounded-3xl border-2 border-stone-300 bg-white p-6 sm:p-8 lg:p-10 shadow-lg">
+              <h3 className="font-sutonny text-xl sm:text-2xl font-bold text-[#1b4332] mb-2">
+                {isBn ? 'বিনামূল্যে প্রাথমিক সাইট ভিজিট ও বাজেট অনুরোধ' : 'Request Free Site Visit & Estimate'}
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-700 font-medium mb-6">
+                {isBn
+                  ? 'তথ্য দিন—আমাদের প্রধান কৃষিবিদ সরাসরি আপনার সাথে যোগাযোগ করবেন।'
+                  : 'Submit your requirements for direct agronomic review.'}
+              </p>
 
-            {submitted ? (
-              <div className="py-12 text-center space-y-4">
-                <div className="size-12 rounded-full bg-emerald text-white grid place-items-center mx-auto">
-                  <Check className="size-6" strokeWidth={2.5} />
-                </div>
-                <h3 className="font-display text-2xl font-light text-forest">
-                  {isBn ? 'ধন্যবাদ! আপনার ইনকোয়ারি গৃহীত হয়েছে।' : 'Thank you. Inquiry submitted.'}
-                </h3>
-                <p className="text-sm text-charcoal/70 font-light max-w-sm mx-auto">
-                  {isBn
-                    ? 'আমাদের প্রধান ল্যান্ডস্কেপ টিম অতি দ্রুত আপনার সাথে যোগাযোগ করবে।'
-                    : 'Our senior architectural team will reach out directly.'}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/60 mb-2">
-                    {isBn ? 'আপনার নাম' : 'YOUR NAME'}
+                  <label className="block text-xs font-bold text-stone-900 mb-1.5">
+                    {isBn ? 'আপনার পূর্ণ নাম *' : 'Full Name *'}
                   </label>
                   <input
                     type="text"
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder={isBn ? 'উদা: মাহির চৌধুরী' : 'e.g. Mahir Chowdhury'}
-                    className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-forest placeholder:text-charcoal/30 focus:border-forest focus:outline-none transition"
+                    placeholder={isBn ? 'যেমন: মোহাম্মদ রফিকুল ইসলাম / সাহানা বেগম' : 'e.g. John Doe'}
+                    className="w-full rounded-xl border-2 border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 placeholder:text-stone-500 focus:bg-white focus:border-[#1b4332] focus:outline-none transition"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-stone-900 mb-1.5">
+                    {isBn ? 'মোবাইল / হোয়াটসঅ্যাপ নম্বর *' : 'Mobile / WhatsApp *'}
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    placeholder="017XXXXXXXX"
+                    className="w-full rounded-xl border-2 border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 placeholder:text-stone-500 focus:bg-white focus:border-[#1b4332] focus:outline-none transition font-mono"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/60 mb-2">
-                      {isBn ? 'মোবাইল / হোয়াটসঅ্যাপ' : 'PHONE / WHATSAPP'}
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      placeholder="017XXXXXXXX"
-                      className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-forest placeholder:text-charcoal/30 focus:border-forest focus:outline-none transition"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/60 mb-2">
-                      {isBn ? 'প্রকল্পের ধরন' : 'PROJECT DISCIPLINE'}
+                    <label className="block text-xs font-bold text-stone-900 mb-1.5">
+                      {isBn ? 'প্রকল্পের ধরন' : 'Project Type'}
                     </label>
                     <select
                       value={form.type}
                       onChange={(e) => setForm({ ...form, type: e.target.value })}
-                      className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-forest focus:border-forest focus:outline-none transition"
+                      className="w-full rounded-xl border-2 border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 focus:bg-white focus:border-[#1b4332] focus:outline-none transition"
                     >
-                      <option value="rooftop">{isBn ? 'ছাদবাগান ও স্কাই টেরেস' : 'Rooftop Sanctuary'}</option>
-                      <option value="estate">{isBn ? 'ভিলা ও এস্টেট ল্যান্ডস্কেপ' : 'Estate Landscape'}</option>
-                      <option value="lawn">{isBn ? 'কার্পেট ঘাস ও লন' : 'Velvet Carpet Turf'}</option>
-                      <option value="hardscape">{isBn ? 'পাথুরে হার্ডস্কেপ ও পারগোলা' : 'Hardscape & Pergola'}</option>
-                      <option value="vertical">{isBn ? 'ভার্টিক্যাল লিভিং ওয়াল' : 'Living Green Wall'}</option>
+                      <option value="rooftop">{isBn ? 'ছাদবাগান ও টেরেস (১০০% লিকপ্রুফ)' : 'Rooftop Sanctuary'}</option>
+                      <option value="estate">{isBn ? 'প্রাইভেট ভিলা এস্টেট' : 'Villa / Estate'}</option>
+                      <option value="lawn">{isBn ? 'কার্পেট ঘাসের লন' : 'Velvet Lawn'}</option>
+                      <option value="vertical">{isBn ? 'ভার্টিক্যাল গ্রিন ওয়াল' : 'Vertical Green Wall'}</option>
+                      <option value="other">{isBn ? 'বাগান মালি ও কেয়ার প্যাকেজ' : 'Care & Maintenance'}</option>
                     </select>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/60 mb-2">
-                      {isBn ? 'আনুমানিক আয়তন (বর্গফুট)' : 'ESTIMATED AREA (SQ FT)'}
+                    <label className="block text-xs font-bold text-stone-900 mb-1.5">
+                      {isBn ? 'আনুমানিক আয়তন (বর্গফুট)' : 'Approx. Area (Sq Ft)'}
                     </label>
                     <input
                       type="text"
                       value={form.area}
                       onChange={(e) => setForm({ ...form, area: e.target.value })}
-                      placeholder={isBn ? 'উদা: ১,২০০ ব.ফু.' : 'e.g. 1,500 sq ft'}
-                      className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-forest placeholder:text-charcoal/30 focus:border-forest focus:outline-none transition"
-                    />
-                  </div>
-                  <div>
-                    <label className="block font-mono text-[0.68rem] uppercase tracking-wider text-charcoal/60 mb-2">
-                      {isBn ? 'প্রকল্পের এলাকা / শহর' : 'PROJECT LOCATION'}
-                    </label>
-                    <input
-                      type="text"
-                      value={form.location}
-                      onChange={(e) => setForm({ ...form, location: e.target.value })}
-                      placeholder={isBn ? 'উদা: গুলশান-২, ঢাকা' : 'e.g. Gulshan, Banani, Uttara'}
-                      className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-forest placeholder:text-charcoal/30 focus:border-forest focus:outline-none transition"
+                      placeholder={isBn ? 'যেমন: ১২০০' : 'e.g. 1200'}
+                      className="w-full rounded-xl border-2 border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 placeholder:text-stone-500 focus:bg-white focus:border-[#1b4332] focus:outline-none transition font-mono"
                     />
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full rounded-full bg-forest py-4 text-xs sm:text-sm font-medium text-white hover:bg-forest/90 transition shadow-xs tracking-wider uppercase"
-                >
-                  {isBn ? 'প্রস্তাব পাঠান ও হোয়াটসঅ্যাপে আলোচনা করুন' : 'Submit & Inquire on WhatsApp'} →
-                </button>
+                <div>
+                  <label className="block text-xs font-bold text-stone-900 mb-1.5">
+                    {isBn ? 'সাইটের অবস্থান / এলাকা' : 'Site Location'}
+                  </label>
+                  <input
+                    type="text"
+                    value={form.location}
+                    onChange={(e) => setForm({ ...form, location: e.target.value })}
+                    placeholder={isBn ? 'যেমন: গুলশান-২ / ধানমন্ডি / পূর্বাচল / উত্তরা' : 'e.g. Gulshan-2, Dhaka'}
+                    className="w-full rounded-xl border-2 border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 placeholder:text-stone-500 focus:bg-white focus:border-[#1b4332] focus:outline-none transition"
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="w-full rounded-2xl bg-[#1b4332] py-4 text-sm sm:text-base font-bold text-white hover:bg-[#2d6a4f] transition-all shadow-md hover:shadow-lg"
+                  >
+                    {isBn ? 'হোয়াটসঅ্যাপে তাৎক্ষণিক বার্তা পাঠান' : 'Dispatch via WhatsApp'}
+                  </button>
+                </div>
+
+                {submitted && (
+                  <div className="flex items-center gap-2 p-3 bg-emerald-50 border border-emerald-300 rounded-xl text-xs font-bold text-[#1b4332]">
+                    <Check className="size-4" />
+                    <span>{isBn ? 'আপনার অনুরোধ তৈরি হয়েছে, হোয়াটসঅ্যাপ উইন্ডো খুলছে...' : 'Request composed, opening WhatsApp...'}</span>
+                  </div>
+                )}
               </form>
-            )}
+            </div>
           </div>
         </div>
       </Container>
