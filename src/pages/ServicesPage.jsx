@@ -1,4 +1,4 @@
-import { ArrowLeft, ChevronRight, Layers, Phone, ShieldCheck, Waves } from 'lucide-react'
+import { ArrowLeft, Calculator, ChevronRight, Layers, Phone, ShieldCheck, Sparkles } from 'lucide-react'
 import { useLocale } from '../lib/locale'
 import { useRouter } from '../lib/router'
 import Navbar from '../components/layout/Navbar'
@@ -6,6 +6,9 @@ import Footer from '../components/layout/Footer'
 import FloatingActions from '../components/layout/FloatingActions'
 import CartDrawer from '../components/layout/CartDrawer'
 import Services from '../components/sections/Services'
+import LandscapeEstimator from '../components/sections/LandscapeEstimator'
+import LandscapeTransformation from '../components/sections/LandscapeTransformation'
+import LandscapeMaterials from '../components/sections/LandscapeMaterials'
 import Rooftop from '../components/sections/Rooftop'
 import Lawn from '../components/sections/Lawn'
 import IrrigationSimulator from '../components/sections/IrrigationSimulator'
@@ -43,64 +46,77 @@ export default function ServicesPage() {
                 <span>{isBn ? 'হোম' : 'Home'}</span>
               </button>
               <ChevronRight className="size-3 text-forest/30" />
-              <span className="text-emerald font-bold">{t.nav.services}</span>
+              <span className="text-emerald font-bold">{isBn ? 'ল্যান্ডস্কেপ সেবা' : 'Landscaping Services'}</span>
             </nav>
 
             <div className="rounded-3xl glass-panel p-8 sm:p-14 shadow-lift border border-white/85">
               <span className="inline-flex items-center gap-2 rounded-full glass-pill px-4 py-1.5 text-xs font-bold text-forest uppercase tracking-wider mb-4">
                 <Layers className="size-4 text-emerald" />
-                {isBn ? 'বিজ্ঞানসম্মত কৃষি ও ল্যান্ডস্কেপিং' : 'Science-First Agronomic Landscaping'}
+                {isBn ? 'আর্কিটেকচারাল ল্যান্ডস্কেপিং ও এক্সটেরিয়র ডিজাইন' : 'Architectural Landscaping & Exterior Design'}
               </span>
               <h1 className="font-display text-[clamp(2.2rem,4.5vw,3.6rem)] font-extrabold text-forest leading-tight">
-                {isBn ? 'আমাদের বিশেষায়িত সেবাসমূহ' : 'Our Specialized Agronomic Services'}
+                {isBn ? 'আমাদের বিশেষায়িত ল্যান্ডস্কেপ সেবাসমূহ' : 'Our Specialized Architectural Landscape Disciplines'}
               </h1>
               <p className="mt-4 max-w-2xl text-base sm:text-lg text-charcoal/80 leading-relaxed">
                 {isBn
-                  ? 'ছাদবাগান, কার্পেট ঘাসের লন, স্মার্ট স্বয়ংক্রিয় সেচ, বাঁশের প্রাচীর ও ভার্টিক্যাল গ্রিন ওয়াল — প্রতিটি প্রকল্প ডিএই সনদপ্রাপ্ত কৃষিবিদের তত্ত্বাবধানে নিখুঁত ও দীর্ঘস্থায়ীভাবে নির্মিত।'
-                  : 'Rooftop ecosystems, precision-carpet turf lawns, automated micro-drip irrigation, and living vertical gardens — engineered under certified agronomist supervision.'}
+                  ? 'ছাদবাগান, কার্পেট ঘাসের লন, সিলেট স্যান্ডস্টোন ওয়াকওয়ে, স্মার্ট ড্রিপ সেচ ও বায়োফিলিক গ্রিন ওয়াল — প্রতিটি প্রকল্প ডিএই সনদপ্রাপ্ত কৃষিবিদ ও ল্যান্ডস্কেপ আর্কিটেক্টের সমন্বয়ে বাস্তবায়িত।'
+                  : 'Rooftop biophilic sanctuaries, precision-graded carpet turf, natural Sylhet stone hardscapes, and weather-synced micro-irrigation — engineered under certified agronomist supervision.'}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
                   type="button"
                   onClick={() => {
-                    const el = document.getElementById('irrigation-demo')
+                    const el = document.getElementById('estimator')
                     if (el) el.scrollIntoView({ behavior: 'smooth' })
                   }}
                   className="inline-flex items-center gap-2 rounded-full bg-forest px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lift hover:bg-emerald transition"
                 >
-                  <Waves className="size-4 text-bright" />
-                  <span>{isBn ? 'স্মার্ট সেচ সিমুলেশন দেখুন' : 'Smart Irrigation Simulation'}</span>
+                  <Calculator className="size-4 text-bright" />
+                  <span>{isBn ? 'প্রজেক্ট খরচ হিসাব করুন' : 'Open Cost Estimator'}</span>
                 </button>
                 <button
                   type="button"
-                  onClick={() => navigate('/store')}
+                  onClick={() => {
+                    const el = document.getElementById('transformation')
+                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="inline-flex items-center gap-2 rounded-full glass-card px-5 py-2.5 text-xs sm:text-sm font-bold text-forest hover:bg-white transition border border-white/80"
                 >
-                  <span>{isBn ? 'প্ল্যান্ট স্টোরে চারা দেখুন' : 'Browse Plant Store'}</span>
+                  <Sparkles className="size-4 text-emerald" />
+                  <span>{isBn ? 'আগে ও পরের রূপান্তর দেখুন' : 'View Before & After'}</span>
                 </button>
               </div>
             </div>
           </Container>
         </section>
 
-        {/* 1. Core Services Catalog */}
+        {/* 1. Core Services Catalog (8 Disciplines) */}
         <Services />
 
-        {/* 2. Interactive Automated Irrigation Simulator */}
+        {/* 2. Interactive Landscaping Estimator */}
+        <LandscapeEstimator />
+
+        {/* 3. Before & After Transformation Slider */}
+        <LandscapeTransformation />
+
+        {/* 4. Materials & Engineering Standards */}
+        <LandscapeMaterials />
+
+        {/* 5. Deep Dive: Rooftop Agriculture & Waterproofing */}
+        <Rooftop />
+
+        {/* 6. Deep Dive: Precision Turf & Lawn Engineering */}
+        <Lawn />
+
+        {/* 7. Interactive Automated Irrigation Simulator */}
         <section id="irrigation-demo" className="py-16 sm:py-24">
           <Container>
             <IrrigationSimulator />
           </Container>
         </section>
 
-        {/* 3. Deep Dive: Rooftop Agriculture & Waterproofing */}
-        <Rooftop />
-
-        {/* 4. Deep Dive: Precision Turf & Lawn Engineering */}
-        <Lawn />
-
-        {/* 5. Commercial Maintenance & Care Plans */}
+        {/* 8. Commercial Maintenance & Care Plans */}
         <CarePlans />
 
         {/* Consultation Call to Action */}
@@ -112,7 +128,7 @@ export default function ServicesPage() {
                 {isBn ? 'আমির আলী গ্যারান্টি' : 'DAE Agronomist Guarantee'}
               </span>
               <h2 className="font-display text-2xl sm:text-4xl font-extrabold leading-tight">
-                {isBn ? 'আপনার স্বপ্নের বাগানের সাইট ভিজিট ও মাস্টারপ্ল্যান' : 'Book an On-Site Soil & Structural Feasibility Study'}
+                {isBn ? 'আপনার স্পেসের সাইট ভিজিট ও আর্কিটেকচারাল প্রপোজাল' : 'Schedule an On-Site Soil & Structural Feasibility Study'}
               </h2>
               <p className="mt-4 text-white/90 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
                 {isBn
@@ -121,10 +137,10 @@ export default function ServicesPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Button
-                  href={getWhatsAppLink(isBn ? 'সাইট পরিদর্শন ও পরামর্শ' : 'Site Consultation Request', null, lang)}
+                  href={getWhatsAppLink(isBn ? 'সাইট পরিদর্শন ও ল্যান্ডস্কেপিং পরামর্শ' : 'Site Consultation Request for Landscaping', null, lang)}
                   variant="primary"
                   size="lg"
-                  className="bg-white text-forest hover:bg-cream hover:text-emerald"
+                  className="bg-white text-forest hover:bg-cream hover:text-emerald font-bold"
                 >
                   {t.actions.bookWhatsapp}
                 </Button>

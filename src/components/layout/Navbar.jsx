@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
-  BookOpen,
-  Building2,
+  Calculator,
   Calendar,
   Info,
   Layers,
   LayoutGrid,
   Menu,
   Phone,
-  ScanSearch,
+  ShieldCheck,
   ShoppingBag,
   Sparkles,
-  Trees,
   X,
 } from 'lucide-react'
 import { site } from '../../data/site'
@@ -20,7 +18,6 @@ import { useLocale } from '../../lib/locale'
 import { useRouter } from '../../lib/router'
 import { useCart } from '../../lib/CartContext'
 import Button from '../ui/Button'
-import { MowerDoodle } from '../ui/Doodles'
 import LangToggle from '../ui/LangToggle'
 import Logo from '../ui/Logo'
 import UserAuthMenu from '../ui/UserAuthMenu'
@@ -84,25 +81,55 @@ export default function Navbar() {
   const phone = site.phones[0]
 
   const navLinks = [
-    { path: '/', label: t.nav.home, icon: Trees },
-    { path: '/store', label: t.nav.store, badge: 'NURSERY', icon: ShoppingBag },
-    { path: '/toolkit', label: t.nav.toolkit, badge: 'NEW', icon: Sparkles },
-    { path: '/services', label: t.nav.services, icon: Layers },
+    { path: '/services', label: isBn ? 'ল্যান্ডস্কেপ সেবা' : 'Landscaping', icon: Layers },
     { path: '/projects', label: t.nav.projects, icon: LayoutGrid },
+    {
+      path: '#estimator',
+      label: isBn ? 'ব্যয় প্রাক্কলন' : 'Cost Estimator',
+      badge: isBn ? 'ক্যালকুলেটর' : 'ESTIMATE',
+      icon: Calculator,
+      isHash: true,
+    },
+    {
+      path: '#transformation',
+      label: isBn ? 'রূপান্তর' : 'Before & After',
+      icon: Sparkles,
+      isHash: true,
+    },
+    {
+      path: '#materials',
+      label: isBn ? 'উপাদান মান' : 'Materials',
+      icon: ShieldCheck,
+      isHash: true,
+    },
+    { path: '/store', label: isBn ? 'প্ল্যান্ট নার্সারি' : 'Nursery', badge: '715+', icon: ShoppingBag },
     { path: '/about', label: t.nav.about, icon: Info },
     { path: '/contact', label: t.nav.contact, icon: Phone },
   ]
 
-  const handleNavClick = (e, path) => {
+  const handleNavClick = (e, path, isHash = false) => {
     e.preventDefault()
-    navigate(path)
     closeMobile()
+    if (isHash) {
+      if (route !== '/') {
+        navigate('/')
+        setTimeout(() => {
+          const el = document.querySelector(path)
+          if (el) el.scrollIntoView({ behavior: 'smooth' })
+        }, 150)
+      } else {
+        const el = document.querySelector(path)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }
+      return
+    }
+    navigate(path)
   }
 
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
-        {/* Top Micro-Bar: Desktop Weather & Plantation Bulletin (AIS, BTV, Hridoye Mati O Manush, DAE) */}
+        {/* Top Micro-Bar: Desktop Weather & Plantation Bulletin */}
         <div className="hidden border-b border-white/50 bg-white/75 backdrop-blur-md py-1.5 lg:block transition-all">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 text-[0.72rem] tracking-wider text-forest/90 font-medium">
             <div className="flex items-center gap-2.5 min-w-0 flex-1 mr-4">
@@ -148,16 +175,16 @@ export default function Navbar() {
               <Logo />
             </a>
 
-            {/* Desktop Navigation Links — Glass Pills */}
+            {/* Desktop Navigation Links */}
             <ul className="hidden items-center gap-1 xl:flex">
               {navLinks.map((link) => {
-                const isActive = route === link.path
+                const isActive = !link.isHash && route === link.path
                 return (
                   <li key={link.path}>
                     <a
                       href={link.path}
-                      onClick={(e) => handleNavClick(e, link.path)}
-                      className={`relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
+                      onClick={(e) => handleNavClick(e, link.path, link.isHash)}
+                      className={`relative inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
                         isActive
                           ? 'bg-forest text-white shadow-soft'
                           : 'text-forest/80 hover:bg-forest/8 hover:text-forest'
@@ -254,26 +281,24 @@ export default function Navbar() {
             <ul className="mt-5 grid gap-1.5 overflow-y-auto">
               {navLinks.map((link) => {
                 const Icon = link.icon
-                const isActive = route === link.path
+                const isActive = !link.isHash && route === link.path
                 return (
                   <li key={link.path}>
                     <a
                       href={link.path}
-                      onClick={(e) => handleNavClick(e, link.path)}
-                      className={`flex items-center justify-between rounded-xl px-4 py-3 font-display text-base font-bold transition-all duration-200 ${
-                        isActive ? 'bg-forest text-white shadow-soft' : 'text-forest hover:bg-forest/8'
+                      onClick={(e) => handleNavClick(e, link.path, link.isHash)}
+                      className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold transition ${
+                        isActive
+                          ? 'bg-forest text-white'
+                          : 'text-forest hover:bg-forest/10'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <Icon className={`size-4.5 ${isActive ? 'text-bright' : 'text-emerald'}`} />
+                      <span className="flex items-center gap-3">
+                        <Icon className="size-4.5" />
                         <span>{link.label}</span>
-                      </div>
+                      </span>
                       {link.badge && (
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[0.68rem] font-extrabold ${
-                            isActive ? 'bg-bloom text-charcoal' : 'bg-forest/10 text-forest'
-                          }`}
-                        >
+                        <span className="rounded-full bg-emerald/15 px-2 py-0.5 text-xs font-bold text-emerald">
                           {link.badge}
                         </span>
                       )}
@@ -283,82 +308,22 @@ export default function Navbar() {
               })}
             </ul>
 
-            {/* Fast Service Shortcuts */}
-            <div className="mt-4 border-t border-forest/10 pt-4">
-              <span className="block text-xs font-bold uppercase tracking-wider text-forest/60 mb-2.5">
-                {isBn ? 'সরাসরি সেবাসমূহ' : 'Direct Services'}
-              </span>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <a
-                  href="/services"
-                  onClick={(e) => handleNavClick(e, '/services')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <Building2 className="size-4 text-emerald" />
-                  <span>{t.servicesMenu.rooftop.title}</span>
-                </a>
-                <a
-                  href="/services"
-                  onClick={(e) => handleNavClick(e, '/services')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <MowerDoodle className="size-4 text-emerald" />
-                  <span>{t.servicesMenu.lawn.title}</span>
-                </a>
-                <a
-                  href="/store"
-                  onClick={(e) => handleNavClick(e, '/store')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <ShoppingBag className="size-4 text-emerald" />
-                  <span>{isBn ? 'প্ল্যান্ট স্টোর' : 'Plant Store'}</span>
-                </a>
-                <a
-                  href="/projects"
-                  onClick={(e) => handleNavClick(e, '/projects')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <LayoutGrid className="size-4 text-emerald" />
-                  <span>{isBn ? 'প্রজেক্ট গ্যালারি' : 'Projects'}</span>
-                </a>
-                <a
-                  href="/doctor"
-                  onClick={(e) => handleNavClick(e, '/doctor')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <ScanSearch className="size-4 text-emerald" />
-                  <span>{t.nav.plantDoctor}</span>
-                </a>
-                <a
-                  href="/blog"
-                  onClick={(e) => handleNavClick(e, '/blog')}
-                  className="flex items-center gap-2 rounded-xl glass-pill p-2.5 font-bold text-forest hover:bg-white transition"
-                >
-                  <BookOpen className="size-4 text-emerald" />
-                  <span>{t.nav.blog}</span>
-                </a>
-              </div>
-            </div>
-
             {/* Drawer Footer Actions */}
-            <div className="mt-auto border-t border-forest/10 pt-4 space-y-3">
+            <div className="mt-auto border-t border-forest/10 pt-5 space-y-3">
               <Button
                 href="/contact"
                 onClick={(e) => handleNavClick(e, '/contact')}
-                variant="primary"
                 size="md"
-                className="w-full justify-center"
+                variant="primary"
+                className="w-full justify-center text-xs font-bold uppercase tracking-wider"
               >
                 <Calendar className="size-4" />
                 <span>{isBn ? 'পরামর্শ বুক করুন' : 'Book Consultation'}</span>
               </Button>
-              <a
-                href={`tel:${phone.tel}`}
-                className="flex items-center justify-center gap-2 text-xs font-bold text-forest hover:text-emerald transition py-1"
-              >
-                <Phone className="size-3.5 text-emerald" />
-                <span>{phone.number} ({phone.label[lang]})</span>
-              </a>
+              <div className="flex items-center justify-between text-xs text-charcoal/70 px-1">
+                <span>{site.phones[0].number}</span>
+                <LangToggle />
+              </div>
             </div>
           </div>
         </div>

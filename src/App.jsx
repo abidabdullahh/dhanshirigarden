@@ -10,17 +10,21 @@ import FloatingActions from './components/layout/FloatingActions'
 import CartDrawer from './components/layout/CartDrawer'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
-import About from './components/sections/About'
-import CarePlans from './components/sections/CarePlans'
-import Contact from './components/sections/Contact'
-import Faq from './components/sections/Faq'
 import Hero from './components/sections/Hero'
-import Lawn from './components/sections/Lawn'
-import Projects from './components/sections/Projects'
-import Rooftop from './components/sections/Rooftop'
-import Services from './components/sections/Services'
 import Stats from './components/sections/Stats'
+import LandscapeTransformation from './components/sections/LandscapeTransformation'
+import Services from './components/sections/Services'
+import LandscapeEstimator from './components/sections/LandscapeEstimator'
+import LandscapeMaterials from './components/sections/LandscapeMaterials'
+import Projects from './components/sections/Projects'
+import Process from './components/sections/Process'
+import Rooftop from './components/sections/Rooftop'
+import Lawn from './components/sections/Lawn'
 import IrrigationSimulator from './components/sections/IrrigationSimulator'
+import CarePlans from './components/sections/CarePlans'
+import About from './components/sections/About'
+import Faq from './components/sections/Faq'
+import Contact from './components/sections/Contact'
 import { Container } from './components/ui/Section'
 
 // Code-split Dedicated Standalone Pages
@@ -60,22 +64,40 @@ function HomePage() {
       </a>
 
       <Navbar />
+      <CartDrawer />
 
       <main id="main">
-        {/* Hero with blurred background & climate bulletin */}
+        {/* 1. Architectural Landscape Hero */}
         <Hero />
 
-        {/* Core Credentials & Authority Stats */}
+        {/* 2. Authority Stats & Credentials Strip */}
         <Stats />
 
-        {/* Focused Core Services */}
+        {/* 3. Before & After Architectural Transformation Showcase */}
+        <LandscapeTransformation />
+
+        {/* 4. 8 Specialized Landscaping Disciplines (Dossier & Grid) */}
         <Services />
 
-        {/* Engineering Deep Dives */}
+        {/* 5. Interactive Landscaping Project BOM & Scope Estimator */}
+        <LandscapeEstimator />
+
+        {/* 6. Proven Materials & Craftsmanship Standards */}
+        <LandscapeMaterials />
+
+        {/* 7. Signature Real Projects Showcase (9 Categories) */}
+        <Projects />
+
+        {/* 8. 5-Stage Landscape Architectural Process */}
+        <Process />
+
+        {/* 9. Specialized Rooftop Ecosystems Engineering */}
         <Rooftop />
+
+        {/* 10. Precision Turf & Carpet Grass Engineering */}
         <Lawn />
 
-        {/* Interactive Smart Irrigation Simulation with expanded whitespace */}
+        {/* 11. Smart Weather-Synced Irrigation Simulator */}
         <section className="relative isolate overflow-hidden py-20 sm:py-28">
           <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
           <div aria-hidden="true" className="pointer-events-none absolute -left-32 bottom-10 -z-10 size-96 rounded-full bg-emerald/15 blur-3xl" />
@@ -84,13 +106,16 @@ function HomePage() {
           </Container>
         </section>
 
-        {/* Real Signature Projects Showcase (All 9 types) */}
-        <Projects />
-
-        {/* Commercial Care & Trust */}
+        {/* 12. Commercial Maintenance, Stewardship & Care Plans */}
         <CarePlans />
+
+        {/* 13. DAE Founder Authority & Heritage */}
         <About />
+
+        {/* 14. Frequently Asked Architectural Questions */}
         <Faq />
+
+        {/* 15. Direct Consultation Booking Center */}
         <Contact />
       </main>
 
@@ -160,7 +185,7 @@ function MainContent() {
       </Suspense>
     )
   }
-  if (route === '/doctor') {
+  if (route === '/plant-doctor') {
     return (
       <Suspense fallback={<PageFallback />}>
         <PlantDoctorPage />
@@ -174,7 +199,7 @@ function MainContent() {
       </Suspense>
     )
   }
-  if (route === '/wiki') {
+  if (route === '/plant-wiki') {
     return (
       <Suspense fallback={<PageFallback />}>
         <PlantWikiPage />
@@ -182,23 +207,24 @@ function MainContent() {
     )
   }
 
-  // Default Route: Home Landing Page
+  // Default Single-Page Application (Home)
   return <HomePage />
 }
 
 export default function App() {
   return (
-    <RouterProvider>
-      <AtmosphereProvider>
-        <AuthProvider>
-          <CartProvider>
-            <NatureCanvas />
+    <AtmosphereProvider>
+      <AuthProvider>
+        <CartProvider>
+          <RouterProvider>
+            {/* Ambient Animated Cursor & Canvas Particles */}
             <CustomCursor />
-            <CartDrawer />
+            <NatureCanvas />
+
             <MainContent />
-          </CartProvider>
-        </AuthProvider>
-      </AtmosphereProvider>
-    </RouterProvider>
+          </RouterProvider>
+        </CartProvider>
+      </AuthProvider>
+    </AtmosphereProvider>
   )
 }
