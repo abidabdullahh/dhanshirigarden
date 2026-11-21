@@ -13,8 +13,9 @@ export const pexelsUrl = (id, width = 1200) =>
 const defs = {
   // Landscape paths & gardens
   gardenPath: {
+    src: '/images/landscape/hero-sylhet-sandstone-walkway.jpg',
     id: 8678769,
-    by: 'Ksu&Eli Studio',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - ল্যান্ডস্কেপ বাগানপথ ও ওয়াকওয়ে নকশা',
       en: 'Dhanshiri Garden - Landscape Garden Walkway & Paved Pathway Design',
@@ -25,8 +26,9 @@ const defs = {
     },
   },
   greenhousePath: {
+    src: '/images/nursery/nursery-kamini-greenhouse.jpg',
     id: 10812796,
-    by: 'Carlo Jünemann',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - গ্রিনহাউস ও নার্সারি ওয়াকওয়ে',
       en: 'Dhanshiri Garden - Botanical Greenhouse Walkway & Nursery',
@@ -37,8 +39,9 @@ const defs = {
     },
   },
   sunnyPath: {
+    src: '/images/landscape/hero-sylhet-sandstone-walkway.jpg',
     id: 19053055,
-    by: 'Sabine Fischer',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - ফুল ও সবুজে সাজানো ল্যান্ডস্কেপ বাগানপথ',
       en: 'Dhanshiri Garden - Sunlit Flowering Garden Path & Landscape Design',
@@ -49,8 +52,9 @@ const defs = {
     },
   },
   pondGarden: {
+    src: '/images/projects/project-dhanmondi-courtyard.jpg',
     id: 145685,
-    by: 'Mike Bird',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - প্রাকৃতিক জলাশয় ও ওয়াটার গার্ডেন ল্যান্ডস্কেপ',
       en: 'Dhanshiri Garden - Ornamental Water Garden & Decorative Pond',
@@ -62,7 +66,7 @@ const defs = {
   },
   blueprint: {
     id: 834892,
-    by: 'JESHOOTS.com',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - ল্যান্ডস্কেপ আর্কিটেকচার ব্লুপ্রিন্ট ও মাস্টারপ্ল্যান',
       en: 'Dhanshiri Garden - Professional Landscape Architecture Blueprint & Master Plan',
@@ -75,8 +79,9 @@ const defs = {
 
   // Resort & tropical
   tropicalGazebo: {
+    src: '/images/landscape/hero-tropical-resort-palm-steps.jpg',
     id: 1867660,
-    by: 'Bruno Castelli',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - বিলাসবহুল রিসোর্ট ল্যান্ডস্কেপিং ও কাঠের গেজেবো',
       en: 'Dhanshiri Garden - Tropical Resort Landscaping & Outdoor Wooden Gazebo',
@@ -87,8 +92,9 @@ const defs = {
     },
   },
   palmSteps: {
+    src: '/images/landscape/hero-tropical-resort-palm-steps.jpg',
     id: 15114975,
-    by: 'Dusan Milojevic',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - টেরেস গার্ডেন সিঁড়ি ও পাম ল্যান্ডস্কেপ',
       en: 'Dhanshiri Garden - Tiered Garden Steps & Tropical Palm Landscaping',
@@ -101,8 +107,9 @@ const defs = {
 
   // Lawn & field
   mowerClose: {
+    src: '/images/landscape/hero-bermuda-carpet-lawn.jpg',
     id: 1407305,
-    by: 'Aleksandar Pasaric',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - প্রিমিয়াম বারমুডা কার্পেট ঘাসের লন এস্টেট',
       en: 'Dhanshiri Garden - Premium Bermuda Carpet Grass Estate Lawn',
@@ -113,8 +120,9 @@ const defs = {
     },
   },
   mowing: {
+    src: '/images/landscape/hero-bermuda-carpet-lawn.jpg',
     id: 1300510,
-    by: 'Quang Nguyen Vinh',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - বিলাসবহুল ট্রপিক্যাল গার্ডেন ও কার্পেট ঘাসের পরিচর্যা',
       en: 'Dhanshiri Garden - Luxury Tropical Garden & Velvet Turf Maintenance',
@@ -127,8 +135,9 @@ const defs = {
 
   // Vertical & rooftop
   greenWall: {
+    src: '/images/landscape/hero-vertical-living-green-wall.jpg',
     id: 34968591,
-    by: 'Magda Ehlers',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - বায়োফিলিক ভার্টিক্যাল গার্ডেন ও গ্রিন ওয়াল',
       en: 'Dhanshiri Garden - Biophilic Vertical Garden & Living Green Wall',
@@ -163,8 +172,9 @@ const defs = {
     },
   },
   rooftopTerrace: {
+    src: '/images/landscape/hero-rooftop-terrace-gulshan.jpg',
     id: 2962019,
-    by: 'Athena Sandrini',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - আধুনিক ছাদবাগান ডিজাইন ও টেরেস ল্যান্ডস্কেপিং',
       en: 'Dhanshiri Garden - Modern Rooftop Terrace Garden Design & Landscaping',
@@ -275,8 +285,9 @@ const defs = {
     },
   },
   hoseSprout: {
+    src: '/images/landscape/service-smart-micro-irrigation.jpg',
     id: 4207906,
-    by: 'Karola G',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - আধুনিক স্প্রিংকলার ও ড্রিপ সেচ প্রযুক্তি',
       en: 'Dhanshiri Garden - Precision Garden Irrigation & Micro-Watering',
@@ -287,8 +298,9 @@ const defs = {
     },
   },
   wateringGarden: {
+    src: '/images/landscape/service-smart-micro-irrigation.jpg',
     id: 4750270,
-    by: 'Karola G',
+    by: 'Dhanshiri Garden',
     title: {
       bn: 'ধানসিঁড়ি গার্ডেন - বাগান ও লন নিয়মিত পানি সেচ পরিচর্যা',
       en: 'Dhanshiri Garden - Scheduled Landscape Irrigation & Plant Care Service',
@@ -319,8 +331,10 @@ export const photos = Object.fromEntries(
       key,
       ...def,
       page: def.id ? `https://www.pexels.com/photo/${def.id}/` : undefined,
-      src: (width = 1200) => (def.id ? pexelsUrl(def.id, width) : def.src),
-      srcSet: def.id
+      src: (width = 1200) => (def.src ? def.src : def.id ? pexelsUrl(def.id, width) : ''),
+      srcSet: def.src
+        ? `${def.src} 1200w`
+        : def.id
         ? [480, 800, 1200, 1600].map((w) => `${pexelsUrl(def.id, w)} ${w}w`).join(', ')
         : undefined,
     },

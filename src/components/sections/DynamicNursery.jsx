@@ -34,7 +34,15 @@ export default function DynamicNursery() {
   const filteredSpecimens = useMemo(() => {
     let list = STORE_PRODUCTS
 
-    if (selectedCategory !== 'all') {
+    if (selectedCategory === 'turf') {
+      list = list.filter(
+        (p) =>
+          p.category === 'turf' ||
+          (p.name?.bn || '').includes('ঘাস') ||
+          (p.name?.en || '').toLowerCase().includes('turf') ||
+          (p.name?.en || '').toLowerCase().includes('grass')
+      )
+    } else if (selectedCategory !== 'all') {
       list = list.filter((p) => p.category === selectedCategory)
     }
 
@@ -46,6 +54,11 @@ export default function DynamicNursery() {
           (p.name?.bn || '').toLowerCase().includes(q) ||
           (p.scientificName || '').toLowerCase().includes(q)
       )
+    } else {
+      // Prioritize our signature custom-photographed specimens at the top of each view
+      const localFeatured = list.filter((p) => p.photo && p.photo.startsWith('/images/'))
+      const others = list.filter((p) => !p.photo || !p.photo.startsWith('/images/'))
+      list = [...localFeatured, ...others]
     }
 
     return list.slice(0, 8)
