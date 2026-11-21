@@ -42,9 +42,9 @@ export default function DynamicNursery() {
       const q = searchQuery.toLowerCase()
       list = list.filter(
         (p) =>
-          p.name.en.toLowerCase().includes(q) ||
-          p.name.bn.toLowerCase().includes(q) ||
-          p.scientificName.toLowerCase().includes(q)
+          (p.name?.en || '').toLowerCase().includes(q) ||
+          (p.name?.bn || '').toLowerCase().includes(q) ||
+          (p.scientificName || '').toLowerCase().includes(q)
       )
     }
 
@@ -171,7 +171,7 @@ export default function DynamicNursery() {
                       {specimen.scientificName}
                     </span>
                     <strong className="font-sutonny text-lg font-bold text-[#1b4332] block leading-snug line-clamp-1">
-                      {specimen.name[lang] || specimen.name.en}
+                      {specimen.name?.[lang] || specimen.name?.bn || specimen.name?.en || ''}
                     </strong>
                     <span className="font-mono text-xs text-stone-600 block font-medium">
                       {specimen.sizes && specimen.sizes[0] ? specimen.sizes[0].name : '৮" স্ট্যান্ডার্ড ব্যাগ'}
@@ -202,7 +202,7 @@ export default function DynamicNursery() {
 
                     <a
                       href={getWhatsAppLink(
-                        `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেন থেকে "${specimen.name.bn}" (${specimen.scientificName}) সংগ্রহ করতে চাই।`,
+                        `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেন থেকে "${specimen.name?.bn || specimen.name?.en || ''}" (${specimen.scientificName}) সংগ্রহ করতে চাই।`,
                         null,
                         lang
                       )}

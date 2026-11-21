@@ -83,13 +83,13 @@ export default function Projects() {
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-stone-200 border border-stone-300">
                   <img
                     src={project.photoMain}
-                    alt={project.title[lang] || project.title.en}
+                    alt={project.title?.[lang] || project.title?.bn || project.title?.en || ''}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="rounded-full bg-black/75 backdrop-blur-md px-3.5 py-1 font-mono text-xs font-bold uppercase tracking-wider text-white border border-white/20">
-                      ০{idx + 1} · {project.location[lang] || project.location.en}
+                      ০{idx + 1} · {project.location?.[lang] || project.location?.bn || project.location?.en || ''}
                     </span>
                   </div>
                 </div>
@@ -101,10 +101,10 @@ export default function Projects() {
                     <span>{project.year || 'COMPLETED'}</span>
                   </div>
                   <h3 className="font-sutonny text-xl sm:text-2xl font-bold tracking-tight text-[#1b4332] group-hover:text-[#2d6a4f] transition">
-                    {project.title[lang] || project.title.en}
+                    {project.title?.[lang] || project.title?.bn || project.title?.en || ''}
                   </h3>
                   <p className="mt-2 text-xs sm:text-sm text-stone-700 font-medium leading-relaxed">
-                    {project.excerpt[lang] || project.excerpt.en}
+                    {project.summary?.[lang] || project.summary?.bn || project.summary?.en || project.excerpt?.[lang] || project.excerpt?.en || ''}
                   </p>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function Projects() {
               <div className="mt-6 pt-4 border-t border-stone-200 flex items-center justify-between">
                 <a
                   href={getWhatsAppLink(
-                    `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেনের "${project.title.bn}" প্রজেক্টের অনুরূপ ল্যান্ডস্কেপিং করাতে চাই।`,
+                    `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেনের "${project.title?.bn || project.title?.en || ''}" প্রজেক্টের অনুরূপ ল্যান্ডস্কেপিং করাতে চাই।`,
                     null,
                     lang,
                   )}

@@ -232,7 +232,7 @@ export default function Services() {
                       {item.number}
                     </span>
                     <span className="font-sutonny text-base sm:text-lg font-bold tracking-tight">
-                      {item.title[lang] || item.title.bn}
+                      {item.title?.[lang] || item.title?.bn || ''}
                     </span>
                   </div>
                   <span
@@ -253,35 +253,35 @@ export default function Services() {
               {/* Photo Banner */}
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-100 border border-stone-200 mb-8">
                 <Img
-                  key={activeItem.id}
-                  photo={photos[activeItem.photo]}
+                  key={activeItem?.id}
+                  photo={photos[activeItem?.photo]}
                   width={1200}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="h-full w-full object-cover transition-opacity duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-[#1b4332] text-white px-3 py-1 rounded-full text-xs font-mono font-bold">
-                  {activeItem.scope}
+                  {activeItem?.scope}
                 </div>
               </div>
 
               {/* Title & Subtitle */}
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#2d6a4f]">
-                  <span>{activeItem.number}</span>
+                  <span>{activeItem?.number}</span>
                   <span>/</span>
-                  <span className="uppercase">{activeItem.scope}</span>
+                  <span className="uppercase">{activeItem?.scope}</span>
                 </div>
                 <h3 className="font-sutonny text-2xl sm:text-3xl font-bold text-[#1b4332] leading-snug">
-                  {activeItem.title[lang] || activeItem.title.bn}
+                  {activeItem?.title?.[lang] || activeItem?.title?.bn || ''}
                 </h3>
                 <p className="text-sm sm:text-base text-stone-700 font-medium leading-relaxed">
-                  {activeItem.subtitle[lang] || activeItem.subtitle.bn}
+                  {activeItem?.subtitle?.[lang] || activeItem?.subtitle?.bn || ''}
                 </p>
               </div>
 
               {/* 3 Detailed Checkpoints */}
               <div className="mt-6 pt-6 border-t-2 border-stone-200 space-y-3.5">
-                {(activeItem.specs[lang] || activeItem.specs.bn).map((spec, sIdx) => (
+                {(activeItem?.specs?.[lang] || activeItem?.specs?.bn || []).map((spec, sIdx) => (
                   <div key={sIdx} className="flex items-start gap-3">
                     <span className="grid size-5 shrink-0 place-items-center rounded-full bg-emerald-100 text-[#1b4332] mt-0.5">
                       <Check className="size-3.5 stroke-[2.5]" />
@@ -297,7 +297,7 @@ export default function Services() {
               <div className="mt-8 pt-6 border-t border-stone-200 flex flex-wrap items-center justify-between gap-4">
                 <a
                   href={getWhatsAppLink(
-                    `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেন থেকে "${activeItem.title.bn}" সেবা সম্পর্কে বিস্তারিত ও কোটেশন জানতে আগ্রহী।`,
+                    `আসসালামু আলাইকুম, আমি ধানসিঁড়ি গার্ডেন থেকে "${activeItem?.title?.bn || activeItem?.title?.en || ''}" সেবা সম্পর্কে বিস্তারিত ও কোটেশন জানতে আগ্রহী।`,
                     null,
                     lang,
                   )}

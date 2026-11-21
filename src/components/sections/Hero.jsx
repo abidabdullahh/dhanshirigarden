@@ -243,7 +243,7 @@ export default function Hero() {
               <div className="inline-flex items-center gap-2 rounded-full bg-black/60 backdrop-blur-md px-3.5 py-1 text-xs font-mono font-bold tracking-wider text-emerald-300 border border-white/15">
                 <span>{`০১ / ০${SLIDES.length}`}</span>
                 <span>·</span>
-                <span>{current.tag[lang] || current.tag.bn}</span>
+                <span>{current?.tag?.[lang] || current?.tag?.bn || ''}</span>
               </div>
 
               <div className="hidden sm:inline-flex items-center gap-2 rounded-full bg-black/50 backdrop-blur-md px-3 py-1 text-[0.7rem] font-mono text-stone-200 border border-white/10">
@@ -255,13 +255,13 @@ export default function Hero() {
             <div className="absolute bottom-4 sm:bottom-8 inset-x-4 sm:inset-x-8 flex flex-col sm:flex-row sm:items-end justify-between text-white gap-3 pointer-events-none">
               <div className="max-w-2xl">
                 <span className="font-mono text-xs sm:text-sm tracking-wider uppercase text-emerald-400 font-bold block mb-1">
-                  {current.tag[lang] || current.tag.bn}
+                  {current?.tag?.[lang] || current?.tag?.bn || ''}
                 </span>
                 <h3 className="font-sutonny text-xl sm:text-3xl font-bold tracking-tight text-white leading-snug drop-shadow-md">
-                  {current.title[lang] || current.title.bn}
+                  {current?.title?.[lang] || current?.title?.bn || ''}
                 </h3>
                 <p className="mt-1.5 text-xs sm:text-sm font-mono text-stone-200">
-                  {current.meta[lang] || current.meta.bn}
+                  {current?.meta?.[lang] || current?.meta?.bn || ''}
                 </p>
               </div>
 
