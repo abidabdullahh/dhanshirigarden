@@ -15594,7 +15594,7 @@ export const STORE_PRODUCTS = [
     "scientificName": "Cestrum nocturnum",
     "category": "floral",
     "basePrice": 220,
-    "photo": "https://images.unsplash.com/photo-1588628566587-dbd176de94b4?auto=format&fit=crop&w=800&q=80",
+    "photo": "/images/nursery/nursery-hasnahena-night-jasmine.jpg",
     "sunlight": "full",
     "watering": "twoDays",
     "maintenance": "moderate",
