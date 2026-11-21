@@ -4,28 +4,15 @@ import { RouterProvider, useRouter } from './lib/router'
 import { AtmosphereProvider } from './lib/AtmosphereProvider'
 import { AuthProvider } from './lib/AuthContext'
 import { CartProvider } from './lib/CartContext'
-import CustomCursor from './components/dynamic/CustomCursor'
-import NatureCanvas from './components/dynamic/NatureCanvas'
-import FloatingActions from './components/layout/FloatingActions'
 import CartDrawer from './components/layout/CartDrawer'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
-import Stats from './components/sections/Stats'
-import LandscapeTransformation from './components/sections/LandscapeTransformation'
 import Services from './components/sections/Services'
-import LandscapeEstimator from './components/sections/LandscapeEstimator'
-import LandscapeMaterials from './components/sections/LandscapeMaterials'
 import Projects from './components/sections/Projects'
-import Process from './components/sections/Process'
-import Rooftop from './components/sections/Rooftop'
-import Lawn from './components/sections/Lawn'
-import IrrigationSimulator from './components/sections/IrrigationSimulator'
-import CarePlans from './components/sections/CarePlans'
+import DynamicNursery from './components/sections/DynamicNursery'
 import About from './components/sections/About'
-import Faq from './components/sections/Faq'
 import Contact from './components/sections/Contact'
-import { Container } from './components/ui/Section'
 
 // Code-split Dedicated Standalone Pages
 const StorePage = lazy(() => import('./pages/StorePage'))
@@ -42,10 +29,12 @@ const PlantWikiPage = lazy(() => import('./pages/PlantWikiPage'))
 
 function PageFallback() {
   return (
-    <div className="min-h-screen bg-cream flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3 rounded-3xl glass-panel p-8 shadow-lift border border-white/85">
-        <div className="size-9 rounded-full border-3 border-emerald/25 border-t-emerald animate-spin" />
-        <span className="font-display text-xs font-bold uppercase tracking-wider text-forest">Dhanshiri Garden</span>
+    <div className="min-h-screen bg-[#FCFCFA] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3 p-8">
+        <div className="size-8 rounded-full border-2 border-forest/20 border-t-forest animate-spin" />
+        <span className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-forest/70">
+          DHANSHIRI ATELIER
+        </span>
       </div>
     </div>
   )
@@ -67,60 +56,26 @@ function HomePage() {
       <CartDrawer />
 
       <main id="main">
-        {/* 1. Architectural Landscape Hero */}
+        {/* 1. Swiss Minimalist Architectural Hero */}
         <Hero />
 
-        {/* 2. Authority Stats & Credentials Strip */}
-        <Stats />
-
-        {/* 3. Before & After Architectural Transformation Showcase */}
-        <LandscapeTransformation />
-
-        {/* 4. 8 Specialized Landscaping Disciplines (Dossier & Grid) */}
+        {/* 2. Six Core Architectural Disciplines (01-06) */}
         <Services />
 
-        {/* 5. Interactive Landscaping Project BOM & Scope Estimator */}
-        <LandscapeEstimator />
-
-        {/* 6. Proven Materials & Craftsmanship Standards */}
-        <LandscapeMaterials />
-
-        {/* 7. Signature Real Projects Showcase (9 Categories) */}
+        {/* 3. Selected Works / Curated Portfolio Showcase */}
         <Projects />
 
-        {/* 8. 5-Stage Landscape Architectural Process */}
-        <Process />
+        {/* 4. Dynamic Botanical Specimen Nursery */}
+        <DynamicNursery />
 
-        {/* 9. Specialized Rooftop Ecosystems Engineering */}
-        <Rooftop />
-
-        {/* 10. Precision Turf & Carpet Grass Engineering */}
-        <Lawn />
-
-        {/* 11. Smart Weather-Synced Irrigation Simulator */}
-        <section className="relative isolate overflow-hidden py-20 sm:py-28">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 -z-10 size-96 rounded-full bg-bright/20 blur-3xl" />
-          <div aria-hidden="true" className="pointer-events-none absolute -left-32 bottom-10 -z-10 size-96 rounded-full bg-emerald/15 blur-3xl" />
-          <Container>
-            <IrrigationSimulator />
-          </Container>
-        </section>
-
-        {/* 12. Commercial Maintenance, Stewardship & Care Plans */}
-        <CarePlans />
-
-        {/* 13. DAE Founder Authority & Heritage */}
+        {/* 5. The Atelier & DAE Agronomic Heritage */}
         <About />
 
-        {/* 14. Frequently Asked Architectural Questions */}
-        <Faq />
-
-        {/* 15. Direct Consultation Booking Center */}
+        {/* 6. Direct Commission & Site Consultation */}
         <Contact />
       </main>
 
       <Footer />
-      <FloatingActions />
     </>
   )
 }
@@ -128,7 +83,7 @@ function HomePage() {
 function MainContent() {
   const { route } = useRouter()
 
-  // Multi-Page Routes with Suspense
+  // Standalone Routes
   if (route === '/store') {
     return (
       <Suspense fallback={<PageFallback />}>
@@ -217,10 +172,6 @@ export default function App() {
       <AuthProvider>
         <CartProvider>
           <RouterProvider>
-            {/* Ambient Animated Cursor & Canvas Particles */}
-            <CustomCursor />
-            <NatureCanvas />
-
             <MainContent />
           </RouterProvider>
         </CartProvider>
