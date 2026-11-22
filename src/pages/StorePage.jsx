@@ -118,7 +118,11 @@ export default function StorePage() {
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.basePrice - b.basePrice
       if (sortBy === 'price-desc') return b.basePrice - a.basePrice
-      return 0
+      // Prioritize our signature custom-photographed nursery specimens
+      const aLocal = a.photo && a.photo.startsWith('/images/') ? 1 : 0
+      const bLocal = b.photo && b.photo.startsWith('/images/') ? 1 : 0
+      if (aLocal !== bLocal) return bLocal - aLocal
+      return (a.serialNumber || 0) - (b.serialNumber || 0)
     })
   }, [selectedCategory, selectedSizeFilter, selectedSunFilter, searchQuery, sortBy])
 
