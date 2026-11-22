@@ -11,8 +11,10 @@ const KNOWN_ROUTES = [
   '/admin',
   '/blog',
   '/toolkit',
+  '/plant-doctor',
   '/doctor',
   '/studio',
+  '/plant-wiki',
   '/wiki',
 ]
 

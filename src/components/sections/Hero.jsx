@@ -222,7 +222,7 @@ export default function Hero() {
                 }`}
               >
                 <Img
-                  src={slide.photo}
+                  photo={slide.photo}
                   alt={slide.title[lang] || slide.title.bn}
                   className="w-full h-full object-cover"
                 />

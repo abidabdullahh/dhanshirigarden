@@ -9,6 +9,7 @@ import { useLocale } from '../../lib/locale'
  */
 export default function Img({
   photo,
+  src,
   width = 1200,
   sizes = '(min-width: 1024px) 50vw, 100vw',
   priority = false,
@@ -22,7 +23,25 @@ export default function Img({
   const label = alt ?? photo?.alt?.[lang] ?? photo?.alt?.en ?? ''
   const tooltip = title ?? photo?.title?.[lang] ?? photo?.title?.en ?? label
 
-  if (failed) {
+  let resolvedSrc = ''
+  let resolvedSrcSet = undefined
+
+  if (typeof src === 'string') {
+    resolvedSrc = src
+  } else if (src && typeof src === 'object' && typeof src.src === 'function') {
+    resolvedSrc = src.src(width)
+    resolvedSrcSet = src.srcSet
+  } else if (typeof photo === 'string') {
+    resolvedSrc = photo
+  } else if (photo && typeof photo.src === 'function') {
+    resolvedSrc = photo.src(width)
+    resolvedSrcSet = photo.srcSet
+  } else if (photo && typeof photo.src === 'string') {
+    resolvedSrc = photo.src
+    resolvedSrcSet = photo.srcSet
+  }
+
+  if (failed || !resolvedSrc) {
     return (
       <div
         role="img"
@@ -37,8 +56,8 @@ export default function Img({
 
   return (
     <img
-      src={photo.src(width)}
-      srcSet={photo.srcSet}
+      src={resolvedSrc}
+      srcSet={resolvedSrcSet}
       sizes={sizes}
       alt={label}
       title={tooltip}

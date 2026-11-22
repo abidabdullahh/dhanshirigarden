@@ -10,6 +10,7 @@ import './index.css'
 import App from './App.jsx'
 import { loadBrandFont } from './lib/brandFont'
 import { LocaleProvider } from './lib/LocaleProvider.jsx'
+import { ErrorBoundary } from './components/ui/ErrorBoundary.jsx'
 
 // Scroll-reveal styles only apply once JavaScript is running, so content is never hidden without it.
 document.documentElement.classList.add('reveal-ready')
@@ -17,8 +18,10 @@ loadBrandFont()
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <LocaleProvider>
-      <App />
-    </LocaleProvider>
+    <ErrorBoundary>
+      <LocaleProvider>
+        <App />
+      </LocaleProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

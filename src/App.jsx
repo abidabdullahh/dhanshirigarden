@@ -148,7 +148,7 @@ function MainContent() {
       </Suspense>
     )
   }
-  if (route === '/plant-doctor') {
+  if (route === '/plant-doctor' || route === '/doctor') {
     return (
       <Suspense fallback={<PageFallback />}>
         <PlantDoctorPage />
@@ -162,7 +162,7 @@ function MainContent() {
       </Suspense>
     )
   }
-  if (route === '/plant-wiki') {
+  if (route === '/plant-wiki' || route === '/wiki') {
     return (
       <Suspense fallback={<PageFallback />}>
         <PlantWikiPage />
