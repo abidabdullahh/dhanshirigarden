@@ -19,7 +19,23 @@ const KNOWN_ROUTES = [
 function getRouteFromLocation() {
   if (typeof window === 'undefined') return '/'
 
-  // 1. Backwards-compatibility: If URL contains hash like `/#/store` or `#/projects`, normalize it to clean path
+  // 1. Single Page App (SPA) redirect support for GitHub Pages 404 (e.g. /?/store)
+  const search = window.location.search || ''
+  if (search.startsWith('?/')) {
+    const cleanSearch = search.slice(1).replace(/~and~/g, '&')
+    const [pathPart, queryPart] = cleanSearch.split('&')
+    for (const r of KNOWN_ROUTES) {
+      if (r !== '/' && (pathPart === r || pathPart.startsWith(r + '/'))) {
+        try {
+          const newUrl = pathPart + (queryPart ? `?${queryPart}` : '') + (window.location.hash || '')
+          window.history.replaceState(null, '', newUrl)
+        } catch {}
+        return r
+      }
+    }
+  }
+
+  // 2. Backwards-compatibility: If URL contains hash like `/#/store` or `#/projects`, normalize it to clean path
   const hash = window.location.hash || ''
   if (hash.startsWith('#/')) {
     const cleanHash = hash.replace(/^#\/?/, '/')
@@ -34,7 +50,7 @@ function getRouteFromLocation() {
     }
   }
 
-  // 2. Canonical HTML5 pathname check
+  // 3. Canonical HTML5 pathname check
   const path = window.location.pathname || '/'
   for (const r of KNOWN_ROUTES) {
     if (r !== '/' && (path === r || path.startsWith(r + '/'))) {
