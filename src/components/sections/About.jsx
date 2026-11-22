@@ -32,26 +32,28 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* LEFT 5 COLS: Portrait Frame */}
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] w-full max-w-md mx-auto lg:max-w-none overflow-hidden rounded-3xl bg-stone-100 border-2 border-stone-300 shadow-lg">
-              {founderPhoto ? (
-                <img
-                  src={founderPhoto}
-                  alt={isBn ? 'জনাব আমির আলী — প্রধান কৃষি পরামর্শক' : 'Mr. Amir Ali — Founder & Chief Agronomist'}
-                  className="h-full w-full object-cover contrast-105"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="h-full w-full flex items-center justify-center text-stone-600 font-mono text-xs">
-                  AMIR ALI · FOUNDER
+            <div className="relative aspect-[4/5] w-full max-w-md mx-auto lg:max-w-none overflow-hidden rounded-3xl glass-panel-3d card-hover-3d p-2 shadow-2xl border border-white/80">
+              <div className="relative h-full w-full overflow-hidden rounded-2xl bg-forest/5">
+                {founderPhoto ? (
+                  <img
+                    src={founderPhoto}
+                    alt={isBn ? 'জনাব আমির আলী — প্রধান কৃষি পরামর্শক' : 'Mr. Amir Ali — Founder & Chief Agronomist'}
+                    className="h-full w-full object-cover contrast-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-full w-full flex items-center justify-center text-forest font-mono text-xs">
+                    AMIR ALI · FOUNDER
+                  </div>
+                )}
+                <div className="absolute bottom-4 left-4 right-4 glass-panel-dark-3d px-5 py-3.5 rounded-2xl border border-white/20 shadow-xl text-white">
+                  <strong className="block font-sutonny text-base sm:text-lg font-bold text-white">
+                    {isBn ? 'জনাব আমির আলী' : 'Mr. Amir Ali'}
+                  </strong>
+                  <span className="text-xs sm:text-sm font-semibold text-bright block mt-0.5">
+                    {isBn ? 'সাবেক উপসহকারী কৃষি কর্মকর্তা (ডিএই), কৃষি মন্ত্রণালয়' : 'Former Sub-Assistant Agriculture Officer, DAE'}
+                  </span>
                 </div>
-              )}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md px-5 py-3.5 rounded-2xl border border-stone-300 shadow-md text-stone-900">
-                <strong className="block font-sutonny text-base sm:text-lg font-bold text-[#1b4332]">
-                  {isBn ? 'জনাব আমির আলী' : 'Mr. Amir Ali'}
-                </strong>
-                <span className="text-xs sm:text-sm font-semibold text-stone-700 block mt-0.5">
-                  {isBn ? 'সাবেক উপসহকারী কৃষি কর্মকর্তা (ডিএই), কৃষি মন্ত্রণালয়' : 'Former Sub-Assistant Agriculture Officer, DAE'}
-                </span>
               </div>
             </div>
           </div>

@@ -52,6 +52,18 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/#irrigation-engine" onClick={(e) => handleLink(e, '/#irrigation-engine')} className="hover:text-emerald-300 transition flex items-center gap-1.5">
+                  <span className="size-1.5 rounded-full bg-bright animate-ping" />
+                  <span>{isBn ? 'ইরিগেশন অটোমেশন ইঞ্জিন' : 'Irrigation Engine'}</span>
+                </a>
+              </li>
+              <li>
+                <a href="/#lawn-mower-engine" onClick={(e) => handleLink(e, '/#lawn-mower-engine')} className="hover:text-emerald-300 transition flex items-center gap-1.5">
+                  <span className="size-1.5 rounded-full bg-emerald-400" />
+                  <span>{isBn ? 'বারমুডা লন মওয়ার ইঞ্জিন' : 'Lawn Mower Lab'}</span>
+                </a>
+              </li>
+              <li>
                 <a href="/projects" onClick={(e) => handleLink(e, '/projects')} className="hover:text-emerald-300 transition">
                   {isBn ? 'সম্পন্ন প্রকল্পসমূহ' : 'Selected Works'}
                 </a>

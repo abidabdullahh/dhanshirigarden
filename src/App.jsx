@@ -8,6 +8,8 @@ import CartDrawer from './components/layout/CartDrawer'
 import Footer from './components/layout/Footer'
 import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
+import IrrigationAutomationEngine from './components/sections/IrrigationAutomationEngine'
+import LawnMowerEngine from './components/sections/LawnMowerEngine'
 import Services from './components/sections/Services'
 import Projects from './components/sections/Projects'
 import DynamicNursery from './components/sections/DynamicNursery'
@@ -56,22 +58,28 @@ function HomePage() {
       <CartDrawer />
 
       <main id="main">
-        {/* 1. Swiss Minimalist Architectural Hero */}
+        {/* 1. 3D Glassmorphic Architectural Hero */}
         <Hero />
 
-        {/* 2. Six Core Architectural Disciplines (01-06) */}
+        {/* 2. Flagship Irrigation Automation Engine */}
+        <IrrigationAutomationEngine />
+
+        {/* 3. Flagship Bermuda Lawn Mower Engine */}
+        <LawnMowerEngine />
+
+        {/* 4. Six Core Architectural Disciplines (01-06) */}
         <Services />
 
-        {/* 3. Selected Works / Curated Portfolio Showcase */}
+        {/* 5. Selected Works / Curated Portfolio Showcase */}
         <Projects />
 
-        {/* 4. Dynamic Botanical Specimen Nursery */}
+        {/* 6. Dynamic Botanical Specimen Nursery */}
         <DynamicNursery />
 
-        {/* 5. About & DAE Agronomic Heritage */}
+        {/* 7. About & DAE Agronomic Heritage */}
         <About />
 
-        {/* 6. Direct Commission & Site Consultation */}
+        {/* 8. Direct Commission & Site Consultation */}
         <Contact />
       </main>
 

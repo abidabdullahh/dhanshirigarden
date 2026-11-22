@@ -26,6 +26,8 @@ export default function Navbar() {
 
   const navLinks = [
     { path: '/services', hash: '#services', label: isBn ? 'সেবাসমূহ' : 'Services' },
+    { path: '/#irrigation-engine', hash: '#irrigation-engine', label: isBn ? 'ইরিগেশন ইঞ্জিন' : 'Irrigation' },
+    { path: '/#lawn-mower-engine', hash: '#lawn-mower-engine', label: isBn ? 'লন মওয়ার' : 'Lawn Mower' },
     { path: '/projects', hash: '#works', label: isBn ? 'সম্পন্ন প্রকল্প' : 'Projects' },
     { path: '/store', hash: '#nursery', label: isBn ? 'গাছ ও ঘাস নার্সারি' : 'Nursery' },
     { path: '/about', hash: '#about', label: isBn ? 'আমাদের কথা' : 'About' },
@@ -35,7 +37,7 @@ export default function Navbar() {
   const handleNavClick = (e, path, hash) => {
     e.preventDefault()
     closeMobile()
-    if (route === '/') {
+    if (hash && (route === '/' || path.startsWith('/#'))) {
       const el = document.querySelector(hash) || (hash === '#about' ? document.querySelector('#atelier') : null)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
@@ -47,121 +49,111 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 backdrop-blur-xl bg-white/95 border-b border-stone-200/80 shadow-xs">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav
-            aria-label="ধানসিঁড়ি গার্ডেন"
-            className="flex h-18 sm:h-20 items-center justify-between gap-4"
-          >
+      <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4">
+          <div className="glass-panel-3d rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-xl flex items-center justify-between gap-4 border border-white/80">
             {/* Brand Logo in Bangla */}
             <a
               href="/"
               onClick={(e) => {
                 e.preventDefault()
                 closeMobile()
-                if (route !== '/') navigate('/')
-                else window.scrollTo({ top: 0, behavior: 'smooth' })
+                if (route === '/') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                } else {
+                  navigate('/')
+                }
               }}
-              className="shrink-0 transition-opacity hover:opacity-90"
+              className="flex items-center gap-3 shrink-0 group focus-visible:outline-hidden"
             >
               <Logo />
             </a>
 
-            {/* Desktop Navigation Links — High-Contrast Clean Typography */}
-            <ul className="hidden items-center gap-7 lg:flex">
+            {/* Desktop Navigation Links */}
+            <nav aria-label="প্রধান নেভিগেশন" className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navLinks.map((link) => {
                 const isActive = route === link.path
                 return (
-                  <li key={link.path}>
-                    <a
-                      href={link.path}
-                      onClick={(e) => handleNavClick(e, link.path, link.hash)}
-                      className={`text-[0.92rem] font-semibold tracking-wide transition-colors ${
-                        isActive
-                          ? 'text-[#1b4332] border-b-2 border-[#1b4332] pb-0.5'
-                          : 'text-stone-800 hover:text-[#1b4332]'
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
+                  <a
+                    key={link.path}
+                    href={link.path}
+                    onClick={(e) => handleNavClick(e, link.path, link.hash)}
+                    className={`px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold font-sutonny transition-all duration-200 ${
+                      isActive
+                        ? 'bg-forest text-white shadow-sm'
+                        : 'text-charcoal hover:text-forest hover:bg-forest/5'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
                 )
               })}
-            </ul>
+            </nav>
 
-            {/* Right Action Deck */}
-            <div className="flex items-center gap-2.5 sm:gap-3.5">
-              {/* Direct Call Line for Housewife / Architect convenience */}
-              <a
-                href={`tel:${site.phones[0].tel}`}
-                className="hidden md:inline-flex items-center gap-2 rounded-full border border-emerald-700/20 bg-emerald-50/80 px-3.5 py-1.5 text-xs font-bold text-[#1b4332] hover:bg-emerald-100/80 transition shadow-2xs"
-                title="সরাসরি ফোন করুন"
-              >
-                <Phone className="size-3.5 text-[#2d6a4f]" />
-                <span className="font-mono text-[0.82rem] tracking-tight">{site.phones[0].number}</span>
-              </a>
-
-              {/* Minimal Cart Trigger */}
+            {/* Right Action Icons: Cart, Auth, Phone */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              {/* Shopping Cart Button */}
               <button
                 type="button"
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-stone-800 hover:text-[#1b4332] transition rounded-full hover:bg-stone-100"
-                aria-label="শপিং ব্যাগ"
+                aria-label={`শপিং ব্যাগ (${totalItems} টি আইটেম)`}
+                className="relative p-2.5 text-forest hover:bg-forest/5 rounded-full transition glass-pill-3d"
               >
                 <ShoppingBag className="size-5" />
                 {totalItems > 0 && (
-                  <span className="absolute top-1 right-1 size-2.5 rounded-full bg-[#2d6a4f] ring-2 ring-white" />
+                  <span className="absolute -top-1 -right-1 size-5 rounded-full bg-forest text-white text-[0.65rem] font-bold flex items-center justify-center font-mono shadow-md animate-pop">
+                    {totalItems}
+                  </span>
                 )}
               </button>
 
+              {/* User Account / Login */}
               <UserAuthMenu />
 
-              {/* Primary Consultation Action Button */}
+              {/* Direct Site Visit CTA */}
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '/contact', '#contact')}
-                className="hidden sm:inline-flex items-center justify-center rounded-full bg-[#1b4332] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#2d6a4f] transition-all tracking-wide shadow-xs"
+                className="hidden sm:inline-flex items-center gap-2 rounded-full bg-forest px-4.5 py-2 text-xs font-bold text-white hover:bg-emerald transition-all shadow-md hover:shadow-lg font-sutonny glass-specular"
               >
-                <span>{isBn ? 'পরামর্শ নিন' : 'Inquire'}</span>
+                <span>{isBn ? 'সাইট ভিজিট' : 'Site Visit'}</span>
               </a>
 
-              {/* Mobile Hamburger */}
+              {/* Mobile Menu Hamburger */}
               <button
                 type="button"
-                aria-label="মেনু খুলুন"
-                onClick={() => setMobileOpen(true)}
-                className="p-2 text-stone-800 hover:text-[#1b4332] lg:hidden rounded-lg hover:bg-stone-100"
+                aria-label={mobileOpen ? 'মেনু বন্ধ করুন' : 'মেনু খুলুন'}
+                onClick={() => setMobileOpen(!mobileOpen)}
+                className="p-2.5 text-forest hover:bg-forest/5 rounded-full lg:hidden transition glass-pill-3d"
               >
-                <Menu className="size-6" />
+                {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
               </button>
             </div>
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Glass Slide Drawer */}
       {mobileOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs lg:hidden animate-fade-in"
-        >
-          <div className="flex h-full w-full max-w-sm flex-col bg-white p-6 shadow-2xl">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-stone-200 pb-5">
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+            onClick={closeMobile}
+          />
+          <div className="fixed inset-y-0 right-0 w-full max-w-sm glass-panel-3d bg-white/95 p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
+            <div className="flex items-center justify-between pb-4 border-b border-forest/10">
               <Logo />
               <button
                 type="button"
                 aria-label="মেনু বন্ধ করুন"
                 onClick={closeMobile}
-                className="p-2 text-stone-700 hover:text-[#1b4332] rounded-lg hover:bg-stone-100"
+                className="p-2 text-forest hover:bg-forest/5 rounded-full"
               >
                 <X className="size-6" />
               </button>
             </div>
 
-            {/* Navigation Links */}
-            <ul className="mt-6 space-y-4">
+            <ul className="mt-6 space-y-3">
               {navLinks.map((link) => {
                 const isActive = route === link.path
                 return (
@@ -169,8 +161,8 @@ export default function Navbar() {
                     <a
                       href={link.path}
                       onClick={(e) => handleNavClick(e, link.path, link.hash)}
-                      className={`block font-sutonny text-2xl font-bold tracking-tight transition ${
-                        isActive ? 'text-[#1b4332]' : 'text-stone-800 hover:text-[#1b4332]'
+                      className={`block font-sutonny text-xl font-bold py-2 px-3 rounded-xl transition ${
+                        isActive ? 'bg-forest text-white' : 'text-charcoal hover:bg-forest/5'
                       }`}
                     >
                       {link.label}
@@ -180,28 +172,22 @@ export default function Navbar() {
               })}
             </ul>
 
-            {/* Drawer Bottom Actions */}
-            <div className="mt-auto border-t border-stone-200 pt-6 space-y-3">
+            <div className="mt-auto border-t border-forest/10 pt-6 space-y-3">
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '/contact', '#contact')}
-                className="flex w-full items-center justify-center rounded-xl bg-[#1b4332] py-3.5 text-sm font-bold text-white hover:bg-[#2d6a4f] transition shadow-xs"
+                className="flex w-full items-center justify-center rounded-xl bg-forest py-3.5 text-sm font-bold text-white hover:bg-emerald transition shadow-md"
               >
                 <span>{isBn ? 'বিনামূল্যে সাইট ভিজিট ও বাজেট পরামর্শ' : 'Free Site Visit & Budget Quote'}</span>
               </a>
 
               <a
                 href={`tel:${site.phones[0].tel}`}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-emerald-700/20 bg-emerald-50 py-3 text-sm font-bold text-[#1b4332] hover:bg-emerald-100 transition"
+                className="flex w-full items-center justify-center gap-2 rounded-xl glass-pill-3d py-3 text-sm font-bold text-forest transition"
               >
-                <Phone className="size-4 text-[#2d6a4f]" />
+                <Phone className="size-4 text-bright" />
                 <span>সরাসরি কল: {site.phones[0].number}</span>
               </a>
-
-              <div className="flex items-center justify-between text-xs text-stone-600 pt-2 font-mono">
-                <span>ঢাকা হেড অফিস</span>
-                <span>নওগাঁ নার্সারি ও খামার</span>
-              </div>
             </div>
           </div>
         </div>

@@ -77,34 +77,34 @@ export default function Contact() {
             </p>
 
             {/* Direct Studio Contact Cards */}
-            <div className="space-y-3 pt-6 border-t-2 border-stone-200">
+            <div className="space-y-3 pt-6 border-t border-forest/15">
               {site.phones.map((phone) => (
                 <a
                   key={phone.tel}
                   href={`tel:${phone.tel}`}
-                  className="group flex items-center justify-between p-4 rounded-2xl border-2 border-stone-200 bg-stone-50 hover:border-[#1b4332] hover:bg-emerald-50/50 transition"
+                  className="group flex items-center justify-between p-4 rounded-2xl glass-pill-3d hover:bg-white text-forest border border-forest/15 transition shadow-xs"
                 >
                   <div className="flex items-center gap-3">
-                    <Phone className="size-5 text-[#2d6a4f]" />
-                    <span className="font-mono text-base sm:text-lg font-bold text-[#1b4332]">
+                    <Phone className="size-5 text-bright" />
+                    <span className="font-mono text-base sm:text-lg font-bold text-forest">
                       {phone.number}
                     </span>
                   </div>
-                  <span className="text-xs font-bold text-stone-600 group-hover:text-[#1b4332] transition">
+                  <span className="text-xs font-bold text-forest/70 group-hover:text-forest transition">
                     {phone.label[lang] || phone.label.bn} →
                   </span>
                 </a>
               ))}
 
-              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-stone-800 font-medium">
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
-                  <strong className="block font-bold text-[#1b4332] mb-1">
+              <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-charcoal/85 font-medium">
+                <div className="p-4 rounded-2xl glass-pill-3d border border-forest/15">
+                  <strong className="block font-bold text-forest mb-1">
                     ঢাকা অফিস ও স্টুডিও
                   </strong>
                   <span>ক-২৬/১, মহাখালী, ঢাকা-১২১২</span>
                 </div>
-                <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
-                  <strong className="block font-bold text-[#1b4332] mb-1">
+                <div className="p-4 rounded-2xl glass-pill-3d border border-forest/15">
+                  <strong className="block font-bold text-forest mb-1">
                     নওগাঁ গবেষণা নার্সারি
                   </strong>
                   <span>সুলতানপুর, পণ্ডিত পাড়া, নওগাঁ সদর-৬৫০০</span>
@@ -115,11 +115,11 @@ export default function Contact() {
 
           {/* RIGHT 6 COLS: Direct Inquiry Form */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl border-2 border-stone-300 bg-white p-6 sm:p-8 lg:p-10 shadow-lg">
-              <h3 className="font-sutonny text-xl sm:text-2xl font-bold text-[#1b4332] mb-2">
+            <div className="rounded-3xl glass-panel-3d p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/80">
+              <h3 className="font-sutonny text-xl sm:text-2xl font-bold text-forest mb-2">
                 {isBn ? 'বিনামূল্যে প্রাথমিক সাইট ভিজিট ও বাজেট অনুরোধ' : 'Request Free Site Visit & Estimate'}
               </h3>
-              <p className="text-xs sm:text-sm text-stone-700 font-medium mb-6">
+              <p className="text-xs sm:text-sm text-charcoal/70 font-medium mb-6">
                 {isBn
                   ? 'তথ্য দিন—আমাদের প্রধান কৃষিবিদ সরাসরি আপনার সাথে যোগাযোগ করবেন।'
                   : 'Submit your requirements for direct agronomic review.'}

@@ -133,7 +133,7 @@ export default function DynamicNursery() {
         </div>
 
         {/* Dynamic Category Tabs */}
-        <div className="flex flex-wrap items-center gap-2 pb-6 mb-10 border-b-2 border-stone-200 overflow-x-auto scrollbar-none">
+        <div className="flex flex-wrap items-center gap-2 pb-6 mb-10 border-b border-forest/10 overflow-x-auto scrollbar-none">
           {visibleCategories.map((cat) => {
             const isActive = selectedCategory === cat.id
             return (
@@ -143,8 +143,8 @@ export default function DynamicNursery() {
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`rounded-full px-5 py-2.5 text-xs sm:text-sm font-bold transition-all tracking-wide whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#1b4332] text-white shadow-xs'
-                    : 'bg-white border border-stone-300 text-stone-800 hover:border-stone-500 hover:text-stone-900'
+                    ? 'bg-forest text-white shadow-md'
+                    : 'glass-pill-3d text-charcoal hover:bg-white/80 border border-forest/15'
                 }`}
               >
                 <span>{cat.label[lang] || cat.label.en}</span>
@@ -160,11 +160,11 @@ export default function DynamicNursery() {
             return (
               <div
                 key={specimen.id}
-                className="group flex flex-col justify-between rounded-3xl bg-white border-2 border-stone-300 p-5 transition-all duration-300 hover:border-[#2d6a4f] hover:shadow-md"
+                className="group flex flex-col justify-between rounded-3xl glass-panel-3d card-hover-3d p-5 transition-all duration-300 border border-white/80 shadow-lg"
               >
                 <div>
                   {/* Photograph */}
-                  <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-stone-100 mb-4 border border-stone-200">
+                  <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-forest/5 mb-4 border border-forest/10">
                     <img
                       src={specimen.photo}
                       alt={specimen.name[lang] || specimen.name.en}
@@ -172,7 +172,7 @@ export default function DynamicNursery() {
                       loading="lazy"
                     />
                     <div className="absolute top-2.5 left-2.5">
-                      <span className="rounded-full bg-white/95 backdrop-blur-md px-2.5 py-0.5 font-mono text-[0.68rem] font-bold uppercase text-[#1b4332] border border-stone-200">
+                      <span className="rounded-full glass-pill-3d px-2.5 py-0.5 font-mono text-[0.68rem] font-bold uppercase text-forest border border-forest/20">
                         {specimen.category}
                       </span>
                     </div>
@@ -180,21 +180,21 @@ export default function DynamicNursery() {
 
                   {/* Names */}
                   <div className="space-y-1">
-                    <span className="font-serif italic text-xs text-stone-600 block line-clamp-1 font-medium">
+                    <span className="font-serif italic text-xs text-forest/70 block line-clamp-1 font-medium">
                       {specimen.scientificName}
                     </span>
-                    <strong className="font-sutonny text-lg font-bold text-[#1b4332] block leading-snug line-clamp-1">
+                    <strong className="font-sutonny text-lg font-bold text-forest block leading-snug line-clamp-1 group-hover:text-emerald transition">
                       {specimen.name?.[lang] || specimen.name?.bn || specimen.name?.en || ''}
                     </strong>
-                    <span className="font-mono text-xs text-stone-600 block font-medium">
+                    <span className="font-mono text-xs text-charcoal/60 block font-medium">
                       {specimen.sizes && specimen.sizes[0] ? specimen.sizes[0].name : '৮" স্ট্যান্ডার্ড ব্যাগ'}
                     </span>
                   </div>
                 </div>
 
                 {/* Price & Action Row */}
-                <div className="mt-5 pt-4 border-t border-stone-200 flex items-center justify-between">
-                  <div className="font-mono text-base font-bold text-[#1b4332]">
+                <div className="mt-5 pt-4 border-t border-forest/10 flex items-center justify-between">
+                  <div className="font-mono text-base font-bold text-forest">
                     {isBn ? `৳ ${n(specimen.basePrice)}` : `BDT ${specimen.basePrice}`}
                   </div>
 
@@ -204,8 +204,8 @@ export default function DynamicNursery() {
                       onClick={() => handleAdd(specimen)}
                       className={`size-9 rounded-full grid place-items-center transition-all ${
                         isAdded
-                          ? 'bg-[#2d6a4f] text-white shadow-xs'
-                          : 'bg-emerald-50 border border-emerald-700/30 text-[#1b4332] hover:bg-[#1b4332] hover:text-white'
+                          ? 'bg-emerald text-white shadow-xs'
+                          : 'glass-pill-3d text-forest border border-forest/20 hover:bg-forest hover:text-white shadow-xs'
                       }`}
                       aria-label="অর্ডারে যোগ করুন"
                       title="অর্ডারে যোগ করুন"

@@ -173,17 +173,21 @@ export default function Services() {
   const activeItem = DISCIPLINES[activeTab]
 
   return (
-    <section id="services" className="relative isolate py-20 sm:py-28 lg:py-36 bg-white border-b border-stone-200">
+    <section id="services" className="relative isolate py-20 sm:py-28 lg:py-36 bg-[#FCFCFA] border-b border-forest/10 overflow-hidden">
+      {/* 3D Ambient Orbs */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-bright/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-forest/10 rounded-full blur-3xl pointer-events-none" />
+
       <Container>
         {/* Section Header */}
-        <div className="flex items-center justify-between border-b-2 border-stone-200 pb-5 mb-14 sm:mb-20">
+        <div className="flex items-center justify-between border-b border-forest/15 pb-5 mb-14 sm:mb-20">
           <div className="flex items-center gap-3">
-            <span className="size-2 rounded-full bg-[#2d6a4f]" />
-            <span className="font-sutonny font-bold text-sm tracking-wider uppercase text-[#1b4332]">
+            <span className="size-2 rounded-full bg-bright animate-ping" />
+            <span className="font-sutonny font-bold text-sm tracking-wider uppercase text-forest">
               {isBn ? 'সেবাসমূহ ও স্থাপত্য শৃঙ্খলা' : 'SERVICES & DISCIPLINES'}
             </span>
           </div>
-          <span className="font-mono text-xs sm:text-sm font-bold text-stone-700 bg-stone-100 px-3 py-1 rounded-full border border-stone-300">
+          <span className="font-mono text-xs sm:text-sm font-bold text-forest glass-pill-3d px-3.5 py-1 rounded-full border border-forest/20 shadow-xs">
             [০১ — ০৬ সেবাসমূহ]
           </span>
         </div>
@@ -212,8 +216,8 @@ export default function Services() {
 
         {/* Interactive Discipline Selector */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* LEFT 5 COLS: High Contrast Tab List */}
-          <div className="lg:col-span-5 space-y-2">
+          {/* LEFT 5 COLS: 3D Glass Tab List */}
+          <div className="lg:col-span-5 space-y-3">
             {DISCIPLINES.map((item, idx) => {
               const isActive = activeTab === idx
               return (
@@ -221,14 +225,14 @@ export default function Services() {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveTab(idx)}
-                  className={`group flex w-full items-center justify-between p-4 sm:p-5 rounded-2xl border-2 text-left transition-all ${
+                  className={`group flex w-full items-center justify-between p-4 sm:p-5 rounded-2xl text-left transition-all duration-300 ${
                     isActive
-                      ? 'border-[#1b4332] bg-emerald-50/70 shadow-sm text-[#1b4332]'
-                      : 'border-stone-200 bg-white hover:border-stone-400 text-stone-800'
+                      ? 'bg-forest text-white shadow-xl scale-[1.02] border border-bright/40'
+                      : 'glass-pill-3d hover:bg-white text-charcoal border border-forest/10 hover:border-forest/30 shadow-xs'
                   }`}
                 >
                   <div className="flex items-center gap-3.5">
-                    <span className={`font-mono text-sm sm:text-base font-bold ${isActive ? 'text-[#2d6a4f]' : 'text-stone-500'}`}>
+                    <span className={`font-mono text-sm sm:text-base font-bold ${isActive ? 'text-bright' : 'text-forest/60'}`}>
                       {item.number}
                     </span>
                     <span className="font-sutonny text-base sm:text-lg font-bold tracking-tight">
@@ -237,7 +241,7 @@ export default function Services() {
                   </div>
                   <span
                     className={`font-mono text-xs font-bold transition-transform ${
-                      isActive ? 'text-[#1b4332] translate-x-1' : 'text-stone-400'
+                      isActive ? 'text-bright translate-x-1.5' : 'text-forest/40'
                     }`}
                   >
                     →
@@ -249,7 +253,7 @@ export default function Services() {
 
           {/* RIGHT 7 COLS: Active Discipline Showcase */}
           <div className="lg:col-span-7">
-            <div className="rounded-3xl border-2 border-stone-300 bg-white p-6 sm:p-8 lg:p-10 shadow-lg">
+            <div className="rounded-3xl glass-panel-3d p-6 sm:p-8 lg:p-10 shadow-2xl border border-white/80">
               {/* Photo Banner */}
               <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-stone-100 border border-stone-200 mb-8">
                 <Img
